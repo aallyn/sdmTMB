@@ -279,10 +279,11 @@
 <span><span class="co">#&gt; ✔ No sigma parameters are &lt; 0.01</span></span>
 <span><span class="co">#&gt; ✔ No sigma parameters are &gt; 100</span></span>
 <span><span class="co">#&gt; ✔ Range parameter doesn't look unreasonably large</span></span></code></pre></div>
-<p>Use the <a href="https://github.com/strengejacke/ggeffects" class="external-link">ggeffects</a> package (<strong>the GitHub version until the next ggeffects CRAN update</strong>) to plot the smoother effect:</p>
+<p>Use the <a href="https://github.com/strengejacke/ggeffects" class="external-link">ggeffects</a> package to plot the smoother effect:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">ggeffects</span><span class="fu">::</span><span class="fu"><a href="https://strengejacke.github.io/ggeffects/reference/ggpredict.html" class="external-link">ggpredict</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"depth [50:400, by=2]"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-plot-ggpredict-link-1.png" width="50%"></p>
+<p>If the depth effect was parametric and not a penalized smoother, we could have alternatively used <code><a href="https://strengejacke.github.io/ggeffects/reference/ggpredict.html" class="external-link">ggeffects::ggeffect()</a></code> for a fast marginal effect plot.</p>
 <p>Predict on new data:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">fit</span>, newdata <span class="op">=</span> <span class="va">qcs_grid</span><span class="op">)</span></span></code></pre></div>

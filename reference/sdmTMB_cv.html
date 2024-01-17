@@ -230,9 +230,9 @@ with, but not ELPD. For maximum likelihood, <a href="https://github.com/pbs-asse
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Set a parallel `future::plan()` to use parallel processing.</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">m_cv</span><span class="op">$</span><span class="va">fold_loglik</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -3387.398 -3329.670</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -3222.826 -3472.216</span>
 <span class="r-in"><span><span class="va">m_cv</span><span class="op">$</span><span class="va">sum_loglik</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -6717.068</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -6695.043</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">m_cv</span><span class="op">$</span><span class="va">data</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 15</span></span>
@@ -252,18 +252,18 @@ with, but not ELPD. For maximum likelihood, <a href="https://github.com/pbs-asse
 <span class="r-out co"><span class="r-pr">#&gt;</span> Family: tweedie(link = 'log')</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>               coef.est coef.se</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> depth_scaled     -2.06    0.19</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> depth_scaled2    -1.27    0.10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> depth_scaled     -1.58    0.17</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> depth_scaled2    -1.55    0.11</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Dispersion parameter: 13.10</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Tweedie p: 1.60</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Matérn range: 96.42</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Spatial SD: 2.78</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ML criterion at convergence: 3206.009</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Dispersion parameter: 13.32</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Tweedie p: 1.63</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Matérn range: 158.72</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Spatial SD: 2.57</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ML criterion at convergence: 3355.049</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> See ?tidy.sdmTMB to extract these values as a data frame.</span>
 <span class="r-in"><span><span class="va">m_cv</span><span class="op">$</span><span class="va">max_gradients</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1.814876e-10 4.610284e-12</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1.367306e-09 6.083545e-11</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="co"># Create mesh each fold:</span></span></span>
