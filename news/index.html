@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">sdmTMB</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.1.9006</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.2</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -63,8 +63,9 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="development version" id="sdmtmb-development-version">sdmTMB (development version)<a class="anchor" aria-label="anchor" href="#sdmtmb-development-version"></a></h2>
-<ul><li><p>Fix crash in if <code>sdmTMB(..., do_index = TRUE)</code> and <code>extra_time</code> supplied along with <code>predict_args = list(newdata = ...)</code> that lacked <code>extra_time</code> elements.</p></li>
+<h2 class="pkg-version" data-toc-text="0.4.2" id="sdmtmb-042">sdmTMB 0.4.2<a class="anchor" aria-label="anchor" href="#sdmtmb-042"></a></h2>
+<ul><li><p>Force rebuild of CRAN binaries to fix issue with breaking Matrix ABI change causing <code>NaN gradient</code> errors. <a href="https://github.com/pbs-assess/sdmTMB/issues/288" class="external-link">#288</a> <a href="https://github.com/pbs-assess/sdmTMB/issues/287" class="external-link">#287</a></p></li>
+<li><p>Fix crash in if <code>sdmTMB(..., do_index = TRUE)</code> and <code>extra_time</code> supplied along with <code>predict_args = list(newdata = ...)</code> that lacked <code>extra_time</code> elements.</p></li>
 <li><p>Allow <code><a href="../reference/get_index.html">get_index()</a></code> to work with missing time elements.</p></li>
 <li><p>Add the ability to pass a custom randomized quantile function <code>qres_func</code> to <code><a href="../reference/residuals.sdmTMB.html">residuals.sdmTMB()</a></code>.</p></li>
 <li><p>Add check for factor random intercept columns in <code>newdata</code> to avoid a crash. <a href="https://github.com/pbs-assess/sdmTMB/issues/278" class="external-link">#278</a> <a href="https://github.com/pbs-assess/sdmTMB/issues/280" class="external-link">#280</a></p></li>
@@ -395,7 +396,7 @@
 
 
     <footer><div class="pkgdown-footer-left">
-  <p></p><p>Developed by Sean C. Anderson, Eric J. Ward, Lewis A. K. Barnett, Philina A. English.</p>
+  <p></p><p>Developed by Sean C. Anderson, Eric J. Ward, Philina A. English, Lewis A. K. Barnett, James T. Thorson.</p>
 </div>
 
 <div class="pkgdown-footer-right">
