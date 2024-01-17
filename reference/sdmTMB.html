@@ -489,7 +489,623 @@ estimated abundance indices for West Coast groundfishes. ICES J. Mar. Sci.
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://pbs-assess.github.io/sdmTMB/">sdmTMB</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Build a mesh to implement the SPDE approach:</span></span></span>
+<span class="r-in"><span><span class="va">mesh</span> <span class="op">&lt;-</span> <span class="fu"><a href="make_mesh.html">make_mesh</a></span><span class="op">(</span><span class="va">pcod_2011</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"X"</span>, <span class="st">"Y"</span><span class="op">)</span>, cutoff <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># - this example uses a fairly coarse mesh so these examples run quickly</span></span></span>
+<span class="r-in"><span><span class="co"># - 'cutoff' is the minimum distance between mesh vertices in units of the</span></span></span>
+<span class="r-in"><span><span class="co">#   x and y coordinates</span></span></span>
+<span class="r-in"><span><span class="co"># - 'cutoff = 10' might make more sense in applied situations for this dataset</span></span></span>
+<span class="r-in"><span><span class="co"># - or build any mesh in 'fmesher' and pass it to the 'mesh' argument in make_mesh()`</span></span></span>
+<span class="r-in"><span><span class="co"># - the mesh is not needed if you will be turning off all</span></span></span>
+<span class="r-in"><span><span class="co">#   spatial/spatiotemporal random fields</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Quick mesh plot:</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">mesh</span><span class="op">)</span></span></span>
+<span class="r-plt img"><img src="sdmTMB-1.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Fit a Tweedie spatial random field GLMM with a smoother for depth:</span></span></span>
+<span class="r-in"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu">sdmTMB</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="va">density</span> <span class="op">~</span> <span class="fu">s</span><span class="op">(</span><span class="va">depth</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  data <span class="op">=</span> <span class="va">pcod_2011</span>, mesh <span class="op">=</span> <span class="va">mesh</span>,</span></span>
+<span class="r-in"><span>  family <span class="op">=</span> <span class="fu"><a href="families.html">tweedie</a></span><span class="op">(</span>link <span class="op">=</span> <span class="st">"log"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">fit</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Spatial model fit by ML ['sdmTMB']</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Formula: density ~ s(depth)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Mesh: mesh (isotropic covariance)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Data: pcod_2011</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Family: tweedie(link = 'log')</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             coef.est coef.se</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)     2.16    0.34</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> sdepth          1.94    3.13</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Smooth terms:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            Std. Dev.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> sds(depth)     13.07</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Dispersion parameter: 13.68</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Tweedie p: 1.58</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Matérn range: 16.84</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Spatial SD: 2.20</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ML criterion at convergence: 2937.789</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> See ?tidy.sdmTMB to extract these values as a data frame.</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Extract coefficients:</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy</a></span><span class="op">(</span><span class="va">fit</span>, conf.int <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 × 5</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   term        estimate std.error conf.low conf.high</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> (Intercept)     2.16     0.340     1.50      2.83</span>
+<span class="r-in"><span><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy</a></span><span class="op">(</span><span class="va">fit</span>, effects <span class="op">=</span> <span class="st">"ran_par"</span>, conf.int <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 4 × 5</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   term      estimate std.error conf.low conf.high</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> range        16.8    13.7       3.40      83.3 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> phi          13.7     0.663    12.4       15.0 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> sigma_O       2.20    1.23      0.735      6.59</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> tweedie_p     1.58    0.015<span style="text-decoration: underline;">3</span>    1.55       1.61</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Perform several 'sanity' checks:</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="sanity.html">sanity</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Non-linear minimizer suggests successful convergence</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Hessian matrix is positive definite</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> No extreme or very small eigenvalues detected</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> No gradients with respect to fixed effects are &gt;= 0.001</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> No fixed-effect standard errors are NA</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> No standard errors look unreasonably large</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> No sigma parameters are &lt; 0.01</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> No sigma parameters are &gt; 100</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Range parameter doesn't look unreasonably large</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Predict on the fitted data; see ?predict.sdmTMB</span></span></span>
+<span class="r-in"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Predict on new data:</span></span></span>
+<span class="r-in"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">fit</span>, newdata <span class="op">=</span> <span class="va">qcs_grid</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">p</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     X    Y    depth depth_scaled depth_scaled2       est est_non_rf      est_rf</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 456 5636 347.0834    1.5608122    2.43613479 -4.726638  -4.567385 -0.15925308</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 458 5636 223.3348    0.5697699    0.32463771  2.342470   2.368314 -0.02584421</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 460 5636 203.7408    0.3633693    0.13203724  3.087513   2.979948  0.10756466</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 462 5636 183.2987    0.1257046    0.01580166  3.878560   3.637586  0.24097353</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 464 5636 182.9998    0.1220368    0.01489297  4.020914   3.646532  0.37438240</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6 466 5636 186.3892    0.1632882    0.02666303  4.050895   3.543104  0.50779127</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       omega_s</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 -0.15925308</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 -0.02584421</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  0.10756466</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4  0.24097353</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5  0.37438240</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6  0.50779127</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="co"># Visualize the depth effect with ggeffects:</span></span></span>
+<span class="r-in"><span><span class="fu">ggeffects</span><span class="fu">::</span><span class="fu"><a href="https://strengejacke.github.io/ggeffects/reference/ggpredict.html" class="external-link">ggpredict</a></span><span class="op">(</span><span class="va">fit</span>,  <span class="st">"depth [all]"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-plt img"><img src="sdmTMB-2.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Visualize depth effect with visreg: (see ?visreg_delta)</span></span></span>
+<span class="r-in"><span><span class="fu">visreg</span><span class="fu">::</span><span class="fu"><a href="http://pbreheny.github.io/visreg/reference/visreg.html" class="external-link">visreg</a></span><span class="op">(</span><span class="va">fit</span>, xvar <span class="op">=</span> <span class="st">"depth"</span><span class="op">)</span> <span class="co"># link space; randomized quantile residuals</span></span></span>
+<span class="r-plt img"><img src="sdmTMB-3.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span><span class="fu">visreg</span><span class="fu">::</span><span class="fu"><a href="http://pbreheny.github.io/visreg/reference/visreg.html" class="external-link">visreg</a></span><span class="op">(</span><span class="va">fit</span>, xvar <span class="op">=</span> <span class="st">"depth"</span>, scale <span class="op">=</span> <span class="st">"response"</span><span class="op">)</span></span></span>
+<span class="r-plt img"><img src="sdmTMB-4.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span><span class="fu">visreg</span><span class="fu">::</span><span class="fu"><a href="http://pbreheny.github.io/visreg/reference/visreg.html" class="external-link">visreg</a></span><span class="op">(</span><span class="va">fit</span>, xvar <span class="op">=</span> <span class="st">"depth"</span>, scale <span class="op">=</span> <span class="st">"response"</span>, gg <span class="op">=</span> <span class="cn">TRUE</span>, rug <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-plt img"><img src="sdmTMB-5.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Add spatiotemporal random fields:</span></span></span>
+<span class="r-in"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu">sdmTMB</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="va">density</span> <span class="op">~</span> <span class="fl">0</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">year</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  time <span class="op">=</span> <span class="st">"year"</span>, <span class="co">#&lt;</span></span></span>
+<span class="r-in"><span>  data <span class="op">=</span> <span class="va">pcod_2011</span>, mesh <span class="op">=</span> <span class="va">mesh</span>,</span></span>
+<span class="r-in"><span>  family <span class="op">=</span> <span class="fu"><a href="families.html">tweedie</a></span><span class="op">(</span>link <span class="op">=</span> <span class="st">"log"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">fit</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Spatiotemporal model fit by ML ['sdmTMB']</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Formula: density ~ 0 + as.factor(year)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Mesh: mesh (isotropic covariance)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Time column: year</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Data: pcod_2011</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Family: tweedie(link = 'log')</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                     coef.est coef.se</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> as.factor(year)2011     2.76    0.36</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> as.factor(year)2013     3.10    0.35</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> as.factor(year)2015     3.21    0.35</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> as.factor(year)2017     2.47    0.36</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Dispersion parameter: 14.83</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Tweedie p: 1.57</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Matérn range: 13.31</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Spatial SD: 3.16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Spatiotemporal IID SD: 1.79</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ML criterion at convergence: 3007.552</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> See ?tidy.sdmTMB to extract these values as a data frame.</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Make the fields AR1:</span></span></span>
+<span class="r-in"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu">sdmTMB</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="va">density</span> <span class="op">~</span> <span class="fu">s</span><span class="op">(</span><span class="va">depth</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  time <span class="op">=</span> <span class="st">"year"</span>,</span></span>
+<span class="r-in"><span>  spatial <span class="op">=</span> <span class="st">"off"</span>,</span></span>
+<span class="r-in"><span>  spatiotemporal <span class="op">=</span> <span class="st">"ar1"</span>, <span class="co">#&lt;</span></span></span>
+<span class="r-in"><span>  data <span class="op">=</span> <span class="va">pcod_2011</span>, mesh <span class="op">=</span> <span class="va">mesh</span>,</span></span>
+<span class="r-in"><span>  family <span class="op">=</span> <span class="fu"><a href="families.html">tweedie</a></span><span class="op">(</span>link <span class="op">=</span> <span class="st">"log"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">fit</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Spatiotemporal model fit by ML ['sdmTMB']</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Formula: density ~ s(depth)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Mesh: mesh (isotropic covariance)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Time column: year</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Data: pcod_2011</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Family: tweedie(link = 'log')</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             coef.est coef.se</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)     1.84    0.33</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> sdepth          1.96    3.27</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Smooth terms:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            Std. Dev.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> sds(depth)      13.6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Dispersion parameter: 12.84</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Tweedie p: 1.55</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Spatiotemporal AR1 correlation (rho): 0.67</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Matérn range: 12.22</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Spatiotemporal marginal AR1 SD: 3.28</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ML criterion at convergence: 2914.393</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> See ?tidy.sdmTMB to extract these values as a data frame.</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Make the fields a random walk:</span></span></span>
+<span class="r-in"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu">sdmTMB</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="va">density</span> <span class="op">~</span> <span class="fu">s</span><span class="op">(</span><span class="va">depth</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  time <span class="op">=</span> <span class="st">"year"</span>,</span></span>
+<span class="r-in"><span>  spatial <span class="op">=</span> <span class="st">"off"</span>,</span></span>
+<span class="r-in"><span>  spatiotemporal <span class="op">=</span> <span class="st">"rw"</span>, <span class="co">#&lt;</span></span></span>
+<span class="r-in"><span>  data <span class="op">=</span> <span class="va">pcod_2011</span>, mesh <span class="op">=</span> <span class="va">mesh</span>,</span></span>
+<span class="r-in"><span>  family <span class="op">=</span> <span class="fu"><a href="families.html">tweedie</a></span><span class="op">(</span>link <span class="op">=</span> <span class="st">"log"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">fit</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Spatiotemporal model fit by ML ['sdmTMB']</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Formula: density ~ s(depth)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Mesh: mesh (isotropic covariance)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Time column: year</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Data: pcod_2011</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Family: tweedie(link = 'log')</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             coef.est coef.se</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)     1.95    0.34</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> sdepth          1.96    3.18</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Smooth terms:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            Std. Dev.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> sds(depth)     13.22</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Dispersion parameter: 12.84</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Tweedie p: 1.56</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Matérn range: 14.66</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Spatiotemporal RW SD: 2.17</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ML criterion at convergence: 2919.181</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> See ?tidy.sdmTMB to extract these values as a data frame.</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Depth smoothers by year:</span></span></span>
+<span class="r-in"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu">sdmTMB</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="va">density</span> <span class="op">~</span> <span class="fu">s</span><span class="op">(</span><span class="va">depth</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">year</span><span class="op">)</span><span class="op">)</span>, <span class="co">#&lt;</span></span></span>
+<span class="r-in"><span>  time <span class="op">=</span> <span class="st">"year"</span>,</span></span>
+<span class="r-in"><span>  spatial <span class="op">=</span> <span class="st">"off"</span>,</span></span>
+<span class="r-in"><span>  spatiotemporal <span class="op">=</span> <span class="st">"rw"</span>,</span></span>
+<span class="r-in"><span>  data <span class="op">=</span> <span class="va">pcod_2011</span>, mesh <span class="op">=</span> <span class="va">mesh</span>,</span></span>
+<span class="r-in"><span>  family <span class="op">=</span> <span class="fu"><a href="families.html">tweedie</a></span><span class="op">(</span>link <span class="op">=</span> <span class="st">"log"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">fit</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Spatiotemporal model fit by ML ['sdmTMB']</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Formula: density ~ s(depth, by = as.factor(year))</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Mesh: mesh (isotropic covariance)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Time column: year</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Data: pcod_2011</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Family: tweedie(link = 'log')</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                             coef.est coef.se</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)                     1.76    0.34</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> sdepth):as.factor(year)2011     0.07    4.02</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> sdepth):as.factor(year)2013     4.59    3.28</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> sdepth):as.factor(year)2015     5.97    6.01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> sdepth):as.factor(year)2017    -1.97    3.22</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Smooth terms:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                 Std. Dev.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> sds(depth):as.factor(year)2011)     16.62</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> sds(depth):as.factor(year)2013)     13.57</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> sds(depth):as.factor(year)2015)     28.24</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> sds(depth):as.factor(year)2017)     18.65</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Dispersion parameter: 12.70</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Tweedie p: 1.55</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Matérn range: 8.62</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Spatiotemporal RW SD: 3.14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ML criterion at convergence: 2924.193</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> See ?tidy.sdmTMB to extract these values as a data frame.</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># 2D depth-year smoother:</span></span></span>
+<span class="r-in"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu">sdmTMB</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="va">density</span> <span class="op">~</span> <span class="fu">s</span><span class="op">(</span><span class="va">depth</span>, <span class="va">year</span><span class="op">)</span>, <span class="co">#&lt;</span></span></span>
+<span class="r-in"><span>  spatial <span class="op">=</span> <span class="st">"off"</span>,</span></span>
+<span class="r-in"><span>  data <span class="op">=</span> <span class="va">pcod_2011</span>, mesh <span class="op">=</span> <span class="va">mesh</span>,</span></span>
+<span class="r-in"><span>  family <span class="op">=</span> <span class="fu"><a href="families.html">tweedie</a></span><span class="op">(</span>link <span class="op">=</span> <span class="st">"log"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">fit</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Model fit by ML ['sdmTMB']</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Formula: density ~ s(depth, year)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Mesh: mesh (isotropic covariance)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Data: pcod_2011</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Family: tweedie(link = 'log')</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              coef.est coef.se</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)      2.55    0.24</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> sdepthyear_1    -0.15    0.09</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> sdepthyear_2    -2.93    2.07</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Smooth terms:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                 Std. Dev.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> sds(depth,year)      6.08</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Dispersion parameter: 14.95</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Tweedie p: 1.60</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ML criterion at convergence: 2974.143</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> See ?tidy.sdmTMB to extract these values as a data frame.</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Turn off spatial random fields:</span></span></span>
+<span class="r-in"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu">sdmTMB</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="va">present</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/stats/poly.html" class="external-link">poly</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">depth</span><span class="op">)</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  spatial <span class="op">=</span> <span class="st">"off"</span>, <span class="co">#&lt;</span></span></span>
+<span class="r-in"><span>  data <span class="op">=</span> <span class="va">pcod_2011</span>, mesh <span class="op">=</span> <span class="va">mesh</span>,</span></span>
+<span class="r-in"><span>  family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">binomial</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">fit</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Model fit by ML ['sdmTMB']</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Formula: present ~ poly(log(depth))</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Mesh: mesh (isotropic covariance)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Data: pcod_2011</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Family: binomial(link = 'logit')</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                  coef.est coef.se</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)         -0.16    0.07</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> poly(log(depth))   -13.19    2.14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ML criterion at convergence: 648.334</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> See ?tidy.sdmTMB to extract these values as a data frame.</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Which, matches glm():</span></span></span>
+<span class="r-in"><span><span class="va">fit_glm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="va">present</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/stats/poly.html" class="external-link">poly</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">depth</span><span class="op">)</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  data <span class="op">=</span> <span class="va">pcod_2011</span>,</span></span>
+<span class="r-in"><span>  family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">binomial</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">fit_glm</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Call:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> glm(formula = present ~ poly(log(depth)), family = binomial(), </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     data = pcod_2011)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Coefficients:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                   Estimate Std. Error z value Pr(&gt;|z|)    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)       -0.16433    0.06583  -2.496   0.0126 *  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> poly(log(depth)) -13.18981    2.14179  -6.158 7.35e-10 ***</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ---</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Dispersion parameter for binomial family taken to be 1)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Null deviance: 1337.2  on 968  degrees of freedom</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Residual deviance: 1296.7  on 967  degrees of freedom</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> AIC: 1300.7</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Number of Fisher Scoring iterations: 4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/AIC.html" class="external-link">AIC</a></span><span class="op">(</span><span class="va">fit</span>, <span class="va">fit_glm</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         df      AIC</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> fit      2 1300.668</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> fit_glm  2 1300.668</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Delta/hurdle binomial-Gamma model:</span></span></span>
+<span class="r-in"><span><span class="va">fit_dg</span> <span class="op">&lt;-</span> <span class="fu">sdmTMB</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="va">density</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/stats/poly.html" class="external-link">poly</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">depth</span><span class="op">)</span>, <span class="fl">2</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  data <span class="op">=</span> <span class="va">pcod_2011</span>, mesh <span class="op">=</span> <span class="va">mesh</span>,</span></span>
+<span class="r-in"><span>  spatial <span class="op">=</span> <span class="st">"off"</span>,</span></span>
+<span class="r-in"><span>  family <span class="op">=</span> <span class="fu"><a href="families.html">delta_gamma</a></span><span class="op">(</span><span class="op">)</span> <span class="co">#&lt;</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">fit_dg</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Model fit by ML ['sdmTMB']</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Formula: density ~ poly(log(depth), 2)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Mesh: mesh (isotropic covariance)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Data: pcod_2011</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Family: delta_gamma(link1 = 'logit', link2 = 'log')</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Delta/hurdle model 1: -----------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Family: binomial(link = 'logit') </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                      coef.est coef.se</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)             -0.48    0.09</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> poly(log(depth), 2)1   -23.06    3.15</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> poly(log(depth), 2)2   -48.79    4.45</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Delta/hurdle model 2: -----------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Family: Gamma(link = 'log') </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                      coef.est coef.se</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)              4.24    0.08</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> poly(log(depth), 2)1    -5.49    3.50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> poly(log(depth), 2)2   -13.26    3.23</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Dispersion parameter: 0.64</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ML criterion at convergence: 2936.579</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> See ?tidy.sdmTMB to extract these values as a data frame.</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Delta model with different formulas and spatial structure:</span></span></span>
+<span class="r-in"><span><span class="va">fit_dg</span> <span class="op">&lt;-</span> <span class="fu">sdmTMB</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">density</span> <span class="op">~</span> <span class="va">depth_scaled</span>, <span class="va">density</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/stats/poly.html" class="external-link">poly</a></span><span class="op">(</span><span class="va">depth_scaled</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span>, <span class="co">#&lt;</span></span></span>
+<span class="r-in"><span>  data <span class="op">=</span> <span class="va">pcod_2011</span>, mesh <span class="op">=</span> <span class="va">mesh</span>,</span></span>
+<span class="r-in"><span>  spatial <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"off"</span>, <span class="st">"on"</span><span class="op">)</span>, <span class="co">#&lt;</span></span></span>
+<span class="r-in"><span>  family <span class="op">=</span> <span class="fu"><a href="families.html">delta_gamma</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">fit_dg</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Spatial model fit by ML ['sdmTMB']</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Formula: list(density ~ depth_scaled, density ~ poly(depth_scaled, 2))</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Mesh: mesh (isotropic covariance)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Data: pcod_2011</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Family: delta_gamma(link1 = 'logit', link2 = 'log')</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Delta/hurdle model 1: -----------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Family: binomial(link = 'logit') </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              coef.est coef.se</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)     -0.17    0.07</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> depth_scaled    -0.43    0.07</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Delta/hurdle model 2: -----------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Family: Gamma(link = 'log') </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                        coef.est coef.se</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)                4.08    0.14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> poly(depth_scaled, 2)1    -6.15    4.52</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> poly(depth_scaled, 2)2   -12.58    4.14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Dispersion parameter: 0.72</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Matérn range: 0.01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Spatial SD: 2148.89</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ML criterion at convergence: 3034.512</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> See ?tidy.sdmTMB to extract these values as a data frame.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> **Possible issues detected! Check output of sanity().**</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Delta/hurdle truncated NB2:</span></span></span>
+<span class="r-in"><span><span class="va">pcod_2011</span><span class="op">$</span><span class="va">count</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">pcod_2011</span><span class="op">$</span><span class="va">density</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">fit_nb2</span> <span class="op">&lt;-</span> <span class="fu">sdmTMB</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="va">count</span> <span class="op">~</span> <span class="fu">s</span><span class="op">(</span><span class="va">depth</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  data <span class="op">=</span> <span class="va">pcod_2011</span>, mesh <span class="op">=</span> <span class="va">mesh</span>,</span></span>
+<span class="r-in"><span>  spatial <span class="op">=</span> <span class="st">"off"</span>,</span></span>
+<span class="r-in"><span>  family <span class="op">=</span> <span class="fu"><a href="families.html">delta_truncated_nbinom2</a></span><span class="op">(</span><span class="op">)</span> <span class="co">#&lt;</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">fit_nb2</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Model fit by ML ['sdmTMB']</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Formula: count ~ s(depth)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Mesh: mesh (isotropic covariance)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Data: pcod_2011</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Family: delta_truncated_nbinom2(link1 = 'logit', link2 = 'log')</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Delta/hurdle model 1: -----------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Family: binomial(link = 'logit') </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             coef.est coef.se</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)    -0.69    0.21</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> sdepth          0.29    2.37</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Smooth terms:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            Std. Dev.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> sds(depth)       9.6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Delta/hurdle model 2: -----------------------------------</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Family: truncated_nbinom2(link = 'log') </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             coef.est coef.se</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)     4.18    0.22</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> sdepth         -0.37    1.77</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Smooth terms:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            Std. Dev.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> sds(depth)      6.73</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Dispersion parameter: 0.49</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ML criterion at convergence: 2915.733</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> See ?tidy.sdmTMB to extract these values as a data frame.</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Regular NB2:</span></span></span>
+<span class="r-in"><span><span class="va">fit_nb2</span> <span class="op">&lt;-</span> <span class="fu">sdmTMB</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="va">count</span> <span class="op">~</span> <span class="fu">s</span><span class="op">(</span><span class="va">depth</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  data <span class="op">=</span> <span class="va">pcod_2011</span>, mesh <span class="op">=</span> <span class="va">mesh</span>,</span></span>
+<span class="r-in"><span>  spatial <span class="op">=</span> <span class="st">"off"</span>,</span></span>
+<span class="r-in"><span>  family <span class="op">=</span> <span class="fu"><a href="families.html">nbinom2</a></span><span class="op">(</span><span class="op">)</span> <span class="co">#&lt;</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">fit_nb2</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Model fit by ML ['sdmTMB']</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Formula: count ~ s(depth)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Mesh: mesh (isotropic covariance)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Data: pcod_2011</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Family: nbinom2(link = 'log')</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             coef.est coef.se</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)     2.49    0.27</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> sdepth          3.61    3.96</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Smooth terms:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            Std. Dev.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> sds(depth)      16.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Dispersion parameter: 0.14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ML criterion at convergence: 3006.939</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> See ?tidy.sdmTMB to extract these values as a data frame.</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># IID random intercepts by year:</span></span></span>
+<span class="r-in"><span><span class="va">pcod_2011</span><span class="op">$</span><span class="va">fyear</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">pcod_2011</span><span class="op">$</span><span class="va">year</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu">sdmTMB</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="va">density</span> <span class="op">~</span> <span class="fu">s</span><span class="op">(</span><span class="va">depth</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">fyear</span><span class="op">)</span>, <span class="co">#&lt;</span></span></span>
+<span class="r-in"><span>  data <span class="op">=</span> <span class="va">pcod_2011</span>, mesh <span class="op">=</span> <span class="va">mesh</span>,</span></span>
+<span class="r-in"><span>  family <span class="op">=</span> <span class="fu"><a href="families.html">tweedie</a></span><span class="op">(</span>link <span class="op">=</span> <span class="st">"log"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">fit</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Spatial model fit by ML ['sdmTMB']</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Formula: density ~ s(depth) + (1 | fyear)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Mesh: mesh (isotropic covariance)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Data: pcod_2011</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Family: tweedie(link = 'log')</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             coef.est coef.se</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)     2.13    0.37</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> sdepth          1.82    2.99</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Smooth terms:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            Std. Dev.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> sds(depth)     12.51</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Random intercepts:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       Std. Dev.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> fyear       0.3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Dispersion parameter: 13.55</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Tweedie p: 1.58</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Matérn range: 16.66</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Spatial SD: 2.21</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ML criterion at convergence: 2933.138</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> See ?tidy.sdmTMB to extract these values as a data frame.</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Spatially varying coefficient of year:</span></span></span>
+<span class="r-in"><span><span class="va">pcod_2011</span><span class="op">$</span><span class="va">year_scaled</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale</a></span><span class="op">(</span><span class="va">pcod_2011</span><span class="op">$</span><span class="va">year</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu">sdmTMB</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="va">density</span> <span class="op">~</span> <span class="va">year_scaled</span>,</span></span>
+<span class="r-in"><span>  spatial_varying <span class="op">=</span> <span class="op">~</span> <span class="fl">0</span> <span class="op">+</span> <span class="va">year_scaled</span>, <span class="co">#&lt;</span></span></span>
+<span class="r-in"><span>  data <span class="op">=</span> <span class="va">pcod_2011</span>, mesh <span class="op">=</span> <span class="va">mesh</span>, family <span class="op">=</span> <span class="fu"><a href="families.html">tweedie</a></span><span class="op">(</span><span class="op">)</span>, time <span class="op">=</span> <span class="st">"year"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">fit</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Spatiotemporal model fit by ML ['sdmTMB']</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Formula: density ~ year_scaled</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Mesh: mesh (isotropic covariance)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Time column: year</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Data: pcod_2011</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Family: tweedie(link = 'log')</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             coef.est coef.se</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)     2.86    0.33</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> year_scaled    -0.06    0.15</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Dispersion parameter: 14.79</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Tweedie p: 1.56</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Matérn range: 20.56</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Spatial SD: 2.38</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Spatially varying coefficient SD (year_scaled): 0.81</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Spatiotemporal IID SD: 1.11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ML criterion at convergence: 3008.886</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> See ?tidy.sdmTMB to extract these values as a data frame.</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Time-varying effects of depth and depth squared:</span></span></span>
+<span class="r-in"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu">sdmTMB</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="va">density</span> <span class="op">~</span> <span class="fl">0</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">year</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  time_varying <span class="op">=</span> <span class="op">~</span> <span class="fl">0</span> <span class="op">+</span> <span class="va">depth_scaled</span> <span class="op">+</span> <span class="va">depth_scaled2</span>, <span class="co">#&lt;</span></span></span>
+<span class="r-in"><span>  data <span class="op">=</span> <span class="va">pcod_2011</span>, time <span class="op">=</span> <span class="st">"year"</span>, mesh <span class="op">=</span> <span class="va">mesh</span>,</span></span>
+<span class="r-in"><span>  family <span class="op">=</span> <span class="fu"><a href="families.html">tweedie</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Spatiotemporal model fit by ML ['sdmTMB']</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Formula: density ~ 0 + as.factor(year)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Mesh: mesh (isotropic covariance)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Time column: year</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Data: pcod_2011</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Family: tweedie(link = 'log')</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                     coef.est coef.se</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> as.factor(year)2011     3.73    0.30</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> as.factor(year)2013     3.64    0.28</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> as.factor(year)2015     4.00    0.29</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> as.factor(year)2017     3.31    0.32</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Time-varying parameters:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                    coef.est coef.se</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> depth_scaled-2011     -0.87    0.16</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> depth_scaled-2013     -0.81    0.13</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> depth_scaled-2015     -0.75    0.13</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> depth_scaled-2017     -1.11    0.23</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> depth_scaled2-2011    -1.92    0.29</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> depth_scaled2-2013    -0.92    0.14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> depth_scaled2-2015    -1.59    0.22</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> depth_scaled2-2017    -2.20    0.35</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Dispersion parameter: 12.80</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Tweedie p: 1.56</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Matérn range: 0.01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Spatial SD: 2574.11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Spatiotemporal IID SD: 2088.89</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ML criterion at convergence: 2911.371</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> See ?tidy.sdmTMB to extract these values as a data frame.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> **Possible issues detected! Check output of sanity().**</span>
+<span class="r-in"><span><span class="co"># Extract values:</span></span></span>
+<span class="r-in"><span><span class="va">est</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">as.list</a></span><span class="op">(</span><span class="va">fit</span><span class="op">$</span><span class="va">sd_report</span>, <span class="st">"Estimate"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">se</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">as.list</a></span><span class="op">(</span><span class="va">fit</span><span class="op">$</span><span class="va">sd_report</span>, <span class="st">"Std. Error"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">est</span><span class="op">$</span><span class="va">b_rw_t</span><span class="op">[</span>, , <span class="fl">1</span><span class="op">]</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            [,1]       [,2]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] -0.8738038 -1.9199722</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] -0.8115162 -0.9195934</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3,] -0.7514766 -1.5858307</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4,] -1.1064060 -2.1992575</span>
+<span class="r-in"><span><span class="va">se</span><span class="op">$</span><span class="va">b_rw_t</span><span class="op">[</span>, , <span class="fl">1</span><span class="op">]</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           [,1]      [,2]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 0.1619744 0.2944087</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [2,] 0.1287059 0.1386946</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [3,] 0.1346182 0.2197914</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [4,] 0.2305927 0.3514650</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Linear break-point effect of depth:</span></span></span>
+<span class="r-in"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu">sdmTMB</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="va">density</span> <span class="op">~</span> <span class="fu">breakpt</span><span class="op">(</span><span class="va">depth_scaled</span><span class="op">)</span>, <span class="co">#&lt;</span></span></span>
+<span class="r-in"><span>  data <span class="op">=</span> <span class="va">pcod_2011</span>,</span></span>
+<span class="r-in"><span>  mesh <span class="op">=</span> <span class="va">mesh</span>,</span></span>
+<span class="r-in"><span>  family <span class="op">=</span> <span class="fu"><a href="families.html">tweedie</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">fit</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Spatial model fit by ML ['sdmTMB']</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Formula: density ~ breakpt(depth_scaled)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Mesh: mesh (isotropic covariance)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Data: pcod_2011</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Family: tweedie(link = 'log')</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                      coef.est coef.se</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)              4.11    0.33</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> depth_scaled-slope       1.07    0.22</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> depth_scaled-breakpt    -1.30    0.25</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Dispersion parameter: 15.19</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Tweedie p: 1.58</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Matérn range: 23.57</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Spatial SD: 1.92</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ML criterion at convergence: 2997.241</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> See ?tidy.sdmTMB to extract these values as a data frame.</span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
+</code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
