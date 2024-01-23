@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../../index.html">sdmTMB</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.2.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.2.9001</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -87,7 +87,7 @@
                         <h4 data-toc-skip class="author">Julia Indivero,
 Philina English, Sean Anderson, Eric Ward, Lewis Barnett</h4>
             
-            <h4 data-toc-skip class="date">2024-01-18</h4>
+            <h4 data-toc-skip class="date">2024-01-23</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/pbs-assess/sdmTMB/blob/HEAD/vignettes/web_only/delta-models.Rmd" class="external-link"><code>vignettes/web_only/delta-models.Rmd</code></a></small>
       <div class="d-none name"><code>delta-models.Rmd</code></div>
@@ -128,15 +128,15 @@ fits a binomial presence-absence model (i.e.,
 <code>binomial(link = "logit")</code>) and then a model for the positive
 catches only with a lognormal observation distribution and a log link
 (i.e., <code>lognormal(link = "log")</code></p></li>
-</ol>
-<!-- Currently not supported: 3. A Poisson-link delta model: `family = delta_poisson_link_gamma()` --><!-- This fits a binomial presence-absence model (`family = binomial(link = "logit")`) and then a model for the positive catches only with a Poisson observation distribution and a log link  --><ol start="3" style="list-style-type: decimal">
-<li>Delta-truncated-negative-binomial:
+<li><p>Poisson-link delta-Gamma or delta-lognormal. See the <a href="https://pbs-assess.github.io/sdmTMB/articles/web_only/poisson-link.html">Poisson-link
+delta model vignette</a>.</p></li>
+<li><p>Delta-truncated-negative-binomial:
 <code>family = delta_truncated_nbinom1()</code> or
 <code>family = delta_truncated_nbinom2()</code>. This fits a binomial
 presence-absence model (<code>binomial(link = "logit")</code>) and a
 <code>truncated_nbinom1(link = "log")</code> or
 <code>truncated_nbinom1(link = "log")</code> distribution for positive
-catches.</li>
+catches.</p></li>
 </ol>
 <p>To summarize the built-in delta models and the separate
 components:</p>
@@ -180,7 +180,7 @@ components:</p>
 </tr>
 </tbody>
 </table>
-<!-- Add back to table when included again: Poisson-link delta |`family = delta_poisson_link_gamma()`|`family = binomial(link = "logit")`| `family = lognormal(link = "log")`  --><div class="section level2">
+<div class="section level2">
 <h2 id="example-with-built-in-delta-model">Example with built-in delta model<a class="anchor" aria-label="anchor" href="#example-with-built-in-delta-model"></a>
 </h2>
 <p>Here, we will show an example of fitting using the built-in delta
@@ -517,8 +517,8 @@ will just let the depth effect be more wiggly by not specifying
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Dispersion parameter: 0.94</span></span>
 <span><span class="co">#&gt; Matérn range: 0.01</span></span>
-<span><span class="co">#&gt; Spatial SD: 727.60</span></span>
-<span><span class="co">#&gt; Spatiotemporal IID SD: 2065.82</span></span>
+<span><span class="co">#&gt; Spatial SD: 727.55</span></span>
+<span><span class="co">#&gt; Spatiotemporal IID SD: 2065.67</span></span>
 <span><span class="co">#&gt; ML criterion at convergence: 5102.136</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; See ?tidy.sdmTMB to extract these values as a data frame.</span></span>
