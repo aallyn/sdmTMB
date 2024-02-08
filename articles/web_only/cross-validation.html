@@ -213,9 +213,9 @@ folds that are difficult to predict.</p>
 <span><span class="co">#&gt; Set a parallel `future::plan()` to use parallel processing.</span></span>
 <span></span>
 <span><span class="va">m_cv</span><span class="op">$</span><span class="va">fold_loglik</span> <span class="co"># fold log-likelihood</span></span>
-<span><span class="co">#&gt; [1] -1682.861 -1547.518 -1585.954 -1757.154</span></span>
+<span><span class="co">#&gt; [1] -1669.056 -1655.737 -1481.513 -1771.861</span></span>
 <span><span class="va">m_cv</span><span class="op">$</span><span class="va">sum_loglik</span> <span class="co"># total log-likelihood</span></span>
-<span><span class="co">#&gt; [1] -6573.487</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] -6578.167</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="single-splits">Single splits<a class="anchor" aria-label="anchor" href="#single-splits"></a>
@@ -242,7 +242,7 @@ is given ID = 1, and the training set is given ID = 2).</p>
 element of list list:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">m_cv</span><span class="op">$</span><span class="va">fold_loglik</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
-<span><span class="co">#&gt; [1] -669.5137</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] -630.85</span></span></code></pre></div>
 <!-- # Leave Future Out Cross-Validation -->
 <!-- We can do LFOCV using the relevant arguments. Our dataset has 9 time steps. Therefore, if we use the arguments `lfo_forecast=2` and `lfo_validations=3`, the cross validation will: -->
 <!-- - Fit data to time steps 1 to 5, predict and validate step 7. -->
@@ -284,9 +284,9 @@ the model.</p>
 <span></span>
 <span><span class="co"># Compare log-likelihoods -- higher is better!</span></span>
 <span><span class="va">m1</span><span class="op">$</span><span class="va">sum_loglik</span></span>
-<span><span class="co">#&gt; [1] -6749.822</span></span>
+<span><span class="co">#&gt; [1] -6728.265</span></span>
 <span><span class="va">m2</span><span class="op">$</span><span class="va">sum_loglik</span></span>
-<span><span class="co">#&gt; [1] -6623.677</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] -6618.712</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="model-ensembling">Model ensembling<a class="anchor" aria-label="anchor" href="#model-ensembling"></a>
