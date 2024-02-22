@@ -18,7 +18,7 @@ randomly but folds can be manually assigned via the fold_ids argument."><!-- mat
     
     <a class="navbar-brand me-2" href="../index.html">sdmTMB</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.2.9004</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.2.9005</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -186,8 +186,10 @@ exception of <code>weights</code>, which are used to define the folds.</p></dd>
 <p>A list:</p><ul><li><p><code>data</code>: Original data plus columns for fold ID, CV predicted value,
 and CV log likelihood.</p></li>
 <li><p><code>models</code>: A list of models; one per fold.</p></li>
-<li><p><code>fold_loglik</code>: Sum of left-out log likelihoods per fold.</p></li>
-<li><p><code>sum_loglik</code>: Sum of <code>fold_loglik</code> across all left-out data.</p></li>
+<li><p><code>fold_loglik</code>: Sum of left-out log likelihoods per fold. More positive
+values are better.</p></li>
+<li><p><code>sum_loglik</code>: Sum of <code>fold_loglik</code> across all left-out data. More positive
+values are better.</p></li>
 <li><p><code>pdHess</code>: Logical vector: Hessian was invertible each fold?</p></li>
 <li><p><code>converged</code>: Logical: all <code>pdHess</code> <code>TRUE</code>?</p></li>
 <li><p><code>max_gradients</code>: Max gradient per fold.</p></li>
