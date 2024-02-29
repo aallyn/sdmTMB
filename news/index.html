@@ -63,8 +63,11 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="development version" id="sdmtmb-development-version">sdmTMB (development version)<a class="anchor" aria-label="anchor" href="#sdmtmb-development-version"></a></h2>
-<ul><li><p>Fix a bug likely introduced in July 2023 that caused issues when <code>extra_time</code> was specified with some configurations of <code>offset</code>. This is an important bug and models fit with <code>extra_time</code> and offsets between that date and v0.4.2.9003 (February 21 2024) should be checked against a current version of sdmTMB. This likely affected v0.4.0 to v0.4.2 on CRAN.</p></li>
+<h2 class="pkg-version" data-toc-text="0.4.3" id="sdmtmb-043">sdmTMB 0.4.3<a class="anchor" aria-label="anchor" href="#sdmtmb-043"></a></h2><p class="text-muted">CRAN release: 2024-02-29</p>
+<ul><li>
+<p>Fix a bug likely introduced in July 2023 that caused issues when <code>extra_time</code> was specified. This is an important bug and models fit with <code>extra_time</code> between that date (if using the GitHub version) and v0.4.2.9004 (2024-02-24) should be checked against a current version of sdmTMB (v0.4.2.9005 or greater). On CRAN, this affected v0.4.0 (2023-10-20) to v0.4.2. Details:</p>
+<ul><li>The essence of the bug was that <code>extra_time</code> works by padding the data with a fake row of data for every extra time element (using the first row of data as the template). This is supposed to then be omitted from the likelihood so it has no impact on model fitting beyond spacing time-series processes appropriately and setting up internal structures for forecasting. Unfortunately, a bug was introduced that caused these fake data (1 per extra time element) to be included in the likelihood.</li>
+</ul></li>
 <li><p>Issue error if <code>time</code> column has NAs. <a href="https://github.com/pbs-assess/sdmTMB/issues/298" class="external-link">#298</a> <a href="https://github.com/pbs-assess/sdmTMB/issues/299" class="external-link">#299</a></p></li>
 <li><p>Fix bug in <code>get_cog(..., format = "wide")</code> where the time column was hardcoded to <code>"year"</code> by accident.</p></li>
 <li><p>Poisson-link delta models now use a <code>type</code> argument in <code><a href="../reference/families.html">delta_gamma()</a></code> and <code><a href="../reference/families.html">delta_lognormal()</a></code>. <code><a href="../reference/families.html">delta_poisson_link_gamma()</a></code> and <code><a href="../reference/families.html">delta_poisson_link_lognormal()</a></code> are deprecated. <a href="https://github.com/pbs-assess/sdmTMB/issues/290" class="external-link">#290</a></p></li>
