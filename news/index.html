@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">sdmTMB</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.3.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.3.9002</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -64,7 +64,10 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="sdmtmb-development-version">sdmTMB (development version)<a class="anchor" aria-label="anchor" href="#sdmtmb-development-version"></a></h2>
-</div>
+<ul><li><p>Detect possible issue with factor(time) in formula if same column name is used for <code>time</code> and <code>extra_time</code> is specified. <a href="https://github.com/pbs-assess/sdmTMB/issues/320" class="external-link">#320</a></p></li>
+<li><p>Improve <code><a href="../reference/sanity.html">sanity()</a></code> check output when there are NA fixed effect standard errors.</p></li>
+<li><p>Set <code>intern = FALSE</code> within index bias correction, which seems to be considerably faster when testing with most models.</p></li>
+</ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.4.3" id="sdmtmb-043">sdmTMB 0.4.3<a class="anchor" aria-label="anchor" href="#sdmtmb-043"></a></h2><p class="text-muted">CRAN release: 2024-02-29</p>
 <ul><li>
