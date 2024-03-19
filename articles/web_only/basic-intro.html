@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../../index.html">sdmTMB</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.3.9002</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.2.9003</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -402,8 +402,8 @@ model here so the vignette builds quickly.</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; SAMPLING FOR MODEL 'tmb_generic' NOW (CHAIN 1).</span></span>
 <span><span class="co">#&gt; Chain 1: </span></span>
-<span><span class="co">#&gt; Chain 1: Gradient evaluation took 0.010037 seconds</span></span>
-<span><span class="co">#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 100.37 seconds.</span></span>
+<span><span class="co">#&gt; Chain 1: Gradient evaluation took 0.010206 seconds</span></span>
+<span><span class="co">#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 102.06 seconds.</span></span>
 <span><span class="co">#&gt; Chain 1: Adjust your expectations accordingly!</span></span>
 <span><span class="co">#&gt; Chain 1: </span></span>
 <span><span class="co">#&gt; Chain 1: </span></span>
@@ -428,9 +428,9 @@ model here so the vignette builds quickly.</p>
 <span><span class="co">#&gt; Chain 1: Iteration: 100 / 101 [ 99%]  (Warmup)</span></span>
 <span><span class="co">#&gt; Chain 1: Iteration: 101 / 101 [100%]  (Sampling)</span></span>
 <span><span class="co">#&gt; Chain 1: </span></span>
-<span><span class="co">#&gt; Chain 1:  Elapsed Time: 27.086 seconds (Warm-up)</span></span>
-<span><span class="co">#&gt; Chain 1:                0.198 seconds (Sampling)</span></span>
-<span><span class="co">#&gt; Chain 1:                27.284 seconds (Total)</span></span>
+<span><span class="co">#&gt; Chain 1:  Elapsed Time: 26.666 seconds (Warm-up)</span></span>
+<span><span class="co">#&gt; Chain 1:                0.203 seconds (Sampling)</span></span>
+<span><span class="co">#&gt; Chain 1:                26.869 seconds (Total)</span></span>
 <span><span class="co">#&gt; Chain 1:</span></span>
 <span><span class="va">r</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/residuals.html" class="external-link">residuals</a></span><span class="op">(</span><span class="va">m3</span>, <span class="st">"mle-mcmc"</span>, mcmc_samples <span class="op">=</span> <span class="va">samps</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/qqnorm.html" class="external-link">qqnorm</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span></span>
@@ -653,6 +653,26 @@ progress.</p>
 <span><span class="co">#&gt; Warning in sqrt(diag(object$cov.fixed)): NaNs produced</span></span>
 <span></span>
 <span><span class="co">#&gt; Warning in sqrt(diag(object$cov.fixed)): NaNs produced</span></span>
+<span></span>
+<span><span class="co">#&gt; Warning in sqrt(diag(object$cov.fixed)): NaNs produced</span></span>
+<span></span>
+<span><span class="co">#&gt; Warning in sqrt(diag(object$cov.fixed)): NaNs produced</span></span>
+<span></span>
+<span><span class="co">#&gt; Warning in sqrt(diag(object$cov.fixed)): NaNs produced</span></span>
+<span></span>
+<span><span class="co">#&gt; Warning in sqrt(diag(object$cov.fixed)): NaNs produced</span></span>
+<span></span>
+<span><span class="co">#&gt; Warning in sqrt(diag(object$cov.fixed)): NaNs produced</span></span>
+<span></span>
+<span><span class="co">#&gt; Warning in sqrt(diag(object$cov.fixed)): NaNs produced</span></span>
+<span></span>
+<span><span class="co">#&gt; Warning in sqrt(diag(object$cov.fixed)): NaNs produced</span></span>
+<span></span>
+<span><span class="co">#&gt; Warning in sqrt(diag(object$cov.fixed)): NaNs produced</span></span>
+<span></span>
+<span><span class="co">#&gt; Warning in sqrt(diag(object$cov.fixed)): NaNs produced</span></span>
+<span></span>
+<span><span class="co">#&gt; Warning in sqrt(diag(object$cov.fixed)): NaNs produced</span></span>
 <span><span class="co">#&gt;  </span></span>
 <span><span class="co">#&gt;                     coef.est coef.se</span></span>
 <span><span class="co">#&gt; as.factor(year)2003     3.36    0.30</span></span>
@@ -691,13 +711,13 @@ progress.</p>
 <span><span class="co">#&gt; Matérn range: 13.58</span></span>
 <span><span class="co">#&gt; Spatial SD: 1.63</span></span>
 <span><span class="co">#&gt; Spatiotemporal IID SD: 1.66</span></span>
-<span><span class="co">#&gt; ML criterion at convergence: 6251.146</span></span>
+<span><span class="co">#&gt; ML criterion at convergence: 6251.148</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; See ?tidy.sdmTMB to extract these values as a data frame.</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; **Possible issues detected! Check output of sanity().**</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/AIC.html" class="external-link">AIC</a></span><span class="op">(</span><span class="va">m4</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 12534.29</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 12534.3</span></span></code></pre></div>
 <p>To plot these, we make a data frame that contains all combinations of
 the time-varying covariate and time. This is easily created using
 <code><a href="https://rdrr.io/r/base/expand.grid.html" class="external-link">expand.grid()</a></code> or <code><a href="https://tidyr.tidyverse.org/reference/expand_grid.html" class="external-link">tidyr::expand_grid()</a></code>.</p>

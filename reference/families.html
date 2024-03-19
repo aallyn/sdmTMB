@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">sdmTMB</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.3.9002</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.2.9003</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -73,6 +73,8 @@
 <span></span>
 <span><span class="fu">lognormal</span><span class="op">(</span>link <span class="op">=</span> <span class="st">"log"</span><span class="op">)</span></span>
 <span></span>
+<span><span class="fu">gengamma</span><span class="op">(</span>link <span class="op">=</span> <span class="st">"log"</span><span class="op">)</span></span>
+<span></span>
 <span><span class="fu">gamma_mix</span><span class="op">(</span>link <span class="op">=</span> <span class="st">"log"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">lognormal_mix</span><span class="op">(</span>link <span class="op">=</span> <span class="st">"log"</span><span class="op">)</span></span>
@@ -100,6 +102,12 @@
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">delta_gamma_mix</span><span class="op">(</span>link1 <span class="op">=</span> <span class="st">"logit"</span>, link2 <span class="op">=</span> <span class="st">"log"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">delta_gengamma</span><span class="op">(</span></span>
+<span>  link1 <span class="op">=</span> <span class="st">"logit"</span>,</span>
+<span>  link2 <span class="op">=</span> <span class="st">"log"</span>,</span>
+<span>  type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"standard"</span>, <span class="st">"poisson-link"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">delta_lognormal</span><span class="op">(</span></span>
 <span>  link1 <span class="op">=</span> <span class="st">"logit"</span>,</span>
@@ -156,6 +164,10 @@ elements <code>delta</code> (logical) and <code>type</code> (standard vs. Poisso
     <p><code>delta_poisson_link_gamma()</code> and <code>delta_poisson_link_lognormal()</code> have been
 deprecated in favour of <code>delta_gamma(type = "poisson-link")</code> and
 <code>delta_lognormal(type = "poisson-link")</code>.</p>
+<p>The <code>gengamma()</code> family was implemented by J.T. Thorson and uses the Prentice
+(1974) parameterization such that the lognormal occurs as the internal
+parameter <code>gengamma_Q</code> (reported in <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> as "Generalized gamma lambda")
+approaches 0.</p>
 <p>The families ending in <code>_mix()</code> are 2-component mixtures where each
 distribution has its own mean but a shared scale parameter.
 (Thorson et al. 2011). See the model-description vignette for details.
@@ -171,7 +183,13 @@ linearly with the mean (Hilbe 2011).</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
-    <p><em>Families ending in <code>_mix()</code></em>:</p>
+    <p><em>Generalized gamma family</em>:</p>
+<p>Prentice, R.L. 1974. A log gamma model and its maximum likelihood estimation.
+Biometrika 61(3): 539–544. <a href="https://doi.org/10.1093/biomet/61.3.539" class="external-link">doi:10.1093/biomet/61.3.539</a></p>
+<p>Stacy, E.W. 1962. A Generalization of the Gamma Distribution. The Annals of
+Mathematical Statistics 33(3): 1187–1192. Institute of Mathematical
+Statistics.</p>
+<p><em>Families ending in <code>_mix()</code></em>:</p>
 <p>Thorson, J.T., Stewart, I.J., and Punt, A.E. 2011. Accounting for fish shoals
 in single- and multi-species survey data using mixture distribution models.
 Can. J. Fish. Aquat. Sci. 68(9): 1681–1693. <a href="https://doi.org/10.1139/f2011-086" class="external-link">doi:10.1139/f2011-086</a>
@@ -195,6 +213,11 @@ Journal of Fisheries and Aquatic Sciences, 75(9), 1369-1382.
 <span class="r-in"><span><span class="fu">lognormal</span><span class="op">(</span>link <span class="op">=</span> <span class="st">"log"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Family: lognormal </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Link function: log </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span><span class="fu">gengamma</span><span class="op">(</span>link <span class="op">=</span> <span class="st">"log"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Family: gengamma </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Link function: log </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="fu">gamma_mix</span><span class="op">(</span>link <span class="op">=</span> <span class="st">"log"</span><span class="op">)</span></span></span>
@@ -255,6 +278,11 @@ Journal of Fisheries and Aquatic Sciences, 75(9), 1369-1382.
 <span class="r-in"><span><span class="fu">delta_gamma_mix</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Family: binomial gamma_mix </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Link function: logit log </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span><span class="fu">delta_gengamma</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Family: binomial gengamma </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Link function: logit log </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span><span class="fu">delta_lognormal</span><span class="op">(</span><span class="op">)</span></span></span>
