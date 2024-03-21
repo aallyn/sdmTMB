@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">sdmTMB</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.2.9004</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.3.9004</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -64,7 +64,9 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="sdmtmb-development-version">sdmTMB (development version)<a class="anchor" aria-label="anchor" href="#sdmtmb-development-version"></a></h2>
-<ul><li><p>Add experimental residuals option “mle-mvn” where a single approximate posterior sample of the random effects is drawn and these are combined with the MLE fixed effects to produce residuals. This may become the default option.</p></li>
+<ul><li><p>Fix bug in <code><a href="../reference/sanity.html">sanity()</a></code> where gradient checks were missing <code><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs()</a></code> such that large negative gradients weren’t getting caught. <a href="https://github.com/pbs-assess/sdmTMB/issues/324" class="external-link">#324</a></p></li>
+<li><p>Return <code>offset</code> vector in fitted object as an element. Ensure any extra time rows of data in the <code>data</code> element of the fitted object do not include the extra time slices.</p></li>
+<li><p>Add experimental residuals option “mle-mvn” where a single approximate posterior sample of the random effects is drawn and these are combined with the MLE fixed effects to produce residuals. This may become the default option.</p></li>
 <li><p>Add the generalized gamma distribution (thanks to J.T. Thorson with additional work by J.C. Dunic.) See <code><a href="../reference/families.html">gengamma()</a></code>. This distribution is still in a testing phase and is not recommended for applied use yet. <a href="https://github.com/pbs-assess/sdmTMB/issues/286" class="external-link">#286</a></p></li>
 <li><p>Detect possible issue with factor(time) in formula if same column name is used for <code>time</code> and <code>extra_time</code> is specified. <a href="https://github.com/pbs-assess/sdmTMB/issues/320" class="external-link">#320</a></p></li>
 <li><p>Improve <code><a href="../reference/sanity.html">sanity()</a></code> check output when there are NA fixed effect standard errors.</p></li>
