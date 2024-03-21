@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../../index.html">sdmTMB</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.2.9003</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.2.9004</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -85,7 +85,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Cross-validation for model evaluation and comparison</h1>
             
-            <h4 data-toc-skip class="date">2024-03-19</h4>
+            <h4 data-toc-skip class="date">2024-03-21</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/pbs-assess/sdmTMB/blob/HEAD/vignettes/web_only/cross-validation.Rmd" class="external-link"><code>vignettes/web_only/cross-validation.Rmd</code></a></small>
       <div class="d-none name"><code>cross-validation.Rmd</code></div>
@@ -213,9 +213,9 @@ folds that are difficult to predict.</p>
 <span><span class="co">#&gt; Set a parallel `future::plan()` to use parallel processing.</span></span>
 <span></span>
 <span><span class="va">m_cv</span><span class="op">$</span><span class="va">fold_loglik</span> <span class="co"># fold log-likelihood</span></span>
-<span><span class="co">#&gt; [1] -1706.432 -1752.370 -1605.601 -1532.687</span></span>
+<span><span class="co">#&gt; [1] -1622.951 -1585.253 -1919.233 -1496.710</span></span>
 <span><span class="va">m_cv</span><span class="op">$</span><span class="va">sum_loglik</span> <span class="co"># total log-likelihood</span></span>
-<span><span class="co">#&gt; [1] -6597.09</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] -6624.147</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="single-splits">Single splits<a class="anchor" aria-label="anchor" href="#single-splits"></a>
@@ -242,7 +242,7 @@ is given ID = 1, and the training set is given ID = 2).</p>
 element of list list:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">m_cv</span><span class="op">$</span><span class="va">fold_loglik</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
-<span><span class="co">#&gt; [1] -557.2195</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] -592.1287</span></span></code></pre></div>
 <!-- # Leave Future Out Cross-Validation -->
 <!-- We can do LFOCV using the relevant arguments. Our dataset has 9 time steps. Therefore, if we use the arguments `lfo_forecast=2` and `lfo_validations=3`, the cross validation will: -->
 <!-- - Fit data to time steps 1 to 5, predict and validate step 7. -->
@@ -284,9 +284,9 @@ the model.</p>
 <span></span>
 <span><span class="co"># Compare log-likelihoods -- higher is better!</span></span>
 <span><span class="va">m1</span><span class="op">$</span><span class="va">sum_loglik</span></span>
-<span><span class="co">#&gt; [1] -6794.99</span></span>
+<span><span class="co">#&gt; [1] -6732.795</span></span>
 <span><span class="va">m2</span><span class="op">$</span><span class="va">sum_loglik</span></span>
-<span><span class="co">#&gt; [1] -6615.061</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] -6559.653</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="model-ensembling">Model ensembling<a class="anchor" aria-label="anchor" href="#model-ensembling"></a>
