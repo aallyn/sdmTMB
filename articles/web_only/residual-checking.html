@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../../index.html">sdmTMB</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.3.9005</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.3.9006</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -232,8 +232,8 @@ take a single draw for speed:</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; SAMPLING FOR MODEL 'tmb_generic' NOW (CHAIN 1).</span></span>
 <span><span class="co">#&gt; Chain 1: </span></span>
-<span><span class="co">#&gt; Chain 1: Gradient evaluation took 0.000856 seconds</span></span>
-<span><span class="co">#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 8.56 seconds.</span></span>
+<span><span class="co">#&gt; Chain 1: Gradient evaluation took 0.000878 seconds</span></span>
+<span><span class="co">#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 8.78 seconds.</span></span>
 <span><span class="co">#&gt; Chain 1: Adjust your expectations accordingly!</span></span>
 <span><span class="co">#&gt; Chain 1: </span></span>
 <span><span class="co">#&gt; Chain 1: </span></span>
@@ -250,15 +250,11 @@ take a single draw for speed:</p>
 <span><span class="co">#&gt; Chain 1: Iteration: 200 / 201 [ 99%]  (Warmup)</span></span>
 <span><span class="co">#&gt; Chain 1: Iteration: 201 / 201 [100%]  (Sampling)</span></span>
 <span><span class="co">#&gt; Chain 1: </span></span>
-<span><span class="co">#&gt; Chain 1:  Elapsed Time: 2.313 seconds (Warm-up)</span></span>
+<span><span class="co">#&gt; Chain 1:  Elapsed Time: 2.324 seconds (Warm-up)</span></span>
 <span><span class="co">#&gt; Chain 1:                0.01 seconds (Sampling)</span></span>
-<span><span class="co">#&gt; Chain 1:                2.323 seconds (Total)</span></span>
+<span><span class="co">#&gt; Chain 1:                2.334 seconds (Total)</span></span>
 <span><span class="co">#&gt; Chain 1:</span></span>
 <span><span class="va">mcmc_res</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/residuals.html" class="external-link">residuals</a></span><span class="op">(</span><span class="va">fit_nb2</span>, type <span class="op">=</span> <span class="st">"mle-mcmc"</span>, mcmc_samples <span class="op">=</span> <span class="va">samps</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Note what used to be the default sdmTMB residuals (before version 0.4.3.9005)</span></span>
-<span><span class="co">#&gt; are now `type = 'mle-eb'`. We recommend using the current default `'mle-mvn'`,</span></span>
-<span><span class="co">#&gt; which takes one sample from the approximate posterior of the random effects or</span></span>
-<span><span class="co">#&gt; `dharma_residuals()` using a similar approach.</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/qqnorm.html" class="external-link">qqnorm</a></span><span class="op">(</span><span class="va">mcmc_res</span><span class="op">)</span>;<span class="fu"><a href="https://rdrr.io/r/stats/qqnorm.html" class="external-link">qqline</a></span><span class="op">(</span><span class="va">mcmc_res</span><span class="op">)</span></span></code></pre></div>
 <p><img src="residual-checking_files/figure-html/unnamed-chunk-4-1.png" width="672"></p>
 <p>We can see these look a bit better. Remember, this is the ‘correct’
@@ -266,9 +262,9 @@ model.</p>
 <p>We can take simulations from the fitted model to use with
 simulation-based residuals:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">s_pois</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span><span class="va">fit_pois</span>, nsim <span class="op">=</span> <span class="fl">500</span><span class="op">)</span></span>
-<span><span class="va">s_nb2_miss</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span><span class="va">fit_nb2_miss</span>, nsim <span class="op">=</span> <span class="fl">500</span><span class="op">)</span></span>
-<span><span class="va">s_nb2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span><span class="va">fit_nb2</span>, nsim <span class="op">=</span> <span class="fl">500</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">s_pois</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span><span class="va">fit_pois</span>, nsim <span class="op">=</span> <span class="fl">500</span>, type <span class="op">=</span> <span class="st">"mle-mvn"</span><span class="op">)</span></span>
+<span><span class="va">s_nb2_miss</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span><span class="va">fit_nb2_miss</span>, nsim <span class="op">=</span> <span class="fl">500</span>, type <span class="op">=</span> <span class="st">"mle-mvn"</span><span class="op">)</span></span>
+<span><span class="va">s_nb2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span><span class="va">fit_nb2</span>, nsim <span class="op">=</span> <span class="fl">500</span>, type <span class="op">=</span> <span class="st">"mle-mvn"</span><span class="op">)</span></span></code></pre></div>
 <p>These return a matrix where each row represents a row of data and
 each column is a simulation draw:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
@@ -280,15 +276,15 @@ zeros:</p>
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">observed</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">observed</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 0.634</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">s_pois</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">s_pois</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 0.3412</span></span>
+<span><span class="co">#&gt; [1] 0.352376</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">s_nb2</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">s_nb2</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 0.63802</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 0.644674</span></span></code></pre></div>
 <p>There are obviously too few zeros in the data simulated from the
 Poisson model.</p>
 <p>Plot DHARMa residuals:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span><span class="va">fit_pois</span>, nsim <span class="op">=</span> <span class="fl">300</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">sdmTMBextra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/sdmTMBextra/man/dharma_residuals.html" class="external-link">dharma_residuals</a></span><span class="op">(</span><span class="va">fit_pois</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span><span class="va">fit_pois</span>, nsim <span class="op">=</span> <span class="fl">300</span>, type <span class="op">=</span> <span class="st">"mle-mvn"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="../../reference/dharma_residuals.html">dharma_residuals</a></span><span class="op">(</span><span class="va">fit_pois</span><span class="op">)</span></span></code></pre></div>
 <p><img src="residual-checking_files/figure-html/unnamed-chunk-8-1.png" width="672"></p>
 <p>We did that with the sdmTMBextra package <a href="https://github.com/pbs-assess/sdmTMBextra" class="external-link uri">https://github.com/pbs-assess/sdmTMBextra</a>.</p>
 <p>We could also do that manually, which lets us use other DHARMa
@@ -312,7 +308,7 @@ tools:</p>
 <span><span class="co">#&gt;  Asymptotic one-sample Kolmogorov-Smirnov test</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; data:  simulationOutput$scaledResiduals</span></span>
-<span><span class="co">#&gt; D = 0.24838, p-value &lt; 2.2e-16</span></span>
+<span><span class="co">#&gt; D = 0.23222, p-value &lt; 2.2e-16</span></span>
 <span><span class="co">#&gt; alternative hypothesis: two-sided</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; </span></span>
@@ -322,7 +318,7 @@ tools:</p>
 <span><span class="co">#&gt;  simulated</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; data:  simulationOutput</span></span>
-<span><span class="co">#&gt; dispersion = 3.8517, p-value &lt; 2.2e-16</span></span>
+<span><span class="co">#&gt; dispersion = 3.9022, p-value &lt; 2.2e-16</span></span>
 <span><span class="co">#&gt; alternative hypothesis: two.sided</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; </span></span>
@@ -332,20 +328,20 @@ tools:</p>
 <span><span class="co">#&gt;  expectations</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; data:  simulationOutput</span></span>
-<span><span class="co">#&gt; outliers at both margin(s) = 126, observations = 1000, p-value &lt;</span></span>
+<span><span class="co">#&gt; outliers at both margin(s) = 127, observations = 1000, p-value &lt;</span></span>
 <span><span class="co">#&gt; 2.2e-16</span></span>
 <span><span class="co">#&gt; alternative hypothesis: true probability of success is not equal to 0.003992016</span></span>
 <span><span class="co">#&gt; 95 percent confidence interval:</span></span>
-<span><span class="co">#&gt;  0.1060568 0.1481737</span></span>
+<span><span class="co">#&gt;  0.1069843 0.1492400</span></span>
 <span><span class="co">#&gt; sample estimates:</span></span>
 <span><span class="co">#&gt; frequency of outliers (expected: 0.00399201596806387 ) </span></span>
-<span><span class="co">#&gt;                                                  0.126</span></span>
+<span><span class="co">#&gt;                                                  0.127</span></span>
 <span><span class="co">#&gt; $uniformity</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Asymptotic one-sample Kolmogorov-Smirnov test</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; data:  simulationOutput$scaledResiduals</span></span>
-<span><span class="co">#&gt; D = 0.24838, p-value &lt; 2.2e-16</span></span>
+<span><span class="co">#&gt; D = 0.23222, p-value &lt; 2.2e-16</span></span>
 <span><span class="co">#&gt; alternative hypothesis: two-sided</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; </span></span>
@@ -355,7 +351,7 @@ tools:</p>
 <span><span class="co">#&gt;  simulated</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; data:  simulationOutput</span></span>
-<span><span class="co">#&gt; dispersion = 3.8517, p-value &lt; 2.2e-16</span></span>
+<span><span class="co">#&gt; dispersion = 3.9022, p-value &lt; 2.2e-16</span></span>
 <span><span class="co">#&gt; alternative hypothesis: two.sided</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; </span></span>
@@ -365,22 +361,22 @@ tools:</p>
 <span><span class="co">#&gt;  expectations</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; data:  simulationOutput</span></span>
-<span><span class="co">#&gt; outliers at both margin(s) = 126, observations = 1000, p-value &lt;</span></span>
+<span><span class="co">#&gt; outliers at both margin(s) = 127, observations = 1000, p-value &lt;</span></span>
 <span><span class="co">#&gt; 2.2e-16</span></span>
 <span><span class="co">#&gt; alternative hypothesis: true probability of success is not equal to 0.003992016</span></span>
 <span><span class="co">#&gt; 95 percent confidence interval:</span></span>
-<span><span class="co">#&gt;  0.1060568 0.1481737</span></span>
+<span><span class="co">#&gt;  0.1069843 0.1492400</span></span>
 <span><span class="co">#&gt; sample estimates:</span></span>
 <span><span class="co">#&gt; frequency of outliers (expected: 0.00399201596806387 ) </span></span>
-<span><span class="co">#&gt;                                                  0.126</span></span>
+<span><span class="co">#&gt;                                                  0.127</span></span>
 <span><span class="fu">DHARMa</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/DHARMa/man/testSpatialAutocorrelation.html" class="external-link">testSpatialAutocorrelation</a></span><span class="op">(</span><span class="va">r_pois</span>, x <span class="op">=</span> <span class="va">dat</span><span class="op">$</span><span class="va">X</span>, y <span class="op">=</span> <span class="va">dat</span><span class="op">$</span><span class="va">Y</span><span class="op">)</span></span></code></pre>
 <p><img src="residual-checking_files/figure-html/unnamed-chunk-9-3.png" width="672"></p>
 <pre><code><span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  DHARMa Moran's I test for distance-based autocorrelation</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; data:  r_pois</span></span>
-<span><span class="co">#&gt; observed = -0.0001603, expected = -0.0010010, sd = 0.0026261, p-value =</span></span>
-<span><span class="co">#&gt; 0.7489</span></span>
+<span><span class="co">#&gt; observed = 0.0020776, expected = -0.0010010, sd = 0.0026262, p-value =</span></span>
+<span><span class="co">#&gt; 0.2411</span></span>
 <span><span class="co">#&gt; alternative hypothesis: Distance-based autocorrelation</span></span>
 <span><span class="fu">DHARMa</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/DHARMa/man/testZeroInflation.html" class="external-link">testZeroInflation</a></span><span class="op">(</span><span class="va">r_pois</span><span class="op">)</span></span></code></pre>
 <p><img src="residual-checking_files/figure-html/unnamed-chunk-9-4.png" width="672"></p>
@@ -389,7 +385,7 @@ tools:</p>
 <span><span class="co">#&gt;  simulation under H0 = fitted model</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; data:  simulationOutput</span></span>
-<span><span class="co">#&gt; ratioObsSim = 1.8581, p-value &lt; 2.2e-16</span></span>
+<span><span class="co">#&gt; ratioObsSim = 1.7992, p-value &lt; 2.2e-16</span></span>
 <span><span class="co">#&gt; alternative hypothesis: two.sided</span></span></code></pre>
 <p>In the QQ residual plots we clearly see evidence of over dispersion
 compared to the Poisson. Note the values clumping near 1.0 on the
@@ -398,8 +394,8 @@ indicative of too many zeros and especially too many large values
 compared to the assumed Poisson distribution.</p>
 <p>Lets try with the correct model:</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span><span class="va">fit_nb2</span>, nsim <span class="op">=</span> <span class="fl">300</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu">sdmTMBextra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/sdmTMBextra/man/dharma_residuals.html" class="external-link">dharma_residuals</a></span><span class="op">(</span><span class="va">fit_nb2</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span><span class="va">fit_nb2</span>, nsim <span class="op">=</span> <span class="fl">300</span>, type <span class="op">=</span> <span class="st">"mle-mvn"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="../../reference/dharma_residuals.html">dharma_residuals</a></span><span class="op">(</span><span class="va">fit_nb2</span><span class="op">)</span></span></code></pre></div>
 <p><img src="residual-checking_files/figure-html/unnamed-chunk-10-1.png" width="672"></p>
 <p>Everything looks fine. But, again, the MCMC-based residuals above are
 likely the best approach.</p>
@@ -439,11 +435,6 @@ missed including it in the model.</p>
 <span><span class="co">#&gt;              df      AIC</span></span>
 <span><span class="co">#&gt; fit_nb2_miss  4 3153.407</span></span>
 <span><span class="co">#&gt; fit_nb2       5 3095.560</span></span></code></pre></div>
-<p>Or we could simulate with new random fields based on the estimated
-parameters governing the random fields (range and SD):</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># simulate with new random fields:</span></span>
-<span><span class="va">s3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span><span class="va">fit_nb2</span>, nsim <span class="op">=</span> <span class="fl">1</span>, re_form <span class="op">=</span> <span class="op">~</span> <span class="fl">0</span><span class="op">)</span></span></code></pre></div>
 <p>For help interpreting the DHARMa residual plots, see
 <code><a href="https://cran.rstudio.com/web/packages/DHARMa/vignettes/DHARMa.html" class="external-link">vignette("DHARMa", package="DHARMa")</a></code>.</p>
 <div class="section level2">
