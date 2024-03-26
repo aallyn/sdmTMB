@@ -18,7 +18,7 @@ randomly but folds can be manually assigned via the fold_ids argument."><!-- mat
     
     <a class="navbar-brand me-2" href="../index.html">sdmTMB</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.3.9004</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.3.9005</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -232,9 +232,9 @@ with, but not ELPD. For maximum likelihood, <a href="https://github.com/pbs-asse
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Set a parallel `future::plan()` to use parallel processing.</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">m_cv</span><span class="op">$</span><span class="va">fold_loglik</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -3376.972 -3280.074</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -3351.292 -3298.167</span>
 <span class="r-in"><span><span class="va">m_cv</span><span class="op">$</span><span class="va">sum_loglik</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -6657.046</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] -6649.459</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">m_cv</span><span class="op">$</span><span class="va">data</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 15</span></span>
@@ -254,18 +254,18 @@ with, but not ELPD. For maximum likelihood, <a href="https://github.com/pbs-asse
 <span class="r-out co"><span class="r-pr">#&gt;</span> Family: tweedie(link = 'log')</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>               coef.est coef.se</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> depth_scaled     -1.89    0.21</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> depth_scaled2    -1.64    0.13</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> depth_scaled     -2.07    0.23</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> depth_scaled2    -1.57    0.14</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Dispersion parameter: 13.03</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Tweedie p: 1.61</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Matérn range: 124.20</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Spatial SD: 2.81</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ML criterion at convergence: 3247.563</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Dispersion parameter: 14.61</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Tweedie p: 1.64</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Matérn range: 100.81</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Spatial SD: 3.11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ML criterion at convergence: 3191.001</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> See ?tidy.sdmTMB to extract these values as a data frame.</span>
 <span class="r-in"><span><span class="va">m_cv</span><span class="op">$</span><span class="va">max_gradients</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 9.581433e-08 7.429837e-09</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 2.788299e-08 6.945591e-10</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="co"># Create mesh each fold:</span></span></span>

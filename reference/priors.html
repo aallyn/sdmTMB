@@ -28,7 +28,7 @@ covariance function."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/
     
     <a class="navbar-brand me-2" href="../index.html">sdmTMB</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.3.9004</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.3.9005</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -286,7 +286,7 @@ constructing priors. arXiv:1403.4630</p>
 <span class="r-in"><span>  priors <span class="op">=</span> <span class="fu">sdmTMBpriors</span><span class="op">(</span></span></span>
 <span class="r-in"><span>    b <span class="op">=</span> <span class="fu">normal</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="cn">NA</span>, <span class="cn">NA</span>, <span class="cn">NA</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">2</span>, <span class="cn">NA</span>, <span class="cn">NA</span>, <span class="cn">NA</span><span class="op">)</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>    phi <span class="op">=</span> <span class="fu">halfnormal</span><span class="op">(</span><span class="fl">0</span>, <span class="fl">10</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>    tweedie_p <span class="op">=</span> <span class="fu">normal</span><span class="op">(</span><span class="fl">1.5</span>, <span class="fl">2</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    <span class="co"># tweedie_p = normal(1.5, 2),</span></span></span>
 <span class="r-in"><span>    ar1_rho <span class="op">=</span> <span class="fu">normal</span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>    matern_s <span class="op">=</span> <span class="fu">pc_matern</span><span class="op">(</span>range_gt <span class="op">=</span> <span class="fl">5</span>, sigma_lt <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>    matern_st <span class="op">=</span> <span class="fu">pc_matern</span><span class="op">(</span>range_gt <span class="op">=</span> <span class="fl">5</span>, sigma_lt <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></span>

@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../../index.html">sdmTMB</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.3.9004</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.3.9005</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -189,12 +189,20 @@ Likelihood Estimates) and random effects that maximize the log
 likelihood at estimated fixed effects:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rq_res</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/residuals.html" class="external-link">residuals</a></span><span class="op">(</span><span class="va">fit_pois</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Note what used to be the default sdmTMB residuals (before version 0.4.3.9005)</span></span>
+<span><span class="co">#&gt; are now `type = 'mle-eb'`. We recommend using the current default `'mle-mvn'`,</span></span>
+<span><span class="co">#&gt; which takes one sample from the approximate posterior of the random effects or</span></span>
+<span><span class="co">#&gt; `dharma_residuals()` using a similar approach.</span></span>
 <span><span class="va">rq_res</span> <span class="op">&lt;-</span> <span class="va">rq_res</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/is.finite.html" class="external-link">is.finite</a></span><span class="op">(</span><span class="va">rq_res</span><span class="op">)</span><span class="op">]</span> <span class="co"># some Inf</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/qqnorm.html" class="external-link">qqnorm</a></span><span class="op">(</span><span class="va">rq_res</span><span class="op">)</span>;<span class="fu"><a href="https://rdrr.io/r/stats/qqnorm.html" class="external-link">qqline</a></span><span class="op">(</span><span class="va">rq_res</span><span class="op">)</span></span></code></pre></div>
 <p><img src="residual-checking_files/figure-html/unnamed-chunk-3-1.png" width="672"></p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="va">rq_res</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/residuals.html" class="external-link">residuals</a></span><span class="op">(</span><span class="va">fit_nb2</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Note what used to be the default sdmTMB residuals (before version 0.4.3.9005)</span></span>
+<span><span class="co">#&gt; are now `type = 'mle-eb'`. We recommend using the current default `'mle-mvn'`,</span></span>
+<span><span class="co">#&gt; which takes one sample from the approximate posterior of the random effects or</span></span>
+<span><span class="co">#&gt; `dharma_residuals()` using a similar approach.</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/qqnorm.html" class="external-link">qqnorm</a></span><span class="op">(</span><span class="va">rq_res</span><span class="op">)</span>;<span class="fu"><a href="https://rdrr.io/r/stats/qqnorm.html" class="external-link">qqline</a></span><span class="op">(</span><span class="va">rq_res</span><span class="op">)</span></span></code></pre></div>
 <p><img src="residual-checking_files/figure-html/unnamed-chunk-3-2.png" width="672"></p>
 <p>These use the approach from Dunn and Smyth (1996). They are also
@@ -224,8 +232,8 @@ take a single draw for speed:</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; SAMPLING FOR MODEL 'tmb_generic' NOW (CHAIN 1).</span></span>
 <span><span class="co">#&gt; Chain 1: </span></span>
-<span><span class="co">#&gt; Chain 1: Gradient evaluation took 0.000879 seconds</span></span>
-<span><span class="co">#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 8.79 seconds.</span></span>
+<span><span class="co">#&gt; Chain 1: Gradient evaluation took 0.000856 seconds</span></span>
+<span><span class="co">#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 8.56 seconds.</span></span>
 <span><span class="co">#&gt; Chain 1: Adjust your expectations accordingly!</span></span>
 <span><span class="co">#&gt; Chain 1: </span></span>
 <span><span class="co">#&gt; Chain 1: </span></span>
@@ -242,11 +250,15 @@ take a single draw for speed:</p>
 <span><span class="co">#&gt; Chain 1: Iteration: 200 / 201 [ 99%]  (Warmup)</span></span>
 <span><span class="co">#&gt; Chain 1: Iteration: 201 / 201 [100%]  (Sampling)</span></span>
 <span><span class="co">#&gt; Chain 1: </span></span>
-<span><span class="co">#&gt; Chain 1:  Elapsed Time: 2.313 seconds (Warm-up)</span></span>
+<span><span class="co">#&gt; Chain 1:  Elapsed Time: 2.319 seconds (Warm-up)</span></span>
 <span><span class="co">#&gt; Chain 1:                0.01 seconds (Sampling)</span></span>
-<span><span class="co">#&gt; Chain 1:                2.323 seconds (Total)</span></span>
+<span><span class="co">#&gt; Chain 1:                2.329 seconds (Total)</span></span>
 <span><span class="co">#&gt; Chain 1:</span></span>
 <span><span class="va">mcmc_res</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/residuals.html" class="external-link">residuals</a></span><span class="op">(</span><span class="va">fit_nb2</span>, type <span class="op">=</span> <span class="st">"mle-mcmc"</span>, mcmc_samples <span class="op">=</span> <span class="va">samps</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Note what used to be the default sdmTMB residuals (before version 0.4.3.9005)</span></span>
+<span><span class="co">#&gt; are now `type = 'mle-eb'`. We recommend using the current default `'mle-mvn'`,</span></span>
+<span><span class="co">#&gt; which takes one sample from the approximate posterior of the random effects or</span></span>
+<span><span class="co">#&gt; `dharma_residuals()` using a similar approach.</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/qqnorm.html" class="external-link">qqnorm</a></span><span class="op">(</span><span class="va">mcmc_res</span><span class="op">)</span>;<span class="fu"><a href="https://rdrr.io/r/stats/qqnorm.html" class="external-link">qqline</a></span><span class="op">(</span><span class="va">mcmc_res</span><span class="op">)</span></span></code></pre></div>
 <p><img src="residual-checking_files/figure-html/unnamed-chunk-4-1.png" width="672"></p>
 <p>We can see these look a bit better. Remember, this is the ‘correct’
@@ -427,33 +439,11 @@ missed including it in the model.</p>
 <span><span class="co">#&gt;              df      AIC</span></span>
 <span><span class="co">#&gt; fit_nb2_miss  4 3153.407</span></span>
 <span><span class="co">#&gt; fit_nb2       5 3095.560</span></span></code></pre></div>
-<p>The above used simulations with the parameters fixed at their Maximum
-Likelihood Estimate (MLE) and predictions conditional on the fitted
-random effects. Alternatively, we could simulate with the parameters
-drawn from their joint precision matrix to encapsulate uncertainty about
-the parameters. This may be a better test for residual analysis, but
-this is an open area of research as far as I can tell.</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># simulate with the parameters drawn from the joint precision matrix:</span></span>
-<span><span class="va">s2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span><span class="va">fit_nb2</span>, nsim <span class="op">=</span> <span class="fl">1</span>, params <span class="op">=</span> <span class="st">"MVN"</span><span class="op">)</span></span></code></pre></div>
 <p>Or we could simulate with new random fields based on the estimated
 parameters governing the random fields (range and SD):</p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># simulate with new random fields:</span></span>
 <span><span class="va">s3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span><span class="va">fit_nb2</span>, nsim <span class="op">=</span> <span class="fl">1</span>, re_form <span class="op">=</span> <span class="op">~</span> <span class="fl">0</span><span class="op">)</span></span></code></pre></div>
-<p>We could, of course, combine those two options:</p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># simulate with new random fields and new parameter draws:</span></span>
-<span><span class="va">s4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span><span class="va">fit_nb2</span>, nsim <span class="op">=</span> <span class="fl">500</span>, params <span class="op">=</span> <span class="st">"MVN"</span>, re_form <span class="op">=</span> <span class="op">~</span> <span class="fl">0</span><span class="op">)</span></span>
-<span><span class="va">pred_fixed</span> <span class="op">&lt;-</span> <span class="va">fit_nb2</span><span class="op">$</span><span class="va">family</span><span class="op">$</span><span class="fu">linkinv</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">fit_nb2</span><span class="op">)</span><span class="op">$</span><span class="va">est_non_rf</span><span class="op">)</span></span>
-<span><span class="va">r_nb2</span> <span class="op">&lt;-</span> <span class="fu">DHARMa</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/DHARMa/man/createDHARMa.html" class="external-link">createDHARMa</a></span><span class="op">(</span></span>
-<span>  simulatedResponse <span class="op">=</span> <span class="va">s4</span>,</span>
-<span>  observedResponse <span class="op">=</span> <span class="va">dat</span><span class="op">$</span><span class="va">observed</span>,</span>
-<span>  fittedPredictedResponse <span class="op">=</span> <span class="va">pred_fixed</span></span>
-<span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">r_nb2</span><span class="op">)</span></span></code></pre></div>
-<p><img src="residual-checking_files/figure-html/unnamed-chunk-16-1.png" width="672"></p>
-<p>These also look OK.</p>
 <p>For help interpreting the DHARMa residual plots, see
 <code><a href="https://cran.rstudio.com/web/packages/DHARMa/vignettes/DHARMa.html" class="external-link">vignette("DHARMa", package="DHARMa")</a></code>.</p>
 <div class="section level2">
