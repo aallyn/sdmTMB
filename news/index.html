@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">sdmTMB</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.3.9007</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.3.9008</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -64,7 +64,8 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="sdmtmb-development-version">sdmTMB (development version)<a class="anchor" aria-label="anchor" href="#sdmtmb-development-version"></a></h2>
-<ul><li><p>Improved re-initialization of saved fitted model objects in new sessions.</p></li>
+<ul><li><p>Make <code><a href="../reference/simulate.sdmTMB.html">simulate.sdmTMB()</a></code> not include <code>extra_time</code> elements.</p></li>
+<li><p>Improved re-initialization of saved fitted model objects in new sessions.</p></li>
 <li><p>Fix important bug in <code><a href="../reference/simulate.sdmTMB.html">simulate.sdmTMB()</a></code> method for delta families where the positive linear predictor was only getting simulated for observations present in the fitted data.</p></li>
 <li><p>Add new <code>"mle-mvn"</code> type to <code><a href="../reference/residuals.sdmTMB.html">residuals.sdmTMB()</a></code> and make it the default. This is a fast option for evaluating goodness of fit that should be better than the previous default. See the details section in <code><a href="../reference/residuals.sdmTMB.html">?residuals.sdmTMB</a></code> for details. The previous default is now called <code>"mvn-eb"</code> but is not recommended.</p></li>
 <li><p>Bring <code><a href="../reference/dharma_residuals.html">dharma_residuals()</a></code> back over from sdmTMBextra to sdmTMB. Add a new option in the <code>type</code> argument (<code>"mle-mvn"</code>) that should make the simulation residuals consistent with the expected distribution. See the same new documentation in <code><a href="../reference/residuals.sdmTMB.html">?residuals.sdmTMB</a></code>. The examples in <code><a href="../reference/dharma_residuals.html">?dharma_residuals</a></code> illustrate suggested use.</p></li>
