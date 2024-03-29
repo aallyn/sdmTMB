@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../../index.html">sdmTMB</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.3.9008</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.3.9011</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -406,8 +406,8 @@ model here so the vignette builds quickly.</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; SAMPLING FOR MODEL 'tmb_generic' NOW (CHAIN 1).</span></span>
 <span><span class="co">#&gt; Chain 1: </span></span>
-<span><span class="co">#&gt; Chain 1: Gradient evaluation took 0.010198 seconds</span></span>
-<span><span class="co">#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 101.98 seconds.</span></span>
+<span><span class="co">#&gt; Chain 1: Gradient evaluation took 0.010067 seconds</span></span>
+<span><span class="co">#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 100.67 seconds.</span></span>
 <span><span class="co">#&gt; Chain 1: Adjust your expectations accordingly!</span></span>
 <span><span class="co">#&gt; Chain 1: </span></span>
 <span><span class="co">#&gt; Chain 1: </span></span>
@@ -432,9 +432,9 @@ model here so the vignette builds quickly.</p>
 <span><span class="co">#&gt; Chain 1: Iteration: 100 / 101 [ 99%]  (Warmup)</span></span>
 <span><span class="co">#&gt; Chain 1: Iteration: 101 / 101 [100%]  (Sampling)</span></span>
 <span><span class="co">#&gt; Chain 1: </span></span>
-<span><span class="co">#&gt; Chain 1:  Elapsed Time: 26.85 seconds (Warm-up)</span></span>
-<span><span class="co">#&gt; Chain 1:                0.203 seconds (Sampling)</span></span>
-<span><span class="co">#&gt; Chain 1:                27.053 seconds (Total)</span></span>
+<span><span class="co">#&gt; Chain 1:  Elapsed Time: 26.889 seconds (Warm-up)</span></span>
+<span><span class="co">#&gt; Chain 1:                0.2 seconds (Sampling)</span></span>
+<span><span class="co">#&gt; Chain 1:                27.089 seconds (Total)</span></span>
 <span><span class="co">#&gt; Chain 1:</span></span>
 <span><span class="va">r</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/residuals.html" class="external-link">residuals</a></span><span class="op">(</span><span class="va">m3</span>, <span class="st">"mle-mcmc"</span>, mcmc_samples <span class="op">=</span> <span class="va">samps</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/qqnorm.html" class="external-link">qqnorm</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span></span>
@@ -736,7 +736,6 @@ the time-varying covariate and time. This is easily created using
 <span><span class="va">nd</span><span class="op">$</span><span class="va">depth_scaled2</span> <span class="op">&lt;-</span> <span class="va">nd</span><span class="op">$</span><span class="va">depth_scaled</span><span class="op">^</span><span class="fl">2</span></span>
 <span></span>
 <span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">m4</span>, newdata <span class="op">=</span> <span class="va">nd</span>, se_fit <span class="op">=</span> <span class="cn">TRUE</span>, re_form <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning in sqrt(diag(cov)): NaNs produced</span></span>
 <span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">p</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">depth_scaled</span>, <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="va">est</span><span class="op">)</span>,</span>
 <span>  ymin <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="va">est</span> <span class="op">-</span> <span class="fl">1.96</span> <span class="op">*</span> <span class="va">est_se</span><span class="op">)</span>,</span>

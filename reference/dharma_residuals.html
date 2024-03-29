@@ -18,7 +18,7 @@ expected distribution. This is not the default.'><!-- mathjax --><script src="ht
     
     <a class="navbar-brand me-2" href="../index.html">sdmTMB</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.3.9008</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.3.9011</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -86,6 +86,7 @@ expected distribution. This is <em>not</em> the default.</p>
 <span>  <span class="va">object</span>,</span>
 <span>  plot <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  return_DHARMa <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  expected_distribution <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"uniform"</span>, <span class="st">"normal"</span><span class="op">)</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -108,6 +109,17 @@ residuals to have the expected distribution.</p></dd>
 
 <dt>return_DHARMa</dt>
 <dd><p>Logical.</p></dd>
+
+
+<dt>expected_distribution</dt>
+<dd><p>Experimental: expected distribution for
+comparison: uniform(0, 1) or normal(0, 1). Traditional <span class="pkg">DHARMa</span>
+residuals are uniform. If <code>"normal"</code>, a <code><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">pnorm()</a></code> transformation is applied.
+First, any simulated quantiles of 0 (no simulations were smaller than the
+observation) are set to an arbitrary value of <code>1/(n*10)</code> where <code>n</code> is the
+number of simulated replicated. Any simulated quantiles of 1 (no
+simulations were larger than the observation) are set to an arbitrary value
+of <code>1 - 1/(n*10)</code>. These points are shown with crosses overlaid.</p></dd>
 
 
 <dt>...</dt>
@@ -138,12 +150,14 @@ analytical quantile function, and (3) they can be used with the various
 diagnostic tools and plots from the <span class="pkg">DHARMa</span> package.</p>
 <p>Disadvantages are (1) they are slower to calculate since one must first
 simulate from the model, (2) the stability of the distribution of the
-residuals depends on having a sufficient number of simulation draws, and
-(3) you no longer have a single residual per data point, should that be of
-diagnostic interest.</p>
+residuals depends on having a sufficient number of simulation draws, (3)
+uniformly distributed residuals put less emphasis on the tails visually
+(which or may not be desired).</p>
 <p>Note that <span class="pkg">DHARMa</span> returns residuals that are uniform(0, 1) if the data
 are consistent with the model whereas any randomized quantile residuals from
-<code><a href="residuals.sdmTMB.html">residuals.sdmTMB()</a></code> are expected to be normal(0, 1).</p>
+<code><a href="residuals.sdmTMB.html">residuals.sdmTMB()</a></code> are expected to be normal(0, 1). An experimental option
+<code>expected_distribution</code> is included to transform the distributions to
+a normal(0, 1) expectation.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -161,28 +175,31 @@ are consistent with the model whereas any randomized quantile residuals from
 <span class="r-in"><span><span class="co"># simulate() can be piped to dharma_residuals():</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># not great:</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span><span class="va">fit</span>, nsim <span class="op">=</span> <span class="fl">200</span>, type <span class="op">=</span> <span class="st">"mle-mvn"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu">dharma_residuals</span><span class="op">(</span><span class="va">fit</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="dharma_residuals-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># delta-lognormal looks better:</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">fit_dl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/update.html" class="external-link">update</a></span><span class="op">(</span><span class="va">fit</span>, family <span class="op">=</span> <span class="fu"><a href="families.html">delta_lognormal</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span><span class="va">fit_dl</span>, nsim <span class="op">=</span> <span class="fl">200</span>, type <span class="op">=</span> <span class="st">"mle-mvn"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu">dharma_residuals</span><span class="op">(</span><span class="va">fit</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="dharma_residuals-2.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># or skip the pipe:</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">s</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span><span class="va">fit_dl</span>, nsim <span class="op">=</span> <span class="fl">200</span>, type <span class="op">=</span> <span class="st">"mle-mvn"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="co"># and manually plot it:</span></span></span>
 <span class="r-in"><span><span class="va">r</span> <span class="op">&lt;-</span> <span class="fu">dharma_residuals</span><span class="op">(</span><span class="va">s</span>, <span class="va">fit_dl</span>, plot <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       observed    expected</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 0.0001675257 0.001030928</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 0.0004061027 0.002061856</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 0.0011315886 0.003092784</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 0.0035284390 0.004123711</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5 0.0072835200 0.005154639</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6 0.0081120117 0.006185567</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 0.0002489617 0.001030928</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 0.0003748640 0.002061856</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 0.0014616353 0.003092784</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 0.0029613685 0.004123711</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 0.0032777465 0.005154639</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6 0.0059662537 0.006185567</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">r</span><span class="op">$</span><span class="va">expected</span>, <span class="va">r</span><span class="op">$</span><span class="va">observed</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="dharma_residuals-3.png" alt="" width="700" height="433"></span>
@@ -192,6 +209,18 @@ are consistent with the model whereas any randomized quantile residuals from
 <span class="r-in"><span>  <span class="fu">dharma_residuals</span><span class="op">(</span><span class="va">fit</span>, return_DHARMa <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">ret</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="dharma_residuals-4.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># try normal(0, 1) residuals:</span></span></span>
+<span class="r-in"><span><span class="va">s</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span><span class="va">fit_dl</span>, nsim <span class="op">=</span> <span class="fl">200</span>, type <span class="op">=</span> <span class="st">"mle-mvn"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">dharma_residuals</span><span class="op">(</span><span class="va">s</span>, <span class="va">fit</span>, expected_distribution <span class="op">=</span> <span class="st">"normal"</span><span class="op">)</span></span></span>
+<span class="r-plt img"><img src="dharma_residuals-5.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span><span class="co"># note the points in the top right corner that had Inf quantiles</span></span></span>
+<span class="r-in"><span><span class="co"># because of pnorm(1)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># work with the residuals themselves:</span></span></span>
+<span class="r-in"><span><span class="va">r</span> <span class="op">&lt;-</span> <span class="fu">dharma_residuals</span><span class="op">(</span><span class="va">s</span>, <span class="va">fit</span>, return_DHARMa <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/fitted.values.html" class="external-link">fitted</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span>, <span class="va">r</span><span class="op">$</span><span class="va">scaledResiduals</span><span class="op">)</span></span></span>
+<span class="r-plt img"><img src="dharma_residuals-6.png" alt="" width="700" height="433"></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
