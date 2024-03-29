@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">sdmTMB</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.3.9011</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.3.9012</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -64,7 +64,8 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="sdmtmb-development-version">sdmTMB (development version)<a class="anchor" aria-label="anchor" href="#sdmtmb-development-version"></a></h2>
-<ul><li><p>Add experimental option to return standard normal residuals from <code><a href="../reference/dharma_residuals.html">dharma_residuals()</a></code>.</p></li>
+<ul><li><p>Fix memory issue with Tweedie family on large datasets. <a href="https://github.com/pbs-assess/sdmTMB/issues/302" class="external-link">#302</a></p></li>
+<li><p>Add experimental option to return standard normal residuals from <code><a href="../reference/dharma_residuals.html">dharma_residuals()</a></code>.</p></li>
 <li><p>Make <code><a href="../reference/simulate.sdmTMB.html">simulate.sdmTMB()</a></code> not include <code>extra_time</code> elements.</p></li>
 <li><p>Improved re-initialization of saved fitted model objects in new sessions.</p></li>
 <li><p>Fix important bug in <code><a href="../reference/simulate.sdmTMB.html">simulate.sdmTMB()</a></code> method for delta families where the positive linear predictor was only getting simulated for observations present in the fitted data.</p></li>

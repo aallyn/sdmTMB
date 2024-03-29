@@ -18,7 +18,7 @@ randomly but folds can be manually assigned via the fold_ids argument."><!-- mat
     
     <a class="navbar-brand me-2" href="../index.html">sdmTMB</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.3.9011</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.3.9012</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -301,6 +301,11 @@ with, but not ELPD. For maximum likelihood, <a href="https://github.com/pbs-asse
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Running fits with `future.apply()`.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Set a parallel `future::plan()` to use parallel processing.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>no non-missing arguments to max; returning -Inf</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`newdata` prediction coordinates appear to be ouside the fitted coordinates.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> This will likely cause all your random field values to be returned as 0.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> Check your coordinates including any conversions between projections.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> If working with UTMs, are both in km or m?</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># See how the LFOCV folds were assigned:</span></span></span>
 <span class="r-in"><span><span class="va">example_data</span> <span class="op">&lt;-</span> <span class="va">m_lfocv</span><span class="op">$</span><span class="va">models</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">data</span></span></span>
