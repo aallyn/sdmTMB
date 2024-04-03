@@ -286,36 +286,6 @@ with, but not ELPD. For maximum likelihood, <a href="https://github.com/pbs-asse
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Running fits with `future.apply()`.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Set a parallel `future::plan()` to use parallel processing.</span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># LFOCV:</span></span></span>
-<span class="r-in"><span><span class="va">m_lfocv</span> <span class="op">&lt;-</span> <span class="fu">sdmTMB_cv</span><span class="op">(</span></span></span>
-<span class="r-in"><span>  <span class="va">present</span> <span class="op">~</span> <span class="fu">s</span><span class="op">(</span><span class="va">year</span>, k <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  data <span class="op">=</span> <span class="va">pcod</span>,</span></span>
-<span class="r-in"><span>  mesh <span class="op">=</span> <span class="va">mesh</span>,</span></span>
-<span class="r-in"><span>  lfo <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
-<span class="r-in"><span>  lfo_forecast <span class="op">=</span> <span class="fl">2</span>,</span></span>
-<span class="r-in"><span>  lfo_validations <span class="op">=</span> <span class="fl">3</span>,</span></span>
-<span class="r-in"><span>  family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">binomial</a></span><span class="op">(</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  spatiotemporal <span class="op">=</span> <span class="st">"off"</span>,</span></span>
-<span class="r-in"><span>  time <span class="op">=</span> <span class="st">"year"</span> <span class="co"># must be specified</span></span></span>
-<span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Running fits with `future.apply()`.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Set a parallel `future::plan()` to use parallel processing.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>no non-missing arguments to max; returning -Inf</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`newdata` prediction coordinates appear to be ouside the fitted coordinates.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> This will likely cause all your random field values to be returned as 0.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> Check your coordinates including any conversions between projections.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> If working with UTMs, are both in km or m?</span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># See how the LFOCV folds were assigned:</span></span></span>
-<span class="r-in"><span><span class="va">example_data</span> <span class="op">&lt;-</span> <span class="va">m_lfocv</span><span class="op">$</span><span class="va">models</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">data</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">example_data</span><span class="op">$</span><span class="va">cv_fold</span>, <span class="va">example_data</span><span class="op">$</span><span class="va">year</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     2003 2004 2005 2007 2009 2011 2013 2015 2017</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   1  232  230  224  255  233  251    0    0    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   2    0    0    0    0    0    0  240    0    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   3    0    0    0    0    0    0    0  238    0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   4    0    0    0    0    0    0    0    0  240</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
