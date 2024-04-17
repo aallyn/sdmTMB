@@ -22,11 +22,11 @@
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
     
 
-    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light"><div class="container">
+    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light" data-bs-theme="light"><div class="container">
     
     <a class="navbar-brand me-2" href="../../index.html">sdmTMB</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0.9001</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -41,13 +41,13 @@
 <li class="active nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="../../articles/model-description.html">sdmTMB model description</a>
     <a class="dropdown-item" href="../../articles/web_only/basic-intro.html">Introduction to modelling with sdmTMB</a>
     <a class="dropdown-item" href="../../articles/web_only/bayesian.html">Bayesian estimation with sdmTMB</a>
     <a class="dropdown-item" href="../../articles/web_only/cross-validation.html">Cross-validation for model evaluation and comparison</a>
     <a class="dropdown-item" href="../../articles/web_only/delta-models.html">Fitting delta (hurdle) models with sdmTMB</a>
     <a class="dropdown-item" href="../../articles/web_only/ggeffects.html">Visualizing marginal effects in sdmTMB models with ggeffects</a>
     <a class="dropdown-item" href="../../articles/web_only/index-standardization.html">Index standardization with sdmTMB</a>
+    <a class="dropdown-item" href="../../articles/model-description.html">sdmTMB model description</a>
     <a class="dropdown-item" href="../../articles/web_only/poisson-link.html">Poisson-link delta models</a>
     <a class="dropdown-item" href="../../articles/web_only/pretty-plots.html">Making pretty maps with sdmTMB output</a>
     <a class="dropdown-item" href="../../articles/web_only/residual-checking.html">Residual checking with sdmTMB</a>
@@ -85,7 +85,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Cross-validation for model evaluation and comparison</h1>
             
-            <h4 data-toc-skip class="date">2024-04-03</h4>
+            <h4 data-toc-skip class="date">2024-04-17</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/pbs-assess/sdmTMB/blob/HEAD/vignettes/web_only/cross-validation.Rmd" class="external-link"><code>vignettes/web_only/cross-validation.Rmd</code></a></small>
       <div class="d-none name"><code>cross-validation.Rmd</code></div>
@@ -213,9 +213,9 @@ folds that are difficult to predict.</p>
 <span><span class="co">#&gt; Set a parallel `future::plan()` to use parallel processing.</span></span>
 <span></span>
 <span><span class="va">m_cv</span><span class="op">$</span><span class="va">fold_loglik</span> <span class="co"># fold log-likelihood</span></span>
-<span><span class="co">#&gt; [1] -1686.896 -1539.966 -1636.384 -1740.170</span></span>
+<span><span class="co">#&gt; [1] -1720.122 -1756.138 -1502.946 -1661.257</span></span>
 <span><span class="va">m_cv</span><span class="op">$</span><span class="va">sum_loglik</span> <span class="co"># total log-likelihood</span></span>
-<span><span class="co">#&gt; [1] -6603.417</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] -6640.463</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="single-splits">Single splits<a class="anchor" aria-label="anchor" href="#single-splits"></a>
@@ -242,7 +242,7 @@ is given ID = 1, and the training set is given ID = 2).</p>
 element of list list:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">m_cv</span><span class="op">$</span><span class="va">fold_loglik</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
-<span><span class="co">#&gt; [1] -703.3432</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] -608.5838</span></span></code></pre></div>
 <!-- # Leave Future Out Cross-Validation -->
 <!-- We can do LFOCV using the relevant arguments. Our dataset has 9 time steps. Therefore, if we use the arguments `lfo_forecast=2` and `lfo_validations=3`, the cross validation will: -->
 <!-- - Fit data to time steps 1 to 5, predict and validate step 7. -->
@@ -284,9 +284,9 @@ the model.</p>
 <span></span>
 <span><span class="co"># Compare log-likelihoods -- higher is better!</span></span>
 <span><span class="va">m1</span><span class="op">$</span><span class="va">sum_loglik</span></span>
-<span><span class="co">#&gt; [1] -6786.084</span></span>
+<span><span class="co">#&gt; [1] -6748.929</span></span>
 <span><span class="va">m2</span><span class="op">$</span><span class="va">sum_loglik</span></span>
-<span><span class="co">#&gt; [1] -6609.059</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] -6596.481</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="model-ensembling">Model ensembling<a class="anchor" aria-label="anchor" href="#model-ensembling"></a>
@@ -346,7 +346,7 @@ Distributions (with Discussion)</span>. <em>Bayesian Analysis</em>,
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.8.</p>
 </div>
 
     </footer>

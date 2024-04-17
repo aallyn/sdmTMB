@@ -10,11 +10,11 @@ partial differential equation) approximation to Gaussian random fields."><!-- ma
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
     
 
-    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light"><div class="container">
+    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light" data-bs-theme="light"><div class="container">
     
     <a class="navbar-brand me-2" href="../index.html">sdmTMB</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0.9001</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -28,13 +28,13 @@ partial differential equation) approximation to Gaussian random fields."><!-- ma
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="../articles/model-description.html">sdmTMB model description</a>
     <a class="dropdown-item" href="../articles/web_only/basic-intro.html">Introduction to modelling with sdmTMB</a>
     <a class="dropdown-item" href="../articles/web_only/bayesian.html">Bayesian estimation with sdmTMB</a>
     <a class="dropdown-item" href="../articles/web_only/cross-validation.html">Cross-validation for model evaluation and comparison</a>
     <a class="dropdown-item" href="../articles/web_only/delta-models.html">Fitting delta (hurdle) models with sdmTMB</a>
     <a class="dropdown-item" href="../articles/web_only/ggeffects.html">Visualizing marginal effects in sdmTMB models with ggeffects</a>
     <a class="dropdown-item" href="../articles/web_only/index-standardization.html">Index standardization with sdmTMB</a>
+    <a class="dropdown-item" href="../articles/model-description.html">sdmTMB model description</a>
     <a class="dropdown-item" href="../articles/web_only/poisson-link.html">Poisson-link delta models</a>
     <a class="dropdown-item" href="../articles/web_only/pretty-plots.html">Making pretty maps with sdmTMB output</a>
     <a class="dropdown-item" href="../articles/web_only/residual-checking.html">Residual checking with sdmTMB</a>
@@ -385,6 +385,8 @@ or a smoother on the time column provide mechanisms to predict over missing
 time slices with process error.</p>
 <p><code>extra_time</code> can also be used to fill in missing time steps for the purposes
 of a random walk or AR(1) process if the gaps between time steps are uneven.</p>
+<p><code>extra_time</code> can include only extra time steps or all time steps including
+those found in the fitted data. This latter option may be simpler.</p>
 <p><strong>Regularization and priors</strong></p>
 <p>You can achieve regularization via penalties (priors) on the fixed effect
 parameters. See <code><a href="priors.html">sdmTMBpriors()</a></code>. You can fit the model once without
@@ -1057,8 +1059,8 @@ estimated abundance indices for West Coast groundfishes. ICES J. Mar. Sci.
 <span class="r-out co"><span class="r-pr">#&gt;</span> Dispersion parameter: 12.80</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Tweedie p: 1.56</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Matérn range: 0.01</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Spatial SD: 2573.92</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Spatiotemporal IID SD: 2088.74</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Spatial SD: 2571.79</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Spatiotemporal IID SD: 2087.01</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ML criterion at convergence: 2911.371</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> See ?tidy.sdmTMB to extract these values as a data frame.</span>
@@ -1118,7 +1120,7 @@ estimated abundance indices for West Coast groundfishes. ICES J. Mar. Sci.
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.8.</p>
 </div>
 
     </footer></div>
