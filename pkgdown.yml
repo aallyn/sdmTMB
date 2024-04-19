@@ -1,5 +1,5 @@
 pandoc: 3.1.11
-pkgdown: 2.0.8
+pkgdown: 2.0.9
 pkgdown_sha: ~
 articles:
   basic-intro: web_only/basic-intro.html
@@ -15,7 +15,7 @@ articles:
   spatial-trend-models: web_only/spatial-trend-models.html
   threshold-models: web_only/threshold-models.html
   visreg: web_only/visreg.html
-last_built: 2024-04-17T22:55Z
+last_built: 2024-04-19T17:24Z
 urls:
   reference: https://pbs-assess.github.io/sdmTMB/reference
   article: https://pbs-assess.github.io/sdmTMB/articles
