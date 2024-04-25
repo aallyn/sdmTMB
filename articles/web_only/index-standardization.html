@@ -85,7 +85,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Index standardization with sdmTMB</h1>
             
-            <h4 data-toc-skip class="date">2024-04-22</h4>
+            <h4 data-toc-skip class="date">2024-04-25</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/pbs-assess/sdmTMB/blob/HEAD/vignettes/web_only/index-standardization.Rmd" class="external-link"><code>vignettes/web_only/index-standardization.Rmd</code></a></small>
       <div class="d-none name"><code>index-standardization.Rmd</code></div>
@@ -142,7 +142,11 @@ each time slice.</p>
 <code class="sourceCode R"><span><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/sdmTMB.html">sdmTMB</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">pcod</span>, </span>
 <span>  formula <span class="op">=</span> <span class="va">density</span> <span class="op">~</span> <span class="fl">0</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">year</span><span class="op">)</span>,</span>
-<span>  time <span class="op">=</span> <span class="st">"year"</span>, mesh <span class="op">=</span> <span class="va">pcod_spde</span>, family <span class="op">=</span> <span class="fu"><a href="../../reference/families.html">tweedie</a></span><span class="op">(</span>link <span class="op">=</span> <span class="st">"log"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span>  time <span class="op">=</span> <span class="st">"year"</span>, mesh <span class="op">=</span> <span class="va">pcod_spde</span>, family <span class="op">=</span> <span class="fu"><a href="../../reference/families.html">tweedie</a></span><span class="op">(</span>link <span class="op">=</span> <span class="st">"log"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning in check_dep_version(): ABI version mismatch: </span></span>
+<span><span class="co">#&gt; lme4 was built with Matrix ABI version 2</span></span>
+<span><span class="co">#&gt; Current Matrix ABI version is 1</span></span>
+<span><span class="co">#&gt; Please re-install lme4 from source or restore original 'Matrix' package</span></span></code></pre></div>
 <p>We can inspect randomized quantile residuals:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pcod</span><span class="op">$</span><span class="va">resids</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/residuals.html" class="external-link">residuals</a></span><span class="op">(</span><span class="va">m</span><span class="op">)</span> <span class="co"># randomized quantile residuals</span></span>
