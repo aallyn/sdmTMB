@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../../index.html">sdmTMB</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0.9003</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0.9004</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -144,10 +144,10 @@ drops the intercept, which is already present due to
 <span>  spatial <span class="op">=</span> <span class="st">"on"</span>,</span>
 <span>  spatial_varying <span class="op">=</span> <span class="op">~</span> <span class="fl">0</span> <span class="op">+</span> <span class="va">scaled_year</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning in check_dep_version(): ABI version mismatch: </span></span>
-<span><span class="co">#&gt; lme4 was built with Matrix ABI version 2</span></span>
-<span><span class="co">#&gt; Current Matrix ABI version is 1</span></span>
-<span><span class="co">#&gt; Please re-install lme4 from source or restore original 'Matrix' package</span></span></code></pre></div>
+<span><span class="co">#&gt; Warning in checkMatrixPackageVersion(getOption("TMB.check.Matrix", TRUE)): Package version inconsistency detected.</span></span>
+<span><span class="co">#&gt; TMB was built with Matrix ABI version 1</span></span>
+<span><span class="co">#&gt; Current Matrix ABI version is 2</span></span>
+<span><span class="co">#&gt; Please re-install 'TMB' from source using install.packages('TMB', type = 'source') or ask CRAN for a binary version of 'TMB' matching CRAN's 'Matrix' package</span></span></code></pre></div>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Spatial model fit by ML ['sdmTMB']</span></span>
@@ -231,9 +231,9 @@ coefficient.</p>
 <code class="sourceCode R"><span><span class="va">coefs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy</a></span><span class="op">(</span><span class="va">fit</span>, conf.int <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="va">scaled_year_coef</span> <span class="op">&lt;-</span> <span class="va">coefs</span><span class="op">$</span><span class="va">estimate</span><span class="op">[</span><span class="va">coefs</span><span class="op">$</span><span class="va">term</span> <span class="op">==</span> <span class="st">"scaled_year"</span><span class="op">]</span></span>
 <span><span class="va">scaled_year_coef</span></span>
-<span><span class="co">#&gt; [1] -0.0632089</span></span>
+<span><span class="co">#&gt; [1] -0.06320893</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="va">scaled_year_coef</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 0.9387474</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 0.9387473</span></span></code></pre></div>
 <p>Our main effect tells us that the overall linear trend of density has
 been a multiplicative factor of 0.94 per decade. Conversely, the overall
 trend has been a decline of 6% per decade.</p>

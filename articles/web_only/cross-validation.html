@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../../index.html">sdmTMB</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0.9003</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0.9004</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -154,14 +154,18 @@ but this can be turned off with the <code>parallel</code> argument.</p>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; Running fits with `future.apply()`.</span></span>
 <span><span class="co">#&gt; Set a parallel `future::plan()` to use parallel processing.</span></span>
-<span><span class="co">#&gt; Warning in check_dep_version(): ABI version mismatch: </span></span>
-<span><span class="co">#&gt; lme4 was built with Matrix ABI version 2</span></span>
-<span><span class="co">#&gt; Current Matrix ABI version is 1</span></span>
-<span><span class="co">#&gt; Please re-install lme4 from source or restore original ‘Matrix’ package</span></span>
-<span><span class="co">#&gt; Warning in check_dep_version(): ABI version mismatch: </span></span>
-<span><span class="co">#&gt; lme4 was built with Matrix ABI version 2</span></span>
-<span><span class="co">#&gt; Current Matrix ABI version is 1</span></span>
-<span><span class="co">#&gt; Please re-install lme4 from source or restore original ‘Matrix’ package</span></span></code></pre></div>
+<span><span class="co">#&gt; Warning in checkMatrixPackageVersion(getOption("TMB.check.Matrix", TRUE)): Package version inconsistency detected.</span></span>
+<span><span class="co">#&gt; TMB was built with Matrix ABI version 1</span></span>
+<span><span class="co">#&gt; Current Matrix ABI version is 2</span></span>
+<span><span class="co">#&gt; Please re-install 'TMB' from source using install.packages('TMB', type = 'source') or ask CRAN for a binary version of 'TMB' matching CRAN's 'Matrix' package</span></span>
+<span><span class="co">#&gt; Warning in checkMatrixPackageVersion(getOption("TMB.check.Matrix", TRUE)): Package version inconsistency detected.</span></span>
+<span><span class="co">#&gt; TMB was built with Matrix ABI version 1</span></span>
+<span><span class="co">#&gt; Current Matrix ABI version is 2</span></span>
+<span><span class="co">#&gt; Please re-install 'TMB' from source using install.packages('TMB', type = 'source') or ask CRAN for a binary version of 'TMB' matching CRAN's 'Matrix' package</span></span>
+<span><span class="co">#&gt; Warning in checkMatrixPackageVersion(getOption("TMB.check.Matrix", TRUE)): Package version inconsistency detected.</span></span>
+<span><span class="co">#&gt; TMB was built with Matrix ABI version 1</span></span>
+<span><span class="co">#&gt; Current Matrix ABI version is 2</span></span>
+<span><span class="co">#&gt; Please re-install 'TMB' from source using install.packages('TMB', type = 'source') or ask CRAN for a binary version of 'TMB' matching CRAN's 'Matrix' package</span></span></code></pre></div>
 <p>In the above example, folds are assigned randomly—but these can be
 modified to specific spatial or temporal applications. Without getting
 into the complexities of the <code>blockCV</code> or
