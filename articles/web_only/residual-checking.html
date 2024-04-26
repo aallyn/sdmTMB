@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../../index.html">sdmTMB</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0.9002</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0.9003</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -118,7 +118,12 @@ effect on the observed data.</p>
 <span>  sigma_O <span class="op">=</span> <span class="fl">0.4</span>,</span>
 <span>  seed <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  B <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.2</span>, <span class="fl">0.8</span><span class="op">)</span> <span class="co"># B0 = intercept, B1 = a1 slope</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; The `seed` argument may be deprecated in the future.</span></span>
+<span><span class="co">#&gt; We recommend instead setting the seed manually with `set.seed()` prior to</span></span>
+<span><span class="co">#&gt; calling `sdmTMB_simulate()`.</span></span>
+<span><span class="co">#&gt; We have encountered some situations where setting the seed via this argument</span></span>
+<span><span class="co">#&gt; does not have the intended effect.</span></span></code></pre></div>
 <p>Next, we will fit model configurations with various families and
 predictors. The first model will use the Poisson instead of the NB2. The
 2nd model will match the simulated data. The third model is missing the
@@ -229,8 +234,8 @@ the fixed effects held at their MLEs. We do this with the
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; SAMPLING FOR MODEL 'tmb_generic' NOW (CHAIN 1).</span></span>
 <span><span class="co">#&gt; Chain 1: </span></span>
-<span><span class="co">#&gt; Chain 1: Gradient evaluation took 0.00094 seconds</span></span>
-<span><span class="co">#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 9.4 seconds.</span></span>
+<span><span class="co">#&gt; Chain 1: Gradient evaluation took 0.000961 seconds</span></span>
+<span><span class="co">#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 9.61 seconds.</span></span>
 <span><span class="co">#&gt; Chain 1: Adjust your expectations accordingly!</span></span>
 <span><span class="co">#&gt; Chain 1: </span></span>
 <span><span class="co">#&gt; Chain 1: </span></span>
@@ -247,9 +252,9 @@ the fixed effects held at their MLEs. We do this with the
 <span><span class="co">#&gt; Chain 1: Iteration: 720 / 800 [ 90%]  (Sampling)</span></span>
 <span><span class="co">#&gt; Chain 1: Iteration: 800 / 800 [100%]  (Sampling)</span></span>
 <span><span class="co">#&gt; Chain 1: </span></span>
-<span><span class="co">#&gt; Chain 1:  Elapsed Time: 6.649 seconds (Warm-up)</span></span>
-<span><span class="co">#&gt; Chain 1:                4.737 seconds (Sampling)</span></span>
-<span><span class="co">#&gt; Chain 1:                11.386 seconds (Total)</span></span>
+<span><span class="co">#&gt; Chain 1:  Elapsed Time: 6.747 seconds (Warm-up)</span></span>
+<span><span class="co">#&gt; Chain 1:                4.814 seconds (Sampling)</span></span>
+<span><span class="co">#&gt; Chain 1:                11.561 seconds (Total)</span></span>
 <span><span class="co">#&gt; Chain 1:</span></span>
 <span><span class="va">mcmc_res</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/residuals.html" class="external-link">residuals</a></span><span class="op">(</span><span class="va">fit_nb2</span>, type <span class="op">=</span> <span class="st">"mle-mcmc"</span>, mcmc_samples <span class="op">=</span> <span class="va">samps</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/qqnorm.html" class="external-link">qqnorm</a></span><span class="op">(</span><span class="va">mcmc_res</span><span class="op">)</span></span>
@@ -456,6 +461,11 @@ and spatial and spatiotemporal random effects.</p>
 <span>  seed <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  B <span class="op">=</span> <span class="fl">0.2</span> <span class="co"># intercept</span></span>
 <span><span class="op">)</span></span>
+<span><span class="co">#&gt; The `seed` argument may be deprecated in the future.</span></span>
+<span><span class="co">#&gt; We recommend instead setting the seed manually with `set.seed()` prior to</span></span>
+<span><span class="co">#&gt; calling `sdmTMB_simulate()`.</span></span>
+<span><span class="co">#&gt; We have encountered some situations where setting the seed via this argument</span></span>
+<span><span class="co">#&gt; does not have the intended effect.</span></span>
 <span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/sdmTMB.html">sdmTMB</a></span><span class="op">(</span><span class="va">observed</span> <span class="op">~</span> <span class="fl">1</span>, data <span class="op">=</span> <span class="va">sim_dat</span>, time <span class="op">=</span> <span class="st">"year"</span>, mesh <span class="op">=</span> <span class="va">mesh</span><span class="op">)</span></span></code></pre></div>
 <p>If we use the empirical Bayes (EB) random effect values (the values
 of the random effects that maximize the log likelihood conditional on
@@ -500,8 +510,8 @@ assumptions, but is much more time intensive for large models.</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; SAMPLING FOR MODEL 'tmb_generic' NOW (CHAIN 1).</span></span>
 <span><span class="co">#&gt; Chain 1: </span></span>
-<span><span class="co">#&gt; Chain 1: Gradient evaluation took 0.002115 seconds</span></span>
-<span><span class="co">#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 21.15 seconds.</span></span>
+<span><span class="co">#&gt; Chain 1: Gradient evaluation took 0.002102 seconds</span></span>
+<span><span class="co">#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 21.02 seconds.</span></span>
 <span><span class="co">#&gt; Chain 1: Adjust your expectations accordingly!</span></span>
 <span><span class="co">#&gt; Chain 1: </span></span>
 <span><span class="co">#&gt; Chain 1: </span></span>
@@ -518,11 +528,11 @@ assumptions, but is much more time intensive for large models.</p>
 <span><span class="co">#&gt; Chain 1: Iteration: 360 / 400 [ 90%]  (Sampling)</span></span>
 <span><span class="co">#&gt; Chain 1: Iteration: 400 / 400 [100%]  (Sampling)</span></span>
 <span><span class="co">#&gt; Chain 1: </span></span>
-<span><span class="co">#&gt; Chain 1:  Elapsed Time: 30.8 seconds (Warm-up)</span></span>
-<span><span class="co">#&gt; Chain 1:                30.265 seconds (Sampling)</span></span>
-<span><span class="co">#&gt; Chain 1:                61.065 seconds (Total)</span></span>
+<span><span class="co">#&gt; Chain 1:  Elapsed Time: 30.135 seconds (Warm-up)</span></span>
+<span><span class="co">#&gt; Chain 1:                30.567 seconds (Sampling)</span></span>
+<span><span class="co">#&gt; Chain 1:                60.702 seconds (Total)</span></span>
 <span><span class="co">#&gt; Chain 1:</span></span>
-<span><span class="co">#&gt; Warning: The largest R-hat is 1.08, indicating chains have not mixed.</span></span>
+<span><span class="co">#&gt; Warning: The largest R-hat is 1.05, indicating chains have not mixed.</span></span>
 <span><span class="co">#&gt; Running the chains for more iterations may help. See</span></span>
 <span><span class="co">#&gt; https://mc-stan.org/misc/warnings.html#r-hat</span></span>
 <span><span class="co">#&gt; Warning: Bulk Effective Samples Size (ESS) is too low, indicating posterior means and medians may be unreliable.</span></span>
@@ -540,7 +550,7 @@ assumptions, but is much more time intensive for large models.</p>
 <span><span class="co">#&gt;  Asymptotic one-sample Kolmogorov-Smirnov test</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; data:  r3</span></span>
-<span><span class="co">#&gt; D = 0.024522, p-value = 0.5845</span></span>
+<span><span class="co">#&gt; D = 0.029602, p-value = 0.3449</span></span>
 <span><span class="co">#&gt; alternative hypothesis: two-sided</span></span></code></pre></div>
 <p>Here that gets us something similar and we would (correctly) fail to
 reject the hypothesis that <span class="math inline">\(r_3 \sim
@@ -598,6 +608,11 @@ with smaller levels of random field variance (<code>sigma_E</code> and
 <span>  seed <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  B <span class="op">=</span> <span class="fl">0.2</span> </span>
 <span><span class="op">)</span></span>
+<span><span class="co">#&gt; The `seed` argument may be deprecated in the future.</span></span>
+<span><span class="co">#&gt; We recommend instead setting the seed manually with `set.seed()` prior to</span></span>
+<span><span class="co">#&gt; calling `sdmTMB_simulate()`.</span></span>
+<span><span class="co">#&gt; We have encountered some situations where setting the seed via this argument</span></span>
+<span><span class="co">#&gt; does not have the intended effect.</span></span>
 <span><span class="va">fit2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/sdmTMB.html">sdmTMB</a></span><span class="op">(</span><span class="va">observed</span> <span class="op">~</span> <span class="fl">1</span>, data <span class="op">=</span> <span class="va">sim_dat2</span>, time <span class="op">=</span> <span class="st">"year"</span>, mesh <span class="op">=</span> <span class="va">mesh</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../../reference/sanity.html">sanity</a></span><span class="op">(</span><span class="va">fit2</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Non-linear minimizer suggests successful convergence</span></span>
