@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../../index.html">sdmTMB</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0.9004</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0.9005</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -87,7 +87,7 @@
                         <h4 data-toc-skip class="author">Julia Indivero,
 Sean Anderson, Lewis Barnett, Philina English, Eric Ward</h4>
             
-            <h4 data-toc-skip class="date">2024-04-26</h4>
+            <h4 data-toc-skip class="date">2024-04-29</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/pbs-assess/sdmTMB/blob/HEAD/vignettes/web_only/visreg.Rmd" class="external-link"><code>vignettes/web_only/visreg.Rmd</code></a></small>
       <div class="d-none name"><code>visreg.Rmd</code></div>
@@ -114,10 +114,7 @@ Tweedie distribution.</p>
 <span>  spatial <span class="op">=</span> <span class="st">"off"</span>, <span class="co"># off for vignette building speed</span></span>
 <span>  family <span class="op">=</span> <span class="fu"><a href="../../reference/families.html">tweedie</a></span><span class="op">(</span>link <span class="op">=</span> <span class="st">"log"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning in checkMatrixPackageVersion(getOption("TMB.check.Matrix", TRUE)): Package version inconsistency detected.</span></span>
-<span><span class="co">#&gt; TMB was built with Matrix ABI version 1</span></span>
-<span><span class="co">#&gt; Current Matrix ABI version is 2</span></span>
-<span><span class="co">#&gt; Please re-install 'TMB' from source using install.packages('TMB', type = 'source') or ask CRAN for a binary version of 'TMB' matching CRAN's 'Matrix' package</span></span></code></pre></div>
+<span><span class="co">#&gt; running TMB sdreport</span></span></code></pre></div>
 <p>We can then plot the effect of depth in link space. This shows the
 value of depth on the x-axis and the change in response on the y-axis,
 holding all other variables constant.</p>
@@ -214,6 +211,7 @@ Gamma, lognormal). For example:</p>
 <span>  spatial <span class="op">=</span> <span class="st">"off"</span>, <span class="co"># for vignette speed</span></span>
 <span>  family <span class="op">=</span> <span class="fu"><a href="../../reference/families.html">delta_gamma</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
+<span><span class="co">#&gt; running TMB sdreport</span></span>
 <span></span>
 <span><span class="fu"><a href="../../reference/visreg_delta.html">visreg_delta</a></span><span class="op">(</span><span class="va">fit_dg</span>, xvar <span class="op">=</span> <span class="st">"depth_scaled"</span>, model <span class="op">=</span> <span class="fl">1</span>, gg <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; These are residuals for delta model component 1. Use the `model` argument to</span></span>

@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../../index.html">sdmTMB</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0.9004</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0.9005</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -85,7 +85,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Introduction to modelling with sdmTMB</h1>
             
-            <h4 data-toc-skip class="date">2024-04-26</h4>
+            <h4 data-toc-skip class="date">2024-04-29</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/pbs-assess/sdmTMB/blob/HEAD/vignettes/web_only/basic-intro.Rmd" class="external-link"><code>vignettes/web_only/basic-intro.Rmd</code></a></small>
       <div class="d-none name"><code>basic-intro.Rmd</code></div>
@@ -172,10 +172,7 @@ tows as a function of depth and depth squared. We will first use
 <span>  family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">binomial</a></span><span class="op">(</span>link <span class="op">=</span> <span class="st">"logit"</span><span class="op">)</span>,</span>
 <span>  spatial <span class="op">=</span> <span class="st">"off"</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning in checkMatrixPackageVersion(getOption("TMB.check.Matrix", TRUE)): Package version inconsistency detected.</span></span>
-<span><span class="co">#&gt; TMB was built with Matrix ABI version 1</span></span>
-<span><span class="co">#&gt; Current Matrix ABI version is 2</span></span>
-<span><span class="co">#&gt; Please re-install 'TMB' from source using install.packages('TMB', type = 'source') or ask CRAN for a binary version of 'TMB' matching CRAN's 'Matrix' package</span></span>
+<span><span class="co">#&gt; running TMB sdreport</span></span>
 <span><span class="va">m</span></span>
 <span><span class="co">#&gt; Model fit by ML ['sdmTMB']</span></span>
 <span><span class="co">#&gt; Formula: present ~ depth_scaled + depth_scaled2</span></span>
@@ -234,6 +231,7 @@ changes coefficient estimates:</p>
 <span>  family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">binomial</a></span><span class="op">(</span>link <span class="op">=</span> <span class="st">"logit"</span><span class="op">)</span>,</span>
 <span>  spatial <span class="op">=</span> <span class="st">"on"</span></span>
 <span><span class="op">)</span></span>
+<span><span class="co">#&gt; running TMB sdreport</span></span>
 <span><span class="va">m1</span></span>
 <span><span class="co">#&gt; Spatial model fit by ML ['sdmTMB']</span></span>
 <span><span class="co">#&gt; Formula: present ~ depth_scaled + depth_scaled2</span></span>
@@ -272,6 +270,7 @@ examples.</p>
 <span>  time <span class="op">=</span> <span class="st">"year"</span>,</span>
 <span>  spatiotemporal <span class="op">=</span> <span class="st">"IID"</span></span>
 <span><span class="op">)</span></span>
+<span><span class="co">#&gt; running TMB sdreport</span></span>
 <span><span class="va">m2</span></span>
 <span><span class="co">#&gt; Spatiotemporal model fit by ML ['sdmTMB']</span></span>
 <span><span class="co">#&gt; Formula: present ~ depth_scaled + depth_scaled2</span></span>
@@ -304,6 +303,7 @@ easier.</p>
 <span>  time <span class="op">=</span> <span class="st">"year"</span>,</span>
 <span>  spatiotemporal <span class="op">=</span> <span class="st">"IID"</span></span>
 <span><span class="op">)</span></span>
+<span><span class="co">#&gt; running TMB sdreport</span></span>
 <span><span class="va">m3</span></span>
 <span><span class="co">#&gt; Spatiotemporal model fit by ML ['sdmTMB']</span></span>
 <span><span class="co">#&gt; Formula: density ~ poly(log(depth), 2)</span></span>
@@ -410,8 +410,8 @@ model here so the vignette builds quickly.</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; SAMPLING FOR MODEL 'tmb_generic' NOW (CHAIN 1).</span></span>
 <span><span class="co">#&gt; Chain 1: </span></span>
-<span><span class="co">#&gt; Chain 1: Gradient evaluation took 0.01007 seconds</span></span>
-<span><span class="co">#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 100.7 seconds.</span></span>
+<span><span class="co">#&gt; Chain 1: Gradient evaluation took 0.01006 seconds</span></span>
+<span><span class="co">#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 100.6 seconds.</span></span>
 <span><span class="co">#&gt; Chain 1: Adjust your expectations accordingly!</span></span>
 <span><span class="co">#&gt; Chain 1: </span></span>
 <span><span class="co">#&gt; Chain 1: </span></span>
@@ -436,9 +436,9 @@ model here so the vignette builds quickly.</p>
 <span><span class="co">#&gt; Chain 1: Iteration: 100 / 101 [ 99%]  (Warmup)</span></span>
 <span><span class="co">#&gt; Chain 1: Iteration: 101 / 101 [100%]  (Sampling)</span></span>
 <span><span class="co">#&gt; Chain 1: </span></span>
-<span><span class="co">#&gt; Chain 1:  Elapsed Time: 26.918 seconds (Warm-up)</span></span>
-<span><span class="co">#&gt; Chain 1:                0.197 seconds (Sampling)</span></span>
-<span><span class="co">#&gt; Chain 1:                27.115 seconds (Total)</span></span>
+<span><span class="co">#&gt; Chain 1:  Elapsed Time: 25.686 seconds (Warm-up)</span></span>
+<span><span class="co">#&gt; Chain 1:                0.2 seconds (Sampling)</span></span>
+<span><span class="co">#&gt; Chain 1:                25.886 seconds (Total)</span></span>
 <span><span class="co">#&gt; Chain 1:</span></span>
 <span><span class="va">r</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/residuals.html" class="external-link">residuals</a></span><span class="op">(</span><span class="va">m3</span>, <span class="st">"mle-mcmc"</span>, mcmc_samples <span class="op">=</span> <span class="va">samps</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/qqnorm.html" class="external-link">qqnorm</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span></span>
@@ -605,6 +605,7 @@ progress.</p>
 <span><span class="co">#&gt; Detected irregular time spacing with an AR(1) or random walk process.</span></span>
 <span><span class="co">#&gt; Consider filling in the missing time slices with `extra_time`.</span></span>
 <span><span class="co">#&gt; `extra_time = c(2006, 2008, 2010, 2012, 2014, 2016)`</span></span>
+<span><span class="co">#&gt; running TMB sdreport</span></span>
 <span><span class="va">m4</span></span>
 <span><span class="co">#&gt; Spatiotemporal model fit by ML ['sdmTMB']</span></span>
 <span><span class="co">#&gt; Formula: density ~ 0 + as.factor(year)</span></span>

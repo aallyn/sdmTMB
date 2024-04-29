@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../../index.html">sdmTMB</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0.9004</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0.9005</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -134,6 +134,7 @@ Matérn parameters to aid in estimation.</p>
 <span></span>
 <span><span class="va">fit_pois</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/sdmTMB.html">sdmTMB</a></span><span class="op">(</span><span class="va">observed</span> <span class="op">~</span> <span class="fl">1</span> <span class="op">+</span> <span class="va">a1</span>, data <span class="op">=</span> <span class="va">dat</span>, family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">poisson</a></span><span class="op">(</span><span class="op">)</span>, mesh <span class="op">=</span> <span class="va">mesh</span>,</span>
 <span>  priors <span class="op">=</span> <span class="fu"><a href="../../reference/priors.html">sdmTMBpriors</a></span><span class="op">(</span>matern_s <span class="op">=</span> <span class="va">pc</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; running TMB sdreport</span></span>
 <span><span class="va">fit_pois</span></span>
 <span><span class="co">#&gt; Spatial model fit by ML ['sdmTMB']</span></span>
 <span><span class="co">#&gt; Formula: observed ~ 1 + a1</span></span>
@@ -152,6 +153,7 @@ Matérn parameters to aid in estimation.</p>
 <span><span class="co">#&gt; See ?tidy.sdmTMB to extract these values as a data frame.</span></span>
 <span></span>
 <span><span class="va">fit_nb2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/update.html" class="external-link">update</a></span><span class="op">(</span><span class="va">fit_pois</span>, family <span class="op">=</span> <span class="fu"><a href="../../reference/families.html">nbinom2</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; running TMB sdreport</span></span>
 <span><span class="va">fit_nb2</span></span>
 <span><span class="co">#&gt; Spatial model fit by ML ['sdmTMB']</span></span>
 <span><span class="co">#&gt; Formula: observed ~ 1 + a1</span></span>
@@ -171,6 +173,7 @@ Matérn parameters to aid in estimation.</p>
 <span><span class="co">#&gt; See ?tidy.sdmTMB to extract these values as a data frame.</span></span>
 <span></span>
 <span><span class="va">fit_nb2_miss</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/update.html" class="external-link">update</a></span><span class="op">(</span><span class="va">fit_nb2</span>, formula. <span class="op">=</span> <span class="va">observed</span> <span class="op">~</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="co">#&gt; running TMB sdreport</span></span>
 <span><span class="va">fit_nb2_miss</span></span>
 <span><span class="co">#&gt; Spatial model fit by ML ['sdmTMB']</span></span>
 <span><span class="co">#&gt; Formula: observed ~ 1</span></span>
@@ -234,8 +237,8 @@ the fixed effects held at their MLEs. We do this with the
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; SAMPLING FOR MODEL 'tmb_generic' NOW (CHAIN 1).</span></span>
 <span><span class="co">#&gt; Chain 1: </span></span>
-<span><span class="co">#&gt; Chain 1: Gradient evaluation took 0.000957 seconds</span></span>
-<span><span class="co">#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 9.57 seconds.</span></span>
+<span><span class="co">#&gt; Chain 1: Gradient evaluation took 0.000971 seconds</span></span>
+<span><span class="co">#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 9.71 seconds.</span></span>
 <span><span class="co">#&gt; Chain 1: Adjust your expectations accordingly!</span></span>
 <span><span class="co">#&gt; Chain 1: </span></span>
 <span><span class="co">#&gt; Chain 1: </span></span>
@@ -252,9 +255,9 @@ the fixed effects held at their MLEs. We do this with the
 <span><span class="co">#&gt; Chain 1: Iteration: 720 / 800 [ 90%]  (Sampling)</span></span>
 <span><span class="co">#&gt; Chain 1: Iteration: 800 / 800 [100%]  (Sampling)</span></span>
 <span><span class="co">#&gt; Chain 1: </span></span>
-<span><span class="co">#&gt; Chain 1:  Elapsed Time: 6.655 seconds (Warm-up)</span></span>
-<span><span class="co">#&gt; Chain 1:                4.738 seconds (Sampling)</span></span>
-<span><span class="co">#&gt; Chain 1:                11.393 seconds (Total)</span></span>
+<span><span class="co">#&gt; Chain 1:  Elapsed Time: 6.808 seconds (Warm-up)</span></span>
+<span><span class="co">#&gt; Chain 1:                4.86 seconds (Sampling)</span></span>
+<span><span class="co">#&gt; Chain 1:                11.668 seconds (Total)</span></span>
 <span><span class="co">#&gt; Chain 1:</span></span>
 <span><span class="va">mcmc_res</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/residuals.html" class="external-link">residuals</a></span><span class="op">(</span><span class="va">fit_nb2</span>, type <span class="op">=</span> <span class="st">"mle-mcmc"</span>, mcmc_samples <span class="op">=</span> <span class="va">samps</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/qqnorm.html" class="external-link">qqnorm</a></span><span class="op">(</span><span class="va">mcmc_res</span><span class="op">)</span></span>
@@ -466,7 +469,8 @@ and spatial and spatiotemporal random effects.</p>
 <span><span class="co">#&gt; calling `sdmTMB_simulate()`.</span></span>
 <span><span class="co">#&gt; We have encountered some situations where setting the seed via this argument</span></span>
 <span><span class="co">#&gt; does not have the intended effect.</span></span>
-<span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/sdmTMB.html">sdmTMB</a></span><span class="op">(</span><span class="va">observed</span> <span class="op">~</span> <span class="fl">1</span>, data <span class="op">=</span> <span class="va">sim_dat</span>, time <span class="op">=</span> <span class="st">"year"</span>, mesh <span class="op">=</span> <span class="va">mesh</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/sdmTMB.html">sdmTMB</a></span><span class="op">(</span><span class="va">observed</span> <span class="op">~</span> <span class="fl">1</span>, data <span class="op">=</span> <span class="va">sim_dat</span>, time <span class="op">=</span> <span class="st">"year"</span>, mesh <span class="op">=</span> <span class="va">mesh</span><span class="op">)</span></span>
+<span><span class="co">#&gt; running TMB sdreport</span></span></code></pre></div>
 <p>If we use the empirical Bayes (EB) random effect values (the values
 of the random effects that maximize the log likelihood conditional on
 the estimated fixed effects), our residuals look off even though our
@@ -510,8 +514,8 @@ assumptions, but is much more time intensive for large models.</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; SAMPLING FOR MODEL 'tmb_generic' NOW (CHAIN 1).</span></span>
 <span><span class="co">#&gt; Chain 1: </span></span>
-<span><span class="co">#&gt; Chain 1: Gradient evaluation took 0.002319 seconds</span></span>
-<span><span class="co">#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 23.19 seconds.</span></span>
+<span><span class="co">#&gt; Chain 1: Gradient evaluation took 0.002074 seconds</span></span>
+<span><span class="co">#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 20.74 seconds.</span></span>
 <span><span class="co">#&gt; Chain 1: Adjust your expectations accordingly!</span></span>
 <span><span class="co">#&gt; Chain 1: </span></span>
 <span><span class="co">#&gt; Chain 1: </span></span>
@@ -528,9 +532,9 @@ assumptions, but is much more time intensive for large models.</p>
 <span><span class="co">#&gt; Chain 1: Iteration: 360 / 400 [ 90%]  (Sampling)</span></span>
 <span><span class="co">#&gt; Chain 1: Iteration: 400 / 400 [100%]  (Sampling)</span></span>
 <span><span class="co">#&gt; Chain 1: </span></span>
-<span><span class="co">#&gt; Chain 1:  Elapsed Time: 30.633 seconds (Warm-up)</span></span>
-<span><span class="co">#&gt; Chain 1:                30.111 seconds (Sampling)</span></span>
-<span><span class="co">#&gt; Chain 1:                60.744 seconds (Total)</span></span>
+<span><span class="co">#&gt; Chain 1:  Elapsed Time: 31.102 seconds (Warm-up)</span></span>
+<span><span class="co">#&gt; Chain 1:                30.541 seconds (Sampling)</span></span>
+<span><span class="co">#&gt; Chain 1:                61.643 seconds (Total)</span></span>
 <span><span class="co">#&gt; Chain 1:</span></span>
 <span><span class="co">#&gt; Warning: The largest R-hat is 1.08, indicating chains have not mixed.</span></span>
 <span><span class="co">#&gt; Running the chains for more iterations may help. See</span></span>
@@ -614,6 +618,7 @@ with smaller levels of random field variance (<code>sigma_E</code> and
 <span><span class="co">#&gt; We have encountered some situations where setting the seed via this argument</span></span>
 <span><span class="co">#&gt; does not have the intended effect.</span></span>
 <span><span class="va">fit2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/sdmTMB.html">sdmTMB</a></span><span class="op">(</span><span class="va">observed</span> <span class="op">~</span> <span class="fl">1</span>, data <span class="op">=</span> <span class="va">sim_dat2</span>, time <span class="op">=</span> <span class="st">"year"</span>, mesh <span class="op">=</span> <span class="va">mesh</span><span class="op">)</span></span>
+<span><span class="co">#&gt; running TMB sdreport</span></span>
 <span><span class="fu"><a href="../../reference/sanity.html">sanity</a></span><span class="op">(</span><span class="va">fit2</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Non-linear minimizer suggests successful convergence</span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Hessian matrix is positive definite</span></span>
