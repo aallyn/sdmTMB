@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">sdmTMB</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0.9005</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0.9006</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -64,7 +64,8 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="sdmtmb-development-version">sdmTMB (development version)<a class="anchor" aria-label="anchor" href="#sdmtmb-development-version"></a></h2>
-<ul><li><p>Move <code>log_ratio_mix</code> parameter to 2nd phase with starting value of -1 instead of 0 to improve convergence.</p></li>
+<ul><li><p>Add warning if it’s detected that there were problems reloading (e.g., with <code><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS()</a></code>) a fitted model. Simultaneously revert the approach to how reloaded models are reattached. Check that random effects haven’t been reverted to zero if you <code><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS()</a></code> a fitted model. E.g. <code>get_pars(fit)$omega_s</code> if you have spatial random fields enabled.</p></li>
+<li><p>Move <code>log_ratio_mix</code> parameter to 2nd phase with starting value of -1 instead of 0 to improve convergence.</p></li>
 <li><p>Fix bugs for <code><a href="../reference/families.html">nbinom1()</a></code> and <code><a href="../reference/families.html">nbinom2_mix()</a></code> simulation.</p></li>
 <li><p>Allow <code>profile</code> argument in the control list to take a character vector of parameters.</p></li>
 <li><p>Add theoretical quantile residuals for the generalized gamma distribution. Thanks to J.C. Dunic. <a href="https://github.com/pbs-assess/sdmTMB/issues/333" class="external-link">#333</a></p></li>

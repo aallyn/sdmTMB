@@ -24,7 +24,7 @@ distributions"><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/li
     
     <a class="navbar-brand me-2" href="../index.html">sdmTMB</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0.9005</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0.9006</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -137,8 +137,6 @@ Average Bayesian Predictive Distributions (with Discussion). Bayesian Analysis
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Running fits with `future.apply()`.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Set a parallel `future::plan()` to use parallel processing.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> running TMB sdreport</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> running TMB sdreport</span>
 <span class="r-in"><span><span class="co"># Depth as linear:</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">m_cv_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="sdmTMB_cv.html">sdmTMB_cv</a></span><span class="op">(</span></span></span>
@@ -148,8 +146,6 @@ Average Bayesian Predictive Distributions (with Discussion). Bayesian Analysis
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Running fits with `future.apply()`.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Set a parallel `future::plan()` to use parallel processing.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> running TMB sdreport</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> running TMB sdreport</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Only an intercept:</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span></span>
@@ -160,8 +156,6 @@ Average Bayesian Predictive Distributions (with Discussion). Bayesian Analysis
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Running fits with `future.apply()`.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Set a parallel `future::plan()` to use parallel processing.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> running TMB sdreport</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> running TMB sdreport</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">models</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">m_cv_1</span>, <span class="va">m_cv_2</span>, <span class="va">m_cv_3</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">weights</span> <span class="op">&lt;-</span> <span class="fu">sdmTMB_stacking</span><span class="op">(</span><span class="va">models</span><span class="op">)</span></span></span>
