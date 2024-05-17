@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../../index.html">sdmTMB</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0.9006</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0.9007</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -266,8 +266,9 @@ point in space that has a different random field value.</p>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> No standard errors look unreasonably large</span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> No sigma parameters are &lt; 0.01</span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> No sigma parameters are &gt; 100</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Range parameters don't look unreasonably large</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">fit_dpg</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Range parameters don't look unreasonably large</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">fit_dpg</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Spatial model fit by REML ['sdmTMB']</span></span>
 <span><span class="co">#&gt; Formula: catch_weight ~ 0 + as.factor(year) + s(log_depth)</span></span>
 <span><span class="co">#&gt; Mesh: mesh (anisotropic covariance)</span></span>
@@ -275,7 +276,7 @@ point in space that has a different random field value.</p>
 <span><span class="co">#&gt; Family: delta_gamma(link1 = 'log', link2 = 'log', type = 'poisson-link')</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Delta/hurdle model 1: -----------------------------------</span></span>
-<span><span class="co">#&gt; Family: binomial(link = 'logit') </span></span>
+<span><span class="co">#&gt; Family: binomial(link = 'log') </span></span>
 <span><span class="co">#&gt;                     coef.est coef.se</span></span>
 <span><span class="co">#&gt; as.factor(year)2004     1.96    0.77</span></span>
 <span><span class="co">#&gt; as.factor(year)2006     2.89    0.77</span></span>
@@ -324,7 +325,7 @@ point in space that has a different random field value.</p>
 <span><span class="co">#&gt; See ?tidy.sdmTMB to extract these values as a data frame.</span></span>
 <span><span class="co">#&gt; See ?plot_anisotropy to plot the anisotropic range.</span></span></code></pre></div>
 <p>and make the same plot:</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">p_dpg</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">fit_dpg</span>, newdata <span class="op">=</span> <span class="va">nd</span>, re_form <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">p_dpg</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">log_depth</span>, <span class="va">est1</span> <span class="op">+</span> <span class="va">est2</span>, colour <span class="op">=</span> <span class="va">year</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
@@ -340,7 +341,7 @@ because both use a log link.</p>
 </h3>
 <p>We’ll make some predictions across depths but for a single year for
 simplicity:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">nd2010</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">nd</span>, <span class="va">year</span> <span class="op">==</span> <span class="fl">2010</span><span class="op">)</span></span>
 <span><span class="va">p_pdg</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">fit_dpg</span>, newdata <span class="op">=</span> <span class="va">nd2010</span>, re_form <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span></span></code></pre></div>
 <!-- TODO fix predict response vs. not on re_form = NA!!!!!!!!!!!!!!!!! -->
@@ -348,7 +349,7 @@ simplicity:</p>
 catch into group <strong>n</strong>umbers density,
 <strong>w</strong>eight per group, encounter
 <strong>p</strong>robability, and positive <strong>r</strong>ate:</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="va">p_pdg</span><span class="op">$</span><span class="va">est1</span><span class="op">)</span></span>
 <span><span class="va">w</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="va">p_pdg</span><span class="op">$</span><span class="va">est2</span><span class="op">)</span></span>
 <span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fl">1</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="op">-</span><span class="va">n</span><span class="op">)</span></span>
@@ -361,13 +362,13 @@ equivalently <code>exp(est1 + est2)</code>, where <code>est1</code> and
 <li><p><code>p * r</code>: encounter probability <span class="math inline">\(\times\)</span> positive catch rate.</p></li>
 </ol>
 <p>These give identical answers:</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">lims</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">p</span> <span class="op">*</span> <span class="va">r</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">n</span> <span class="op">*</span> <span class="va">w</span>, <span class="va">p</span> <span class="op">*</span> <span class="va">r</span>, xlim <span class="op">=</span> <span class="va">lims</span>, ylim <span class="op">=</span> <span class="va">lims</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
 <p><img src="poisson-link_files/figure-html/unnamed-chunk-12-1.png" width="384"></p>
 <p>Let’s plot out all the components and possible combinations:</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">g1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">p_pdg</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">log_depth</span>, <span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"Expected group density"</span><span class="op">)</span></span>
@@ -446,12 +447,13 @@ positive after exponentiating them), we work in log space:</p>
 p = 1 - \exp(-\exp(\log n)).
 \]</span></p>
 <p>We can check this in R:</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fl">0.78</span></span>
 <span><span class="va">log_n</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="fl">1</span> <span class="op">-</span> <span class="va">p</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">log_n</span></span>
-<span><span class="co">#&gt; [1] 0.4148395</span></span>
-<span><span class="fl">1</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="va">log_n</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 0.4148395</span></span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fl">1</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="va">log_n</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 0.78</span></span></code></pre></div>
 <p>You can see how the cloglog inverse link is the same as the first
 part of our Poisson-link delta model. <strong>However</strong>, the

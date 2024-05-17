@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../../index.html">sdmTMB</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0.9006</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0.9007</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -85,7 +85,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Fitting spatial trend models with sdmTMB</h1>
             
-            <h4 data-toc-skip class="date">2024-05-08</h4>
+            <h4 data-toc-skip class="date">2024-05-17</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/pbs-assess/sdmTMB/blob/HEAD/vignettes/web_only/spatial-trend-models.Rmd" class="external-link"><code>vignettes/web_only/spatial-trend-models.Rmd</code></a></small>
       <div class="d-none name"><code>spatial-trend-models.Rmd</code></div>
@@ -163,8 +163,9 @@ drops the intercept, which is already present due to
 <span><span class="co">#&gt; Spatially varying coefficient SD (scaled_year): 1.23</span></span>
 <span><span class="co">#&gt; ML criterion at convergence: 6406.405</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; See ?tidy.sdmTMB to extract these values as a data frame.</span></span>
-<span><span class="fu"><a href="../../reference/sanity.html">sanity</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span></span>
+<span><span class="co">#&gt; See ?tidy.sdmTMB to extract these values as a data frame.</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../../reference/sanity.html">sanity</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Non-linear minimizer suggests successful convergence</span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Hessian matrix is positive definite</span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> No extreme or very small eigenvalues detected</span></span>
@@ -178,14 +179,15 @@ drops the intercept, which is already present due to
 for simplicity, but they could also be included.</p>
 <p>Let’s extract some parameter estimates. Look for <code>sigma_Z</code>
 coefficients:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy</a></span><span class="op">(</span><span class="va">fit</span>, conf.int <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 2 × 5</span></span></span>
 <span><span class="co">#&gt;   term        estimate std.error conf.low conf.high</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> (Intercept)   2.26       0.326    1.62      2.90 </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> scaled_year  -<span style="color: #BB0000;">0.063</span><span style="color: #BB0000; text-decoration: underline;">2</span>     0.205   -<span style="color: #BB0000;">0.465</span>     0.339</span></span>
-<span><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"ran_pars"</span>, conf.int <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> scaled_year  -<span style="color: #BB0000;">0.063</span><span style="color: #BB0000; text-decoration: underline;">2</span>     0.205   -<span style="color: #BB0000;">0.465</span>     0.339</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"ran_pars"</span>, conf.int <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 5 × 5</span></span></span>
 <span><span class="co">#&gt;   term      estimate std.error conf.low conf.high</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
@@ -197,7 +199,7 @@ coefficients:</p>
 <p>Let’s look at the predictions and estimates of the spatially varying
 coefficients on a grid. First, we will create a small function to help
 with plotting:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">plot_map_raster</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">dat</span>, <span class="va">column</span> <span class="op">=</span> <span class="va">est</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">dat</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">X</span>, <span class="va">Y</span>, fill <span class="op">=</span> <span class="op">{</span><span class="op">{</span> <span class="va">column</span> <span class="op">}</span><span class="op">}</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_tile.html" class="external-link">geom_raster</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
@@ -208,7 +210,7 @@ with plotting:</p>
 to add a column for <code>scaled_year</code> to match the fitting. Make
 sure you scale based on the same values! Here, that means using the mean
 from our fitted data and turning years into decades.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">nd</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/replicate_df.html">replicate_df</a></span><span class="op">(</span><span class="va">qcs_grid</span>, <span class="st">"year"</span>, <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">pcod</span><span class="op">$</span><span class="va">year</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">nd</span><span class="op">$</span><span class="va">scaled_year</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">nd</span><span class="op">$</span><span class="va">year</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">pcod</span><span class="op">$</span><span class="va">year</span><span class="op">)</span><span class="op">)</span> <span class="op">/</span> <span class="fl">10</span></span>
 <span><span class="va">pred</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">fit</span>, newdata <span class="op">=</span> <span class="va">nd</span><span class="op">)</span></span></code></pre></div>
@@ -217,29 +219,30 @@ in the predictions are values from a random field describing deviations
 from the overall effect of <code>year_scaled</code> on species density.
 These are in link (log) space. These are the spatially varying
 coefficients.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">plot_map_raster</span><span class="op">(</span><span class="va">pred</span>, <span class="va">zeta_s_scaled_year</span><span class="op">)</span></span></code></pre></div>
 <p><img src="spatial-trend-models_files/figure-html/unnamed-chunk-8-1.png" width="672"></p>
 <p>If we wanted to get at the actual slope of <code>scaled_year</code>
 in space, we would also have to add on the main overall (fixed effect)
 coefficient.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">coefs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy</a></span><span class="op">(</span><span class="va">fit</span>, conf.int <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="va">scaled_year_coef</span> <span class="op">&lt;-</span> <span class="va">coefs</span><span class="op">$</span><span class="va">estimate</span><span class="op">[</span><span class="va">coefs</span><span class="op">$</span><span class="va">term</span> <span class="op">==</span> <span class="st">"scaled_year"</span><span class="op">]</span></span>
 <span><span class="va">scaled_year_coef</span></span>
-<span><span class="co">#&gt; [1] -0.06320893</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="va">scaled_year_coef</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 0.9387473</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] -0.0632089</span></span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="va">scaled_year_coef</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 0.9387474</span></span></code></pre></div>
 <p>Our main effect tells us that the overall linear trend of density has
 been a multiplicative factor of 0.94 per decade. Conversely, the overall
 trend has been a decline of 6% per decade.</p>
 <p>We can add this overall effect to the spatial deviations from this
 effect to get the spatially varying trend:</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">plot_map_raster</span><span class="op">(</span><span class="va">pred</span>, <span class="va">scaled_year_coef</span> <span class="op">+</span> <span class="va">zeta_s_scaled_year</span><span class="op">)</span></span></code></pre></div>
 <p><img src="spatial-trend-models_files/figure-html/unnamed-chunk-10-1.png" width="672"></p>
 <p>We could put those slopes back into natural space:</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">plot_map_raster</span><span class="op">(</span><span class="va">pred</span>, <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="va">scaled_year_coef</span> <span class="op">+</span> <span class="va">zeta_s_scaled_year</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_gradient.html" class="external-link">scale_fill_gradient2</a></span><span class="op">(</span>midpoint <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Scale for <span style="color: #00BB00;">fill</span> is already present.</span></span>
@@ -250,7 +253,7 @@ location per decade.</p>
 <p>We might prefer to log transform the color scale. This gets us back
 to the plot in log space but with values on the colour legend that
 represent (multiplicative) values in natural space.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">plot_map_raster</span><span class="op">(</span><span class="va">pred</span>, <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="va">scaled_year_coef</span> <span class="op">+</span> <span class="va">zeta_s_scaled_year</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_gradient.html" class="external-link">scale_fill_gradient2</a></span><span class="op">(</span>midpoint <span class="op">=</span> <span class="fl">0</span>, trans <span class="op">=</span> <span class="st">"log10"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Scale for <span style="color: #00BB00;">fill</span> is already present.</span></span>
@@ -259,7 +262,7 @@ represent (multiplicative) values in natural space.</p>
 <p>The fastest way to get uncertainty on this spatially varying
 coefficient is with draws from the joint precision matrix of the
 parameters:</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">82938</span><span class="op">)</span></span>
 <span><span class="va">psim</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">fit</span>, newdata <span class="op">=</span> <span class="va">nd</span>, nsim <span class="op">=</span> <span class="fl">200</span>, sims_var <span class="op">=</span> <span class="st">"zeta_s"</span><span class="op">)</span></span>
 <span><span class="va">pred</span><span class="op">$</span><span class="va">se</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">psim</span>, <span class="fl">1</span>, <span class="va">sd</span><span class="op">)</span></span>

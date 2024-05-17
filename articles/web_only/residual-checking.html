@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../../index.html">sdmTMB</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0.9006</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0.9007</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -149,8 +149,9 @@ Matérn parameters to aid in estimation.</p>
 <span><span class="co">#&gt; Spatial SD: 1.20</span></span>
 <span><span class="co">#&gt; ML criterion at convergence: 2887.957</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; See ?tidy.sdmTMB to extract these values as a data frame.</span></span>
-<span></span>
+<span><span class="co">#&gt; See ?tidy.sdmTMB to extract these values as a data frame.</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
 <span><span class="va">fit_nb2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/update.html" class="external-link">update</a></span><span class="op">(</span><span class="va">fit_pois</span>, family <span class="op">=</span> <span class="fu"><a href="../../reference/families.html">nbinom2</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">fit_nb2</span></span>
 <span><span class="co">#&gt; Spatial model fit by ML ['sdmTMB']</span></span>
@@ -168,8 +169,9 @@ Matérn parameters to aid in estimation.</p>
 <span><span class="co">#&gt; Spatial SD: 0.42</span></span>
 <span><span class="co">#&gt; ML criterion at convergence: 1735.452</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; See ?tidy.sdmTMB to extract these values as a data frame.</span></span>
-<span></span>
+<span><span class="co">#&gt; See ?tidy.sdmTMB to extract these values as a data frame.</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
 <span><span class="va">fit_nb2_miss</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/update.html" class="external-link">update</a></span><span class="op">(</span><span class="va">fit_nb2</span>, formula. <span class="op">=</span> <span class="va">observed</span> <span class="op">~</span> <span class="fl">1</span><span class="op">)</span></span>
 <span><span class="va">fit_nb2_miss</span></span>
 <span><span class="co">#&gt; Spatial model fit by ML ['sdmTMB']</span></span>
@@ -198,13 +200,13 @@ degree.</p>
 MLEs (Maximum Likelihood Estimates) and random effects taken from a
 single sample of their approximate distribution (more details
 below):</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
 <span><span class="va">rq_res</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/residuals.html" class="external-link">residuals</a></span><span class="op">(</span><span class="va">fit_pois</span>, type <span class="op">=</span> <span class="st">"mle-mvn"</span><span class="op">)</span></span>
 <span><span class="va">rq_res</span> <span class="op">&lt;-</span> <span class="va">rq_res</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/is.finite.html" class="external-link">is.finite</a></span><span class="op">(</span><span class="va">rq_res</span><span class="op">)</span><span class="op">]</span> <span class="co"># some Inf</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/qqnorm.html" class="external-link">qqnorm</a></span><span class="op">(</span><span class="va">rq_res</span><span class="op">)</span>;<span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
 <p><img src="residual-checking_files/figure-html/unnamed-chunk-3-1.png" width="672"></p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
 <span><span class="va">rq_res</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/residuals.html" class="external-link">residuals</a></span><span class="op">(</span><span class="va">fit_nb2</span>, type <span class="op">=</span> <span class="st">"mle-mvn"</span><span class="op">)</span></span>
@@ -228,14 +230,14 @@ be approximated by a multivariate normal distribution. If we want to
 relax that assumption, we can sample the random effects with MCMC with
 the fixed effects held at their MLEs. We do this with the
 <code><a href="https://rdrr.io/pkg/sdmTMBextra/man/predict_mle_mcmc.html" class="external-link">sdmTMBextra::predict_mle_mcmc()</a></code> function in the <a href="https://github.com/pbs-assess/sdmTMBextra" class="external-link">sdmTMBextra</a>.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
 <span><span class="va">samps</span> <span class="op">&lt;-</span> <span class="fu">sdmTMBextra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/sdmTMBextra/man/predict_mle_mcmc.html" class="external-link">predict_mle_mcmc</a></span><span class="op">(</span><span class="va">fit_nb2</span>, mcmc_iter <span class="op">=</span> <span class="fl">800</span>, mcmc_warmup <span class="op">=</span> <span class="fl">400</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; SAMPLING FOR MODEL 'tmb_generic' NOW (CHAIN 1).</span></span>
 <span><span class="co">#&gt; Chain 1: </span></span>
-<span><span class="co">#&gt; Chain 1: Gradient evaluation took 0.000966 seconds</span></span>
-<span><span class="co">#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 9.66 seconds.</span></span>
+<span><span class="co">#&gt; Chain 1: Gradient evaluation took 0.000962 seconds</span></span>
+<span><span class="co">#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 9.62 seconds.</span></span>
 <span><span class="co">#&gt; Chain 1: Adjust your expectations accordingly!</span></span>
 <span><span class="co">#&gt; Chain 1: </span></span>
 <span><span class="co">#&gt; Chain 1: </span></span>
@@ -252,11 +254,12 @@ the fixed effects held at their MLEs. We do this with the
 <span><span class="co">#&gt; Chain 1: Iteration: 720 / 800 [ 90%]  (Sampling)</span></span>
 <span><span class="co">#&gt; Chain 1: Iteration: 800 / 800 [100%]  (Sampling)</span></span>
 <span><span class="co">#&gt; Chain 1: </span></span>
-<span><span class="co">#&gt; Chain 1:  Elapsed Time: 6.774 seconds (Warm-up)</span></span>
-<span><span class="co">#&gt; Chain 1:                4.814 seconds (Sampling)</span></span>
-<span><span class="co">#&gt; Chain 1:                11.588 seconds (Total)</span></span>
-<span><span class="co">#&gt; Chain 1:</span></span>
-<span><span class="va">mcmc_res</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/residuals.html" class="external-link">residuals</a></span><span class="op">(</span><span class="va">fit_nb2</span>, type <span class="op">=</span> <span class="st">"mle-mcmc"</span>, mcmc_samples <span class="op">=</span> <span class="va">samps</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Chain 1:  Elapsed Time: 6.724 seconds (Warm-up)</span></span>
+<span><span class="co">#&gt; Chain 1:                4.763 seconds (Sampling)</span></span>
+<span><span class="co">#&gt; Chain 1:                11.487 seconds (Total)</span></span>
+<span><span class="co">#&gt; Chain 1:</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">mcmc_res</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/residuals.html" class="external-link">residuals</a></span><span class="op">(</span><span class="va">fit_nb2</span>, type <span class="op">=</span> <span class="st">"mle-mcmc"</span>, mcmc_samples <span class="op">=</span> <span class="va">samps</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/qqnorm.html" class="external-link">qqnorm</a></span><span class="op">(</span><span class="va">mcmc_res</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
 <p><img src="residual-checking_files/figure-html/unnamed-chunk-4-1.png" width="672"></p>
@@ -266,37 +269,39 @@ the fixed effects held at their MLEs. We do this with the
 </h3>
 <p>We can also take simulations from the fitted model to use with
 simulation-based randomized quantile residuals:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">s_pois</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span><span class="va">fit_pois</span>, nsim <span class="op">=</span> <span class="fl">500</span>, type <span class="op">=</span> <span class="st">"mle-mvn"</span><span class="op">)</span></span>
 <span><span class="va">s_nb2_miss</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span><span class="va">fit_nb2_miss</span>, nsim <span class="op">=</span> <span class="fl">500</span>, type <span class="op">=</span> <span class="st">"mle-mvn"</span><span class="op">)</span></span>
 <span><span class="va">s_nb2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span><span class="va">fit_nb2</span>, nsim <span class="op">=</span> <span class="fl">500</span>, type <span class="op">=</span> <span class="st">"mle-mvn"</span><span class="op">)</span></span></code></pre></div>
 <p>These return a matrix where each row represents a row of data and
 each column is a simulation draw:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">s_pois</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 1000  500</span></span></code></pre></div>
 <p>We can look at whether fitted models are consistent with the observed
 number of zeros:</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">observed</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">observed</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 0.527</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">s_pois</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">s_pois</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 0.292788</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">s_nb2</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">s_nb2</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 0.527</span></span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">s_pois</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">s_pois</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 0.292788</span></span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">s_nb2</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">s_nb2</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 0.524644</span></span></code></pre></div>
 <p>There are obviously too few zeros in the data simulated from the
 Poisson model but the NB2 model seems reasonable.</p>
 <p>Plot DHARMa residuals:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../../reference/dharma_residuals.html">dharma_residuals</a></span><span class="op">(</span><span class="va">s_pois</span>, <span class="va">fit_pois</span><span class="op">)</span></span></code></pre></div>
 <p><img src="residual-checking_files/figure-html/unnamed-chunk-8-1.png" width="672"></p>
 <p>We could also return the DHARMa object, which lets us use other
 DHARMa tools:</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">r_pois</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/dharma_residuals.html">dharma_residuals</a></span><span class="op">(</span><span class="va">s_pois</span>, <span class="va">fit_pois</span>, return_DHARMa <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">r_pois</span><span class="op">)</span></span></code></pre></div>
 <p><img src="residual-checking_files/figure-html/unnamed-chunk-9-1.png" width="672"></p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">DHARMa</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/DHARMa/man/testResiduals.html" class="external-link">testResiduals</a></span><span class="op">(</span><span class="va">r_pois</span><span class="op">)</span></span></code></pre></div>
 <p><img src="residual-checking_files/figure-html/unnamed-chunk-9-2.png" width="672"></p>
 <pre><code><span><span class="co">#&gt; $uniformity</span></span>
@@ -364,8 +369,9 @@ DHARMa tools:</p>
 <span><span class="co">#&gt;  0.09219791 0.13212606</span></span>
 <span><span class="co">#&gt; sample estimates:</span></span>
 <span><span class="co">#&gt; frequency of outliers (expected: 0.00399201596806387 ) </span></span>
-<span><span class="co">#&gt;                                                  0.111</span></span>
-<span><span class="fu">DHARMa</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/DHARMa/man/testSpatialAutocorrelation.html" class="external-link">testSpatialAutocorrelation</a></span><span class="op">(</span><span class="va">r_pois</span>, x <span class="op">=</span> <span class="va">dat</span><span class="op">$</span><span class="va">X</span>, y <span class="op">=</span> <span class="va">dat</span><span class="op">$</span><span class="va">Y</span><span class="op">)</span></span></code></pre>
+<span><span class="co">#&gt;                                                  0.111</span></span></code></pre>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">DHARMa</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/DHARMa/man/testSpatialAutocorrelation.html" class="external-link">testSpatialAutocorrelation</a></span><span class="op">(</span><span class="va">r_pois</span>, x <span class="op">=</span> <span class="va">dat</span><span class="op">$</span><span class="va">X</span>, y <span class="op">=</span> <span class="va">dat</span><span class="op">$</span><span class="va">Y</span><span class="op">)</span></span></code></pre></div>
 <p><img src="residual-checking_files/figure-html/unnamed-chunk-9-3.png" width="672"></p>
 <pre><code><span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  DHARMa Moran's I test for distance-based autocorrelation</span></span>
@@ -373,8 +379,9 @@ DHARMa tools:</p>
 <span><span class="co">#&gt; data:  r_pois</span></span>
 <span><span class="co">#&gt; observed = -0.0022978, expected = -0.0010010, sd = 0.0026264, p-value =</span></span>
 <span><span class="co">#&gt; 0.6215</span></span>
-<span><span class="co">#&gt; alternative hypothesis: Distance-based autocorrelation</span></span>
-<span><span class="fu">DHARMa</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/DHARMa/man/testZeroInflation.html" class="external-link">testZeroInflation</a></span><span class="op">(</span><span class="va">r_pois</span><span class="op">)</span></span></code></pre>
+<span><span class="co">#&gt; alternative hypothesis: Distance-based autocorrelation</span></span></code></pre>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">DHARMa</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/DHARMa/man/testZeroInflation.html" class="external-link">testZeroInflation</a></span><span class="op">(</span><span class="va">r_pois</span><span class="op">)</span></span></code></pre></div>
 <p><img src="residual-checking_files/figure-html/unnamed-chunk-9-4.png" width="672"></p>
 <pre><code><span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  DHARMa zero-inflation test via comparison to expected zeros with</span></span>
@@ -390,11 +397,11 @@ indicative of too many zeros and the variance scaling too rapidly with
 the mean (resulting in some large outlying value) for the Poisson
 distribution.</p>
 <p>Lets try with the correct model:</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">r_nb2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/dharma_residuals.html">dharma_residuals</a></span><span class="op">(</span><span class="va">s_nb2</span>, <span class="va">fit_nb2</span>, return_DHARMa <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">r_nb2</span><span class="op">)</span></span></code></pre></div>
 <p><img src="residual-checking_files/figure-html/unnamed-chunk-10-1.png" width="672"></p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">DHARMa</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/DHARMa/man/testZeroInflation.html" class="external-link">testZeroInflation</a></span><span class="op">(</span><span class="va">r_nb2</span><span class="op">)</span></span></code></pre></div>
 <p><img src="residual-checking_files/figure-html/unnamed-chunk-10-2.png" width="672"></p>
 <pre><code><span><span class="co">#&gt; </span></span>
@@ -406,20 +413,20 @@ distribution.</p>
 <span><span class="co">#&gt; alternative hypothesis: two.sided</span></span></code></pre>
 <p>Everything looks fine.</p>
 <p>What about the model where we were missing a predictor?</p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">r_nb2_miss</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/dharma_residuals.html">dharma_residuals</a></span><span class="op">(</span><span class="va">s_nb2_miss</span>, <span class="va">fit_nb2_miss</span>, return_DHARMa <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">r_nb2_miss</span><span class="op">)</span></span></code></pre></div>
 <p><img src="residual-checking_files/figure-html/unnamed-chunk-11-1.png" width="672"></p>
 <p>The plot on the right represents simulated residuals against the
 prediction without the random effects, which here is just an intercept.
 Lets try plotting the residuals against the missing predictor:</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">DHARMa</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/DHARMa/man/plotResiduals.html" class="external-link">plotResiduals</a></span><span class="op">(</span><span class="va">r_nb2_miss</span>, form <span class="op">=</span> <span class="va">dat</span><span class="op">$</span><span class="va">a1</span><span class="op">)</span></span></code></pre></div>
 <p><img src="residual-checking_files/figure-html/unnamed-chunk-12-1.png" width="672"></p>
 <p>We can see a trend in the residuals against ‘a1’ since we have missed
 including it in the model.</p>
 <p>We can also see the difference in the log likelihood or the AIC:</p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/AIC.html" class="external-link">AIC</a></span><span class="op">(</span><span class="va">fit_nb2_miss</span>, <span class="va">fit_nb2</span><span class="op">)</span></span>
 <span><span class="co">#&gt;              df      AIC</span></span>
 <span><span class="co">#&gt; fit_nb2_miss  4 3642.665</span></span>
@@ -441,7 +448,7 @@ MCMC residuals.</p>
 <p>Here we will show why this is necessary.</p>
 <p>We’ll start by simulating some data with Gaussian observation error
 and spatial and spatiotemporal random effects.</p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
 <span><span class="va">predictor_dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
 <span>  X <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">1000</span><span class="op">)</span>, Y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">1000</span><span class="op">)</span>,</span>
@@ -465,18 +472,19 @@ and spatial and spatiotemporal random effects.</p>
 <span><span class="co">#&gt; We recommend instead setting the seed manually with `set.seed()` prior to</span></span>
 <span><span class="co">#&gt; calling `sdmTMB_simulate()`.</span></span>
 <span><span class="co">#&gt; We have encountered some situations where setting the seed via this argument</span></span>
-<span><span class="co">#&gt; does not have the intended effect.</span></span>
-<span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/sdmTMB.html">sdmTMB</a></span><span class="op">(</span><span class="va">observed</span> <span class="op">~</span> <span class="fl">1</span>, data <span class="op">=</span> <span class="va">sim_dat</span>, time <span class="op">=</span> <span class="st">"year"</span>, mesh <span class="op">=</span> <span class="va">mesh</span><span class="op">)</span></span></code></pre></div>
+<span><span class="co">#&gt; does not have the intended effect.</span></span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/sdmTMB.html">sdmTMB</a></span><span class="op">(</span><span class="va">observed</span> <span class="op">~</span> <span class="fl">1</span>, data <span class="op">=</span> <span class="va">sim_dat</span>, time <span class="op">=</span> <span class="st">"year"</span>, mesh <span class="op">=</span> <span class="va">mesh</span><span class="op">)</span></span></code></pre></div>
 <p>If we use the empirical Bayes (EB) random effect values (the values
 of the random effects that maximize the log likelihood conditional on
 the estimated fixed effects), our residuals look off even though our
 model is perfectly matched to our simulated data:</p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
 <span><span class="va">r1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/residuals.html" class="external-link">residuals</a></span><span class="op">(</span><span class="va">fit</span>, type <span class="op">=</span> <span class="st">"mle-eb"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/qqnorm.html" class="external-link">qqnorm</a></span><span class="op">(</span><span class="va">r1</span><span class="op">)</span>;<span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
 <p><img src="residual-checking_files/figure-html/unnamed-chunk-15-1.png" width="672"></p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/ks.test.html" class="external-link">ks.test</a></span><span class="op">(</span><span class="va">r1</span>, <span class="va">pnorm</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Asymptotic one-sample Kolmogorov-Smirnov test</span></span>
@@ -488,12 +496,12 @@ model is perfectly matched to our simulated data:</p>
 calculated correctly we know they do come from <span class="math inline">\(\operatorname{N}(0, 1)\)</span></p>
 <p>If instead we returned to our single sample from the assumed MVN
 random effect distribution, we get the ‘correct’ residuals:</p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
 <span><span class="va">r2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/residuals.html" class="external-link">residuals</a></span><span class="op">(</span><span class="va">fit</span>, type <span class="op">=</span> <span class="st">"mle-mvn"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/qqnorm.html" class="external-link">qqnorm</a></span><span class="op">(</span><span class="va">r2</span><span class="op">)</span>;<span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
 <p><img src="residual-checking_files/figure-html/unnamed-chunk-16-1.png" width="672"></p>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/ks.test.html" class="external-link">ks.test</a></span><span class="op">(</span><span class="va">r2</span>, <span class="va">pnorm</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Asymptotic one-sample Kolmogorov-Smirnov test</span></span>
@@ -505,13 +513,13 @@ random effect distribution, we get the ‘correct’ residuals:</p>
 <p>We could also sample that observation of random effects using MCMC
 (with the fixed effects still held at their MLEs), which relaxes our
 assumptions, but is much more time intensive for large models.</p>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">samp</span> <span class="op">&lt;-</span> <span class="fu">sdmTMBextra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/sdmTMBextra/man/predict_mle_mcmc.html" class="external-link">predict_mle_mcmc</a></span><span class="op">(</span><span class="va">fit</span>, mcmc_iter <span class="op">=</span> <span class="fl">400</span>, mcmc_warmup <span class="op">=</span> <span class="fl">200</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; SAMPLING FOR MODEL 'tmb_generic' NOW (CHAIN 1).</span></span>
 <span><span class="co">#&gt; Chain 1: </span></span>
-<span><span class="co">#&gt; Chain 1: Gradient evaluation took 0.002354 seconds</span></span>
-<span><span class="co">#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 23.54 seconds.</span></span>
+<span><span class="co">#&gt; Chain 1: Gradient evaluation took 0.002192 seconds</span></span>
+<span><span class="co">#&gt; Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 21.92 seconds.</span></span>
 <span><span class="co">#&gt; Chain 1: Adjust your expectations accordingly!</span></span>
 <span><span class="co">#&gt; Chain 1: </span></span>
 <span><span class="co">#&gt; Chain 1: </span></span>
@@ -528,9 +536,9 @@ assumptions, but is much more time intensive for large models.</p>
 <span><span class="co">#&gt; Chain 1: Iteration: 360 / 400 [ 90%]  (Sampling)</span></span>
 <span><span class="co">#&gt; Chain 1: Iteration: 400 / 400 [100%]  (Sampling)</span></span>
 <span><span class="co">#&gt; Chain 1: </span></span>
-<span><span class="co">#&gt; Chain 1:  Elapsed Time: 31.07 seconds (Warm-up)</span></span>
-<span><span class="co">#&gt; Chain 1:                30.552 seconds (Sampling)</span></span>
-<span><span class="co">#&gt; Chain 1:                61.622 seconds (Total)</span></span>
+<span><span class="co">#&gt; Chain 1:  Elapsed Time: 31.226 seconds (Warm-up)</span></span>
+<span><span class="co">#&gt; Chain 1:                30.704 seconds (Sampling)</span></span>
+<span><span class="co">#&gt; Chain 1:                61.93 seconds (Total)</span></span>
 <span><span class="co">#&gt; Chain 1:</span></span>
 <span><span class="co">#&gt; Warning: The largest R-hat is 1.08, indicating chains have not mixed.</span></span>
 <span><span class="co">#&gt; Running the chains for more iterations may help. See</span></span>
@@ -540,11 +548,12 @@ assumptions, but is much more time intensive for large models.</p>
 <span><span class="co">#&gt; https://mc-stan.org/misc/warnings.html#bulk-ess</span></span>
 <span><span class="co">#&gt; Warning: Tail Effective Samples Size (ESS) is too low, indicating posterior variances and tail quantiles may be unreliable.</span></span>
 <span><span class="co">#&gt; Running the chains for more iterations may help. See</span></span>
-<span><span class="co">#&gt; https://mc-stan.org/misc/warnings.html#tail-ess</span></span>
-<span><span class="va">r3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/residuals.html" class="external-link">residuals</a></span><span class="op">(</span><span class="va">fit</span>, type <span class="op">=</span> <span class="st">"mle-mcmc"</span>, mcmc_samples <span class="op">=</span> <span class="va">samp</span><span class="op">)</span></span>
+<span><span class="co">#&gt; https://mc-stan.org/misc/warnings.html#tail-ess</span></span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">r3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/residuals.html" class="external-link">residuals</a></span><span class="op">(</span><span class="va">fit</span>, type <span class="op">=</span> <span class="st">"mle-mcmc"</span>, mcmc_samples <span class="op">=</span> <span class="va">samp</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/qqnorm.html" class="external-link">qqnorm</a></span><span class="op">(</span><span class="va">r3</span><span class="op">)</span>;<span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
 <p><img src="residual-checking_files/figure-html/unnamed-chunk-17-1.png" width="672"></p>
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/ks.test.html" class="external-link">ks.test</a></span><span class="op">(</span><span class="va">r3</span>, <span class="va">pnorm</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Asymptotic one-sample Kolmogorov-Smirnov test</span></span>
@@ -557,7 +566,7 @@ reject the hypothesis that <span class="math inline">\(r_3 \sim
 \operatorname{N}(0, 1)\)</span>.</p>
 <p>A similar issue applies to simulation-based quantile residuals, as
 implemented in the DHARMa package.</p>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span><span class="va">fit</span>, nsim <span class="op">=</span> <span class="fl">500</span>, type <span class="op">=</span> <span class="st">"mle-eb"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../../reference/dharma_residuals.html">dharma_residuals</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span></span>
@@ -567,7 +576,7 @@ implemented in the DHARMa package.</p>
 <p><img src="residual-checking_files/figure-html/unnamed-chunk-18-1.png" width="672"></p>
 <p>Instead we can use a draw from the random effects ‘posterior’
 assuming an MVN distribution.</p>
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span><span class="va">fit</span>, nsim <span class="op">=</span> <span class="fl">500</span>, type <span class="op">=</span> <span class="st">"mle-mvn"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../../reference/dharma_residuals.html">dharma_residuals</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span></span></code></pre></div>
@@ -575,7 +584,7 @@ assuming an MVN distribution.</p>
 <p>And now that looks correct.</p>
 <p>However, what happens if we were to sample the random effects with
 each simulation?</p>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
 <span><span class="va">s</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">replicate</a></span><span class="op">(</span><span class="fl">200</span>, <span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span><span class="va">fit</span>, nsim <span class="op">=</span> <span class="fl">1</span>, type <span class="op">=</span> <span class="st">"mle-mvn"</span><span class="op">)</span>, simplify <span class="op">=</span> <span class="st">"matrix"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">s</span>, <span class="st">"type"</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"mle-mvn"</span></span>
@@ -593,7 +602,7 @@ variance vs. random effect variance<a class="anchor" aria-label="anchor" href="
 (<code>phi</code> here, which is the Gaussian error SD in this case) and
 with smaller levels of random field variance (<code>sigma_E</code> and
 <code>sigma_O</code>):</p>
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
 <span><span class="va">sim_dat2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/sdmTMB_simulate.html">sdmTMB_simulate</a></span><span class="op">(</span></span>
 <span>  formula <span class="op">=</span> <span class="op">~</span> <span class="fl">1</span>,</span>
@@ -612,8 +621,9 @@ with smaller levels of random field variance (<code>sigma_E</code> and
 <span><span class="co">#&gt; We recommend instead setting the seed manually with `set.seed()` prior to</span></span>
 <span><span class="co">#&gt; calling `sdmTMB_simulate()`.</span></span>
 <span><span class="co">#&gt; We have encountered some situations where setting the seed via this argument</span></span>
-<span><span class="co">#&gt; does not have the intended effect.</span></span>
-<span><span class="va">fit2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/sdmTMB.html">sdmTMB</a></span><span class="op">(</span><span class="va">observed</span> <span class="op">~</span> <span class="fl">1</span>, data <span class="op">=</span> <span class="va">sim_dat2</span>, time <span class="op">=</span> <span class="st">"year"</span>, mesh <span class="op">=</span> <span class="va">mesh</span><span class="op">)</span></span>
+<span><span class="co">#&gt; does not have the intended effect.</span></span></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">fit2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/sdmTMB.html">sdmTMB</a></span><span class="op">(</span><span class="va">observed</span> <span class="op">~</span> <span class="fl">1</span>, data <span class="op">=</span> <span class="va">sim_dat2</span>, time <span class="op">=</span> <span class="st">"year"</span>, mesh <span class="op">=</span> <span class="va">mesh</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../../reference/sanity.html">sanity</a></span><span class="op">(</span><span class="va">fit2</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Non-linear minimizer suggests successful convergence</span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Hessian matrix is positive definite</span></span>
@@ -624,12 +634,12 @@ with smaller levels of random field variance (<code>sigma_E</code> and
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> No sigma parameters are &lt; 0.01</span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> No sigma parameters are &gt; 100</span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Range parameter doesn't look unreasonably large</span></span></code></pre></div>
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
 <span><span class="va">r1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/residuals.html" class="external-link">residuals</a></span><span class="op">(</span><span class="va">fit2</span>, type <span class="op">=</span> <span class="st">"mle-eb"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/qqnorm.html" class="external-link">qqnorm</a></span><span class="op">(</span><span class="va">r1</span><span class="op">)</span>;<span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
 <p><img src="residual-checking_files/figure-html/unnamed-chunk-22-1.png" width="672"></p>
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/ks.test.html" class="external-link">ks.test</a></span><span class="op">(</span><span class="va">r1</span>, <span class="va">pnorm</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Asymptotic one-sample Kolmogorov-Smirnov test</span></span>
@@ -637,11 +647,11 @@ with smaller levels of random field variance (<code>sigma_E</code> and
 <span><span class="co">#&gt; data:  r1</span></span>
 <span><span class="co">#&gt; D = 0.021085, p-value = 0.7656</span></span>
 <span><span class="co">#&gt; alternative hypothesis: two-sided</span></span></code></pre></div>
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">r2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/residuals.html" class="external-link">residuals</a></span><span class="op">(</span><span class="va">fit2</span>, type <span class="op">=</span> <span class="st">"mle-mvn"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/qqnorm.html" class="external-link">qqnorm</a></span><span class="op">(</span><span class="va">r2</span><span class="op">)</span>;<span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
 <p><img src="residual-checking_files/figure-html/unnamed-chunk-23-1.png" width="672"></p>
-<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/ks.test.html" class="external-link">ks.test</a></span><span class="op">(</span><span class="va">r2</span>, <span class="va">pnorm</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Asymptotic one-sample Kolmogorov-Smirnov test</span></span>
@@ -664,17 +674,17 @@ consistent with the data. DHARMa residuals, however, are returned as
 uniform(0, 1) under those same circumstances. Both are valid, and which
 to use is preference, but it’s important to appreciate how this changes
 the appearance of the expected residuals.</p>
-<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">r2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/residuals.html" class="external-link">residuals</a></span><span class="op">(</span><span class="va">fit2</span>, type <span class="op">=</span> <span class="st">"mle-mvn"</span><span class="op">)</span></span></code></pre></div>
 <p>Analytical normal(0, 1):</p>
-<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html" class="external-link">hist</a></span><span class="op">(</span><span class="va">r2</span><span class="op">)</span></span></code></pre></div>
 <p><img src="residual-checking_files/figure-html/unnamed-chunk-25-1.png" width="672"></p>
-<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/qqnorm.html" class="external-link">qqnorm</a></span><span class="op">(</span><span class="va">r2</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
 <p><img src="residual-checking_files/figure-html/unnamed-chunk-25-2.png" width="672"></p>
-<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/ks.test.html" class="external-link">ks.test</a></span><span class="op">(</span><span class="va">r2</span>, <span class="va">pnorm</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Asymptotic one-sample Kolmogorov-Smirnov test</span></span>
@@ -683,11 +693,11 @@ the appearance of the expected residuals.</p>
 <span><span class="co">#&gt; D = 0.025614, p-value = 0.528</span></span>
 <span><span class="co">#&gt; alternative hypothesis: two-sided</span></span></code></pre></div>
 <p>Analytical uniform(0, 1):</p>
-<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">u</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">pnorm</a></span><span class="op">(</span><span class="va">r2</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html" class="external-link">hist</a></span><span class="op">(</span><span class="va">u</span><span class="op">)</span></span></code></pre></div>
 <p><img src="residual-checking_files/figure-html/unnamed-chunk-26-1.png" width="672"></p>
-<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">u</span><span class="op">)</span></span>
 <span><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span> <span class="op">/</span> <span class="op">(</span><span class="va">n</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/qqnorm.html" class="external-link">qqplot</a></span><span class="op">(</span><span class="va">m</span>, <span class="va">u</span><span class="op">)</span></span>
@@ -697,23 +707,24 @@ the appearance of the expected residuals.</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; data:  u</span></span>
 <span><span class="co">#&gt; D = 0.025614, p-value = 0.528</span></span>
-<span><span class="co">#&gt; alternative hypothesis: two-sided</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
+<span><span class="co">#&gt; alternative hypothesis: two-sided</span></span></code></pre></div>
+<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
 <p><img src="residual-checking_files/figure-html/unnamed-chunk-26-2.png" width="672"></p>
 <p>Simulation-based uniform(0, 1):</p>
-<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
 <span><span class="va">s</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span><span class="va">fit2</span>, nsim <span class="op">=</span> <span class="fl">500</span>, type <span class="op">=</span> <span class="st">"mle-mvn"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../../reference/dharma_residuals.html">dharma_residuals</a></span><span class="op">(</span><span class="va">fit2</span>, return_DHARMa <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html" class="external-link">hist</a></span><span class="op">(</span><span class="va">s</span><span class="op">$</span><span class="va">scaledResiduals</span><span class="op">)</span></span></code></pre></div>
 <p><img src="residual-checking_files/figure-html/unnamed-chunk-27-1.png" width="672"></p>
-<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">u</span> <span class="op">&lt;-</span> <span class="va">s</span><span class="op">$</span><span class="va">scaledResiduals</span></span>
 <span><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">u</span><span class="op">)</span><span class="op">)</span> <span class="op">/</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">u</span><span class="op">)</span><span class="op">+</span> <span class="fl">1</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/qqnorm.html" class="external-link">qqplot</a></span><span class="op">(</span><span class="va">m</span>, <span class="va">u</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
 <p><img src="residual-checking_files/figure-html/unnamed-chunk-27-2.png" width="672"></p>
-<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/ks.test.html" class="external-link">ks.test</a></span><span class="op">(</span><span class="va">u</span>, <span class="va">punif</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Asymptotic one-sample Kolmogorov-Smirnov test</span></span>
@@ -722,7 +733,7 @@ the appearance of the expected residuals.</p>
 <span><span class="co">#&gt; D = 0.026, p-value = 0.5085</span></span>
 <span><span class="co">#&gt; alternative hypothesis: two-sided</span></span></code></pre></div>
 <p>Simulation-based normal(0, 1):</p>
-<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
 <span><span class="va">s</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span><span class="va">fit2</span>, nsim <span class="op">=</span> <span class="fl">1500</span>, type <span class="op">=</span> <span class="st">"mle-mvn"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../../reference/dharma_residuals.html">dharma_residuals</a></span><span class="op">(</span><span class="va">fit2</span>, return_DHARMa <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
@@ -731,7 +742,7 @@ the appearance of the expected residuals.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/qqnorm.html" class="external-link">qqnorm</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
 <p><img src="residual-checking_files/figure-html/unnamed-chunk-28-1.png" width="672"></p>
-<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/ks.test.html" class="external-link">ks.test</a></span><span class="op">(</span><span class="va">u</span>, <span class="va">punif</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  Asymptotic one-sample Kolmogorov-Smirnov test</span></span>
@@ -760,7 +771,7 @@ sample sizes.</p>
 <h2 id="how-do-those-randomized-quantile-residuals-work">How do those randomized-quantile residuals work?<a class="anchor" aria-label="anchor" href="#how-do-those-randomized-quantile-residuals-work"></a>
 </h2>
 <p>Let’s work through a simple example with the gamma distribution:</p>
-<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
 <span><span class="va">mu</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">500</span><span class="op">)</span></span>
 <span><span class="va">phi</span> <span class="op">&lt;-</span> <span class="fl">0.5</span></span>
@@ -768,11 +779,11 @@ sample sizes.</p>
 <p>To get quantile residuals, we transform those to uniform(0, 1) using
 <code><a href="https://rdrr.io/r/stats/GammaDist.html" class="external-link">pgamma()</a></code> and then (optionally) convert those to normal(0,
 1) with <code><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">qnorm()</a></code>:</p>
-<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">u</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/GammaDist.html" class="external-link">pgamma</a></span><span class="op">(</span>q <span class="op">=</span> <span class="va">y</span>, shape <span class="op">=</span> <span class="va">phi</span>, scale <span class="op">=</span> <span class="va">mu</span> <span class="op">/</span> <span class="va">phi</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html" class="external-link">hist</a></span><span class="op">(</span><span class="va">u</span><span class="op">)</span></span></code></pre></div>
 <p><img src="residual-checking_files/figure-html/unnamed-chunk-30-1.png" width="672"></p>
-<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">r</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">qnorm</a></span><span class="op">(</span><span class="va">u</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html" class="external-link">hist</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span></span></code></pre></div>
 <p><img src="residual-checking_files/figure-html/unnamed-chunk-30-2.png" width="672"></p>
@@ -780,7 +791,7 @@ sample sizes.</p>
 function.</p>
 <p>If we have integer values, we need to add randomization in an
 additional step. Let’s work with a Poisson sample:</p>
-<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
 <span><span class="va">mu</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">500</span><span class="op">)</span></span>
 <span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Poisson.html" class="external-link">rpois</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">mu</span><span class="op">)</span>, <span class="va">mu</span><span class="op">)</span></span></code></pre></div>
@@ -793,41 +804,41 @@ cumulative probability density up to value <code>y</code>. Say we have a
 Poisson variable with a mean (lambda) of 5 and we have an observation
 with a value of 3. We can calculate the density up to the value of 3
 as:</p>
-<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">lambda</span> <span class="op">&lt;-</span> <span class="fl">5</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/Poisson.html" class="external-link">ppois</a></span><span class="op">(</span><span class="fl">3</span>, <span class="va">lambda</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 0.2650259</span></span></code></pre></div>
 <p>I.e., that is the same as:</p>
-<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/Poisson.html" class="external-link">dpois</a></span><span class="op">(</span><span class="fl">0</span>, <span class="va">lambda</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Poisson.html" class="external-link">dpois</a></span><span class="op">(</span><span class="fl">1</span>, <span class="va">lambda</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Poisson.html" class="external-link">dpois</a></span><span class="op">(</span><span class="fl">2</span>, <span class="va">lambda</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Poisson.html" class="external-link">dpois</a></span><span class="op">(</span><span class="fl">3</span>, <span class="va">lambda</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 0.2650259</span></span></code></pre></div>
 <p>But, if we naively apply <code><a href="https://rdrr.io/r/stats/Poisson.html" class="external-link">ppois()</a></code> to the observed values
 we’ll end up with discrete cumulative probabilities that aren’t very
 useful for comparing against the continuous uniform.</p>
-<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html" class="external-link">hist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Poisson.html" class="external-link">ppois</a></span><span class="op">(</span><span class="va">y</span>, <span class="va">mu</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="residual-checking_files/figure-html/unnamed-chunk-34-1.png" width="672"></p>
 <p>Instead, we need to get the probability density up the value below
 the one we observed and “fill in” the values up to the observed value
 with the desired uniformly distributed samples. First, get the density
 up to the value below and the observed value:</p>
-<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb66"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Poisson.html" class="external-link">ppois</a></span><span class="op">(</span><span class="va">y</span> <span class="op">-</span> <span class="fl">1</span>, <span class="va">mu</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html" class="external-link">hist</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span></span></code></pre></div>
 <p><img src="residual-checking_files/figure-html/unnamed-chunk-35-1.png" width="672"></p>
-<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">b</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Poisson.html" class="external-link">ppois</a></span><span class="op">(</span><span class="va">y</span>, <span class="va">mu</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html" class="external-link">hist</a></span><span class="op">(</span><span class="va">b</span><span class="op">)</span></span></code></pre></div>
 <p><img src="residual-checking_files/figure-html/unnamed-chunk-35-2.png" width="672"></p>
 <p>Then we can add randomization between these using
 <code><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif()</a></code> since our expectation is a uniform distribution at
 this stage to fill in the values between:</p>
-<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb68"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">u</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span>, min <span class="op">=</span> <span class="va">a</span>, max <span class="op">=</span> <span class="va">b</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html" class="external-link">hist</a></span><span class="op">(</span><span class="va">u</span><span class="op">)</span></span></code></pre></div>
 <p><img src="residual-checking_files/figure-html/unnamed-chunk-36-1.png" width="672"></p>
 <p>Then we optionally apply <code><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">qnorm()</a></code>:</p>
-<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb69"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">r</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">qnorm</a></span><span class="op">(</span><span class="va">u</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/hist.html" class="external-link">hist</a></span><span class="op">(</span><span class="va">r</span><span class="op">)</span></span></code></pre></div>
 <p><img src="residual-checking_files/figure-html/unnamed-chunk-37-1.png" width="672"></p>
@@ -838,16 +849,16 @@ this stage to fill in the values between:</p>
 <p>DHARMa uses simulation-based quantile residuals. As a result, we
 don’t need to define the quantile function analytically. So, instead of
 a line like this:</p>
-<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb70"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">u</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/GammaDist.html" class="external-link">pgamma</a></span><span class="op">(</span>q <span class="op">=</span> <span class="va">y</span>, shape <span class="op">=</span> <span class="va">phi</span>, scale <span class="op">=</span> <span class="va">mu</span> <span class="op">/</span> <span class="va">phi</span><span class="op">)</span></span></code></pre></div>
 <p>We simulate from our model repeatedly, see where our observation
 falls within the simulated values, and get our quantile that way. For
 example, instead of this:</p>
-<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb71"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">pnorm</a></span><span class="op">(</span><span class="fl">2.2</span>, mean <span class="op">=</span> <span class="fl">0.5</span>, sd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 0.9554345</span></span></code></pre></div>
 <p>we could do this:</p>
-<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb72"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
 <span><span class="va">s</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">1e6</span>, <span class="fl">0.5</span>, <span class="fl">1</span><span class="op">)</span> <span class="co"># equivalent of simulate()ing from our model</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">s</span> <span class="op">&lt;</span> <span class="fl">2.2</span><span class="op">)</span> <span class="co"># equivalent of pnorm()</span></span>
