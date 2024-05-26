@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">sdmTMB</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0.9009</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0.9010</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -155,8 +155,9 @@ deprecated in favour of <code>delta_gamma(type = "poisson-link")</code> and
 <code>delta_lognormal(type = "poisson-link")</code>.</p>
 <p>The <code>gengamma()</code> family was implemented by J.T. Thorson and uses the Prentice
 (1974) parameterization such that the lognormal occurs as the internal
-parameter <code>gengamma_Q</code> (reported in <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> as "Generalized gamma lambda")
-approaches 0.</p>
+parameter <code>gengamma_Q</code> (reported in <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> or <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> as
+"Generalized gamma Q") approaches 0. If Q matches <code>phi</code> the distribution
+should be the gamma.</p>
 <p>The families ending in <code>_mix()</code> are 2-component mixtures where each
 distribution has its own mean but a shared scale parameter.
 (Thorson et al. 2011). See the model-description vignette for details.
