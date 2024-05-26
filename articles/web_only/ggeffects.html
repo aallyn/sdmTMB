@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../../index.html">sdmTMB</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0.9007</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0.9009</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -87,7 +87,7 @@
                         <h4 data-toc-skip class="author">Julia Indivero,
 Sean Anderson, Lewis Barnett, Philina English, Eric Ward</h4>
             
-            <h4 data-toc-skip class="date">2024-05-17</h4>
+            <h4 data-toc-skip class="date">2024-05-26</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/pbs-assess/sdmTMB/blob/HEAD/vignettes/web_only/ggeffects.Rmd" class="external-link"><code>vignettes/web_only/ggeffects.Rmd</code></a></small>
       <div class="d-none name"><code>ggeffects.Rmd</code></div>
@@ -153,6 +153,8 @@ what range and interval of depths are predicted within the function
 <p>We can add in data points</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">g</span>, add.data <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: Argument `add.data` is deprecated and will be removed in the future.</span></span>
+<span><span class="co">#&gt;   Please use `show_data` instead.</span></span>
 <span><span class="co">#&gt; Data points may overlap. Use the `jitter` argument to add some amount of</span></span>
 <span><span class="co">#&gt;   random variation to the location of data points and avoid overplotting.</span></span></code></pre></div>
 <p><img src="ggeffects_files/figure-html/unnamed-chunk-5-1.png" width="672"></p>

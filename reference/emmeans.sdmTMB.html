@@ -14,7 +14,7 @@ effects."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/ma
     
     <a class="navbar-brand me-2" href="../index.html">sdmTMB</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0.9007</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0.9009</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -105,7 +105,7 @@ effects.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ML criterion at convergence: 564.495</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> See ?tidy.sdmTMB to extract these values as a data frame.</span>
-<span class="r-in"><span><span class="fu">emmeans</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/emmeans/man/emmeans.html" class="external-link">emmeans</a></span><span class="op">(</span><span class="va">fit</span>, <span class="op">~</span> <span class="va">year</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">emmeans</span><span class="fu">::</span><span class="fu"><a href="https://rvlenth.github.io/emmeans/reference/emmeans.html" class="external-link">emmeans</a></span><span class="op">(</span><span class="va">fit</span>, <span class="op">~</span> <span class="va">year</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  year emmean    SE  df lower.CL upper.CL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  2011 -0.606 0.551 963   -1.688    0.475</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  2013  0.384 0.550 963   -0.695    1.463</span>
@@ -114,7 +114,7 @@ effects.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Results are given on the logit (not the response) scale. </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Confidence level used: 0.95 </span>
-<span class="r-in"><span><span class="fu">emmeans</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/emmeans/man/emmeans.html" class="external-link">emmeans</a></span><span class="op">(</span><span class="va">fit</span>, <span class="va">pairwise</span> <span class="op">~</span> <span class="va">year</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">emmeans</span><span class="fu">::</span><span class="fu"><a href="https://rvlenth.github.io/emmeans/reference/emmeans.html" class="external-link">emmeans</a></span><span class="op">(</span><span class="va">fit</span>, <span class="va">pairwise</span> <span class="op">~</span> <span class="va">year</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $emmeans</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  year emmean    SE  df lower.CL upper.CL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  2011 -0.606 0.551 963   -1.688    0.475</span>
@@ -137,7 +137,7 @@ effects.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Results are given on the log odds ratio (not the response) scale. </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> P value adjustment: tukey method for comparing a family of 4 estimates </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span><span class="fu">emmeans</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/emmeans/man/emmeans.html" class="external-link">emmeans</a></span><span class="op">(</span><span class="va">fit</span>, <span class="va">pairwise</span> <span class="op">~</span> <span class="va">year</span>, type <span class="op">=</span> <span class="st">"response"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">emmeans</span><span class="fu">::</span><span class="fu"><a href="https://rvlenth.github.io/emmeans/reference/emmeans.html" class="external-link">emmeans</a></span><span class="op">(</span><span class="va">fit</span>, <span class="va">pairwise</span> <span class="op">~</span> <span class="va">year</span>, type <span class="op">=</span> <span class="st">"response"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $emmeans</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  year  prob    SE  df lower.CL upper.CL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  2011 0.353 0.126 963    0.156    0.617</span>
@@ -160,7 +160,7 @@ effects.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> P value adjustment: tukey method for comparing a family of 4 estimates </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Tests are performed on the log odds ratio scale </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span><span class="fu">emmeans</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/emmeans/man/emmeans.html" class="external-link">emmeans</a></span><span class="op">(</span><span class="va">fit</span>, <span class="va">pairwise</span> <span class="op">~</span> <span class="va">year</span>, adjust <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">emmeans</span><span class="fu">::</span><span class="fu"><a href="https://rvlenth.github.io/emmeans/reference/emmeans.html" class="external-link">emmeans</a></span><span class="op">(</span><span class="va">fit</span>, <span class="va">pairwise</span> <span class="op">~</span> <span class="va">year</span>, adjust <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $emmeans</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  year emmean    SE  df lower.CL upper.CL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  2011 -0.606 0.551 963   -1.688    0.475</span>
@@ -183,11 +183,11 @@ effects.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Results are given on the log odds ratio (not the response) scale. </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">e</span> <span class="op">&lt;-</span> <span class="fu">emmeans</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/emmeans/man/emmeans.html" class="external-link">emmeans</a></span><span class="op">(</span><span class="va">fit</span>, <span class="op">~</span> <span class="va">year</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">e</span> <span class="op">&lt;-</span> <span class="fu">emmeans</span><span class="fu">::</span><span class="fu"><a href="https://rvlenth.github.io/emmeans/reference/emmeans.html" class="external-link">emmeans</a></span><span class="op">(</span><span class="va">fit</span>, <span class="op">~</span> <span class="va">year</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">e</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="emmeans.sdmTMB-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">e</span> <span class="op">&lt;-</span> <span class="fu">emmeans</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/emmeans/man/emmeans.html" class="external-link">emmeans</a></span><span class="op">(</span><span class="va">fit</span>, <span class="va">pairwise</span> <span class="op">~</span> <span class="va">year</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">e</span> <span class="op">&lt;-</span> <span class="fu">emmeans</span><span class="fu">::</span><span class="fu"><a href="https://rvlenth.github.io/emmeans/reference/emmeans.html" class="external-link">emmeans</a></span><span class="op">(</span><span class="va">fit</span>, <span class="va">pairwise</span> <span class="op">~</span> <span class="va">year</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/confint.html" class="external-link">confint</a></span><span class="op">(</span><span class="va">e</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $emmeans</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  year emmean    SE  df lower.CL upper.CL</span>
@@ -285,7 +285,7 @@ effects.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> See ?tidy.sdmTMB to extract these values as a data frame.</span>
 <span class="r-in"><span><span class="co"># slopes for each level:</span></span></span>
-<span class="r-in"><span><span class="fu">emmeans</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/emmeans/man/emtrends.html" class="external-link">emtrends</a></span><span class="op">(</span><span class="va">fit2</span>, <span class="op">~</span> <span class="va">year</span>, var <span class="op">=</span> <span class="st">"depth_scaled"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">emmeans</span><span class="fu">::</span><span class="fu"><a href="https://rvlenth.github.io/emmeans/reference/emtrends.html" class="external-link">emtrends</a></span><span class="op">(</span><span class="va">fit2</span>, <span class="op">~</span> <span class="va">year</span>, var <span class="op">=</span> <span class="st">"depth_scaled"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  year depth_scaled.trend    SE  df lower.CL upper.CL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  2011             -0.980 0.250 959    -1.47   -0.490</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  2013             -1.140 0.247 959    -1.63   -0.655</span>
@@ -294,7 +294,7 @@ effects.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Confidence level used: 0.95 </span>
 <span class="r-in"><span><span class="co"># test difference in slopes:</span></span></span>
-<span class="r-in"><span><span class="fu">emmeans</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/emmeans/man/emtrends.html" class="external-link">emtrends</a></span><span class="op">(</span><span class="va">fit2</span>, <span class="va">pairwise</span> <span class="op">~</span> <span class="va">year</span>, var <span class="op">=</span> <span class="st">"depth_scaled"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">emmeans</span><span class="fu">::</span><span class="fu"><a href="https://rvlenth.github.io/emmeans/reference/emtrends.html" class="external-link">emtrends</a></span><span class="op">(</span><span class="va">fit2</span>, <span class="va">pairwise</span> <span class="op">~</span> <span class="va">year</span>, var <span class="op">=</span> <span class="st">"depth_scaled"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $emtrends</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  year depth_scaled.trend    SE  df lower.CL upper.CL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  2011             -0.980 0.250 959    -1.47   -0.490</span>
@@ -315,7 +315,7 @@ effects.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> P value adjustment: tukey method for comparing a family of 4 estimates </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span><span class="fu">emmeans</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/emmeans/man/emmip.html" class="external-link">emmip</a></span><span class="op">(</span><span class="va">fit2</span>, <span class="va">year</span> <span class="op">~</span> <span class="va">depth_scaled</span>,</span></span>
+<span class="r-in"><span><span class="fu">emmeans</span><span class="fu">::</span><span class="fu"><a href="https://rvlenth.github.io/emmeans/reference/emmip.html" class="external-link">emmip</a></span><span class="op">(</span><span class="va">fit2</span>, <span class="va">year</span> <span class="op">~</span> <span class="va">depth_scaled</span>,</span></span>
 <span class="r-in"><span>  at <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>depth_scaled <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="op">-</span><span class="fl">2.5</span>, <span class="fl">2.5</span>, length.out <span class="op">=</span> <span class="fl">50</span><span class="op">)</span><span class="op">)</span>, CIs <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="emmeans.sdmTMB-2.png" alt="" width="700" height="433"></span>
 </code></pre></div>

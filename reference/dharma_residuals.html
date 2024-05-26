@@ -18,7 +18,7 @@ expected distribution. This is not the default.'><!-- mathjax --><script src="ht
     
     <a class="navbar-brand me-2" href="../index.html">sdmTMB</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0.9007</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0.9009</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -86,7 +86,9 @@ expected distribution. This is <em>not</em> the default.</p>
 <span>  <span class="va">object</span>,</span>
 <span>  plot <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  return_DHARMa <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  expected_distribution <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"uniform"</span>, <span class="st">"normal"</span><span class="op">)</span>,</span>
+<span>  test_uniformity <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  test_outliers <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  test_dispersion <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -104,22 +106,23 @@ residuals to have the expected distribution.</p></dd>
 
 
 <dt>plot</dt>
-<dd><p>Logical.</p></dd>
+<dd><p>Logical. Calls <code><a href="https://rdrr.io/pkg/DHARMa/man/plotQQunif.html" class="external-link">DHARMa::plotQQunif()</a></code>.</p></dd>
 
 
 <dt>return_DHARMa</dt>
-<dd><p>Logical.</p></dd>
+<dd><p>Logical. Return object from <code><a href="https://rdrr.io/pkg/DHARMa/man/createDHARMa.html" class="external-link">DHARMa::createDHARMa()</a></code>?</p></dd>
 
 
-<dt>expected_distribution</dt>
-<dd><p>Experimental: expected distribution for
-comparison: uniform(0, 1) or normal(0, 1). Traditional <span class="pkg">DHARMa</span>
-residuals are uniform. If <code>"normal"</code>, a <code><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">pnorm()</a></code> transformation is applied.
-First, any simulated quantiles of 0 (no simulations were smaller than the
-observation) are set to an arbitrary value of <code>1/(n*10)</code> where <code>n</code> is the
-number of simulated replicated. Any simulated quantiles of 1 (no
-simulations were larger than the observation) are set to an arbitrary value
-of <code>1 - 1/(n*10)</code>. These points are shown with crosses overlaid.</p></dd>
+<dt>test_uniformity</dt>
+<dd><p>Passed to <code>testUniformity</code> in <code><a href="https://rdrr.io/pkg/DHARMa/man/plotQQunif.html" class="external-link">DHARMa::plotQQunif()</a></code>.</p></dd>
+
+
+<dt>test_outliers</dt>
+<dd><p>Passed to <code>testOutliers</code> in <code><a href="https://rdrr.io/pkg/DHARMa/man/plotQQunif.html" class="external-link">DHARMa::plotQQunif()</a></code>.</p></dd>
+
+
+<dt>test_dispersion</dt>
+<dd><p>Passed to <code>testDispersion</code> in <code><a href="https://rdrr.io/pkg/DHARMa/man/plotQQunif.html" class="external-link">DHARMa::plotQQunif()</a></code>.</p></dd>
 
 
 <dt>...</dt>
@@ -130,9 +133,9 @@ of <code>1 - 1/(n*10)</code>. These points are shown with crosses overlaid.</p><
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>A data frame of observed and expected values is invisibly returned,
-so you can set <code>plot = FALSE</code> and assign the output to an object if you wish
-to plot the residuals yourself. See the examples.</p>
+<p>A data frame of observed and expected values is invisibly returned
+so you can assign the output to an object and
+plot the residuals yourself. See the examples.</p>
 
 
 <p>If <code>return_DHARMa = TRUE</code>, the object from <code><a href="https://rdrr.io/pkg/DHARMa/man/createDHARMa.html" class="external-link">DHARMa::createDHARMa()</a></code></p>
@@ -142,7 +145,8 @@ to plot the residuals yourself. See the examples.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>Advantages to these residuals over the ones from the <code><a href="residuals.sdmTMB.html">residuals.sdmTMB()</a></code>
+    <p>See the <a href="https://pbs-assess.github.io/sdmTMB/articles/web_only/residual-checking.html">residuals vignette</a>.</p>
+<p>Advantages to these residuals over the ones from the <code><a href="residuals.sdmTMB.html">residuals.sdmTMB()</a></code>
 method are (1) they work with delta/hurdle models for the combined
 predictions, not the just the two parts separately, (2) they should work for
 all families, not the just the families where we have worked out the
@@ -172,7 +176,7 @@ a normal(0, 1) expectation.</p>
 <span class="r-in"><span>  family <span class="op">=</span> <span class="fu"><a href="families.html">tweedie</a></span><span class="op">(</span>link <span class="op">=</span> <span class="st">"log"</span><span class="op">)</span>, spatial <span class="op">=</span> <span class="st">"on"</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># The `simulated_response` argument is first so the output from</span></span></span>
-<span class="r-in"><span><span class="co"># simulate() can be piped to dharma_residuals().</span></span></span>
+<span class="r-in"><span><span class="co"># simulate() can be piped to `dharma_residuals()`.</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># We will work with 100 simulations for fast examples, but you'll</span></span></span>
 <span class="r-in"><span><span class="co"># likely want to work with more than this (enough that the results</span></span></span>
@@ -214,18 +218,6 @@ a normal(0, 1) expectation.</p>
 <span class="r-in"><span>  <span class="fu">dharma_residuals</span><span class="op">(</span><span class="va">fit</span>, return_DHARMa <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">ret</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="dharma_residuals-4.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># try normal(0, 1) residuals:</span></span></span>
-<span class="r-in"><span><span class="va">s</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate</a></span><span class="op">(</span><span class="va">fit_dl</span>, nsim <span class="op">=</span> <span class="fl">100</span>, type <span class="op">=</span> <span class="st">"mle-mvn"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">dharma_residuals</span><span class="op">(</span><span class="va">s</span>, <span class="va">fit</span>, expected_distribution <span class="op">=</span> <span class="st">"normal"</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="dharma_residuals-5.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span><span class="co"># note the points in the top right corner that had Inf quantiles</span></span></span>
-<span class="r-in"><span><span class="co"># because of pnorm(1)</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># work with the residuals themselves:</span></span></span>
-<span class="r-in"><span><span class="va">r</span> <span class="op">&lt;-</span> <span class="fu">dharma_residuals</span><span class="op">(</span><span class="va">s</span>, <span class="va">fit</span>, return_DHARMa <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/fitted.values.html" class="external-link">fitted</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span>, <span class="va">r</span><span class="op">$</span><span class="va">scaledResiduals</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="dharma_residuals-6.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>

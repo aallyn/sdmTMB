@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">sdmTMB</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0.9007</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0.9009</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -64,12 +64,15 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="sdmtmb-development-version">sdmTMB (development version)<a class="anchor" aria-label="anchor" href="#sdmtmb-development-version"></a></h2>
-<ul><li>
+<ul><li><p>Pass several arguments to <code><a href="https://rdrr.io/pkg/DHARMa/man/plotQQunif.html" class="external-link">DHARMa::plotQQunif()</a></code> and set the uniformity p-value argumemt to <code>TRUE</code> by default.</p></li>
+<li><p>Add <code>silent</code> option in <code><a href="../reference/simulate.sdmTMB.html">simulate.sdmTMB()</a></code>. Setting it to <code>FALSE</code> allows monitoring simulations from larger models.</p></li>
+<li>
 <p>Fix bug in <code>est_non_rf1</code> and <code>est_non_rf2</code> columns when all the following conditions were true:</p>
 <ul><li>predicting on new data</li>
 <li>using a delta model</li>
 <li>including IID random intercepts or time-varying coefficients See <a href="https://github.com/pbs-assess/sdmTMB/issues/342" class="external-link">#342</a>. Thanks to <a href="https://github.com/tom-peatman" class="external-link">@tom-peatman</a> for the issue report.</li>
 </ul></li>
+<li><p>Fix delta-gamma binomial link printing for <code>type = 'poisson-link'</code> <a href="https://github.com/pbs-assess/sdmTMB/issues/340" class="external-link">#340</a></p></li>
 <li><p>Add suggestion to use an optimized BLAS library to README.</p></li>
 <li><p>Add warning if it’s detected that there were problems reloading (e.g., with <code><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS()</a></code>) a fitted model. Simultaneously revert the approach to how reloaded models are reattached. Check that random effects haven’t been reverted to zero if you <code><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS()</a></code> a fitted model. E.g. <code>get_pars(fit)$omega_s</code> if you have spatial random fields enabled.</p></li>
 <li><p>Move <code>log_ratio_mix</code> parameter to 2nd phase with starting value of -1 instead of 0 to improve convergence.</p></li>
