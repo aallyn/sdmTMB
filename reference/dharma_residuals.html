@@ -18,7 +18,7 @@ expected distribution. This is not the default.'><!-- mathjax --><script src="ht
     
     <a class="navbar-brand me-2" href="../index.html">sdmTMB</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0.9010</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -72,7 +72,7 @@ expected distribution. This is not the default.'><!-- mathjax --><script src="ht
     </div>
 
     <div class="ref-description section level2">
-    <p>Plot (and possibly return) DHARMa residuals. This is a wrapper function
+    <p>Plot (and possibly return) <span class="pkg">DHARMa</span> residuals. This is a wrapper function
 around <code><a href="https://rdrr.io/pkg/DHARMa/man/createDHARMa.html" class="external-link">DHARMa::createDHARMa()</a></code> to facilitate its use with <code><a href="sdmTMB.html">sdmTMB()</a></code> models.
 <strong>Note:</strong> It is recommended to set <code>type = "mle-mvn"</code> in
 <code><a href="simulate.sdmTMB.html">simulate.sdmTMB()</a></code> for the resulting residuals to have the
@@ -156,12 +156,11 @@ diagnostic tools and plots from the <span class="pkg">DHARMa</span> package.</p>
 simulate from the model, (2) the stability of the distribution of the
 residuals depends on having a sufficient number of simulation draws, (3)
 uniformly distributed residuals put less emphasis on the tails visually
-(which or may not be desired).</p>
+than normally distributed residuals
+(which may or may not be desired).</p>
 <p>Note that <span class="pkg">DHARMa</span> returns residuals that are uniform(0, 1) if the data
-are consistent with the model whereas any randomized quantile residuals from
-<code><a href="residuals.sdmTMB.html">residuals.sdmTMB()</a></code> are expected to be normal(0, 1). An experimental option
-<code>expected_distribution</code> is included to transform the distributions to
-a normal(0, 1) expectation.</p>
+are consistent with the model whereas randomized quantile residuals from
+<code><a href="residuals.sdmTMB.html">residuals.sdmTMB()</a></code> are expected to be normal(0, 1).</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
