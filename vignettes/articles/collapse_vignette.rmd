@@ -1,0 +1,577 @@
+---
+title: "Automatic Model Simplification in sdmTMB: Collapsing random fields and simplifying autoregressive structures"
+author: "Andrew Allyn"
+date: "`r Sys.Date()`"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    code_folding: show
+    theme: flatly
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  message = TRUE,
+  warning = TRUE,
+  fig.width = 7,
+  fig.height = 5
+)
+devtools::load_all()
+```
+
+# Overview
+
+## Motivation
+
+Complex spatial and spatiotemporal models can sometimes estimate parameters that suggest the model is overparameterized. This work builds on [Eric Ward's `collapse_random_fields` contribution](https://github.com/sdmTMB/sdmTMB/pull/477), which addressed issues with spatial and spatiotemporal random field variances collapsing to zero. 
+
+In addition to these variance-related issues, we commonly encounter problems with autoregressive (AR1) temporal correlation parameters. When fitting AR1 processes, the estimated correlation parameter (rho or rho_time for the spatiotemporal AR1 process) can sometimes indicate that:
+
+1. **High correlation (rho or rho_time ≈ 1):** The process is essentially a random walk, suggesting `"rw"` is more appropriate than `"ar1"`
+2. **No correlation (rho or rho_time ≈ 0):** The process shows no temporal correlation, suggesting simpler structures like `"iid"` or random effects
+
+Taking inspiration from Eric's function, I developed a unified `check_and_collapse()` function that automatically detects and addresses these issues.
+
+## What the Function Detects
+
+The unified collapse function checks for:
+
+### Variance Issues (replicating functioality from `check_and_collapse_random_fields`)
+- **Spatial variance → 0:** `sigma_O` very small → collapse `spatial = "on"` to `"off"`
+- **Spatiotemporal variance → 0:** `sigma_E` very small → collapse `spatiotemporal = "iid/ar1/rw"` to `"off"`
+
+### Correlation Issues (AR1 processes)
+- **Spatiotemporal AR1 → RW:** `rho` approaching 1 → collapse `spatiotemporal = "ar1"` to `"rw"`
+- **Spatiotemporal AR1 → IID:** `rho` approaching 0 → collapse `spatiotemporal = "ar1"` to `"iid"`
+- **Time-varying AR1 → RW:** `rho_time` approaching 1 → collapse `time_varying_type = "ar1"` to `"rw"`
+- **Time-varying AR1 → IID:** `rho_time` approaching 0 → **warning only** (user must manually change formula)
+
+### Detection Criteria
+
+For each parameter, we use **two checks with OR logic**:
+
+1. **Point estimate:** Is the estimate within the threshold of the boundary?
+2. **Confidence interval:** Does the 95% CI overlap the boundary?
+
+If **either** condition is met, the function triggers collapse/warning.
+
+**Example for low correlation:**
+- Threshold = 0.01
+- Check 1: Is |rho| < 0.01?
+- Check 2: Does 95% CI include 0?
+- If YES to either → Collapse to IID (or warn)
+
+This OR logic is more robust to noisy parameter estimates and helps identify when the model is uncertain about the parameter value.
+
+## Implementation
+
+### The `check_and_collapse()` Function
+
+This internal function:
+
+1. Examines fitted parameter estimates and their uncertainty
+2. Determines if parameters are at boundary values
+3. Returns updated model structure specifications
+4. Stores warnings for display after fitting completes
+
+### Integration in `fit.R`
+
+The collapse checking is integrated into the main `sdmTMB()` fitting function:
+
+1. Initial model is fit
+2. If collapse checking is enabled, `check_and_collapse()` examines the fit
+3. If issues are detected:
+   - For auto-fixable issues (spatial variance, spatiotemporal variance/correlation): Model is automatically refit
+   - For manual-fix issues (time-varying AR1 → IID): Warning is displayed after fitting
+4. Final model is returned
+
+### Control Parameters
+
+```r
+sdmTMBcontrol(
+  collapse = TRUE,                        # What to check
+  collapse_variance_threshold = 0.01,     # Sigma threshold
+  collapse_correlation_threshold = 0.01   # Rho threshold
+)
+```
+
+**`collapse` options:**
+- `TRUE` (default): Check both variance and correlation
+- `FALSE`: Disable all checking
+- `"variance"`: Check variance only (sigma_O, sigma_E)
+- `"correlation"`: Check correlation only (rho, rho_time)
+
+---
+
+# Example Tests
+
+We'll demonstrate the collapse functionality using simulated data where we know the true structure.
+
+## Setup
+
+```{r setup-data}
+set.seed(123)
+
+# Create spatial grid
+predictor_dat <- data.frame(
+  X = runif(1000), 
+  Y = runif(1000),
+  a1 = rnorm(1000), 
+  year = sample(1:5, size = 1000, replace = TRUE)
+)
+
+mesh <- make_mesh(predictor_dat, xy_cols = c("X", "Y"), cutoff = 0.1)
+```
+
+---
+
+## Test 1: Variance Collapse (Spatial and Spatiotemporal)
+
+**Scenario:** Simulate data with NO spatial or spatiotemporal variation (sigma_O = 0, sigma_E = 0), then fit a model that includes these fields.
+
+### Problem: Without Collapse Detection
+
+```{r test1-problem}
+# Simulate with zero variance
+sim_dat <- sdmTMB_simulate(
+  formula = ~ 1 + a1,
+  data = predictor_dat,
+  time = "year",
+  mesh = mesh,
+  family = tweedie(),
+  range = 2,
+  sigma_E = 0.005,      # Near zero spatiotemporal variation
+  sigma_O = 0.005,      # Near zero spatial variation
+  phi = 0.2,
+  seed = 42,
+  B = c(0.2, -0.4)
+)
+
+# Fit model with collapse disabled
+fit1_problem <- sdmTMB(
+  observed ~ a1,
+  data = sim_dat, 
+  mesh = mesh, 
+  time = "year",
+  spatial = "on",           # Will estimate near-zero
+  spatiotemporal = "iid",   # Will estimate near-zero
+  control = sdmTMBcontrol(collapse = FALSE)
+)
+
+# Check estimated variances
+cat("Spatial field:", fit1_problem$spatial, "\n")
+cat("Spatiotemporal field:", fit1_problem$spatiotemporal, "\n")
+cat("Estimated sigma_O:", fit1_problem$tmb_obj$report()$sigma_O, "\n")
+cat("Estimated sigma_E:", fit1_problem$tmb_obj$report()$sigma_E, "\n")
+```
+
+**Issue:** The model includes unnecessary random fields that add complexity without improving fit, with both `sigma_O` and `sigma_E` collapsing to 0.
+
+### Solution: With Collapse Detection
+
+```{r test1-solution}
+# Fit model with collapse enabled (default)
+fit1_solution <- sdmTMB(
+  observed ~ a1,
+  data = sim_dat, 
+  mesh = mesh, 
+  time = "year",
+  spatial = "on",
+  spatiotemporal = "iid",
+  control = sdmTMBcontrol(collapse = TRUE)
+)
+
+# Check updated structure
+cat("Spatial field:", fit1_solution$spatial, "\n")
+cat("Spatiotemporal field:", fit1_solution$spatiotemporal, "\n")
+```
+
+**Result:** Both fields automatically collapsed to `"off"`, simplifying the model.
+
+---
+
+## Test 2: High Correlation (AR1 → RW)
+
+**Scenario:** Simulate time-varying intercept with very high temporal correlation (rho ≈ 1), then fit with AR1 structure.
+
+### Problem: Without Collapse Detection
+
+```{r test2-setup}
+# Likely need some more time steps for this one
+set.seed(123)
+predictor_dat_tv <- data.frame(
+  X = runif(1000), 
+  Y = runif(1000),
+  a1 = rnorm(1000), 
+  year = rep(1:20, length.out = 1000)  # 15 time points for better AR1 estimation
+)
+
+mesh_tv <- make_mesh(predictor_dat_tv, xy_cols = c("X", "Y"), cutoff = 0.1)
+
+# Simulate with rho_time = 0.95 (very high correlation)
+sim_dat_high_rho <- sdmTMB_simulate(
+  formula = ~ 1 + a1,
+  data = predictor_dat_tv,
+  time = "year",
+  mesh = mesh_tv,
+  family = gaussian(),
+  range = 0.5,
+  time_varying = ~ 1,
+  time_varying_type = "ar1",
+  rho_time = 0.99,        # High correlation
+  sigma_V = 0.8,          # Make it larger so it's noticeable!
+  sigma_E = 0,
+  sigma_O = 0,
+  phi = 0.1,
+  seed = 99,
+  B = c(1, -0.1)
+)
+```
+
+```{r test2-problem}
+# Fit with collapse disabled
+fit2_problem <- sdmTMB(
+  observed ~ 1 + a1,
+  data = sim_dat_high_rho,
+  mesh = mesh,
+  time = "year",
+  spatial = "off",
+  spatiotemporal = "off",
+  time_varying = ~ 1,
+  time_varying_type = "ar1",
+  control = sdmTMBcontrol(collapse = FALSE)
+)
+
+# Check estimated rho
+pl <- as.list(fit2_problem$sd_report, "Estimate")
+pls <- as.list(fit2_problem$sd_report, "Std. Error")
+rho_unscaled <- pl$rho_time_unscaled[1,1]
+se_unscaled <- pls$rho_time_unscaled[1,1]
+
+# Transform to bounded scale
+bound <- function(x) 2 * plogis(x) - 1
+rho_est <- bound(rho_unscaled)
+rho_lower <- bound(rho_unscaled - 1.96 * se_unscaled)
+rho_upper <- bound(rho_unscaled + 1.96 * se_unscaled)
+
+cat("Estimated rho:", round(rho_est, 3), "\n")
+cat("95% CI: [", round(rho_lower, 3), ",", round(rho_upper, 3), "]\n")
+cat("Time-varying type:", as.character(fit2_problem$call['time_varying_type']), "\n")
+```
+
+**Issue:** AR1 is unnecessarily complex when rho ≈ 1; a random walk would be simpler and equally appropriate.
+
+### Solution: With Collapse Detection
+
+```{r test2-solution}
+# Fit with collapse enabled
+fit2_solution <- sdmTMB(
+  observed ~ 1 + a1,
+  data = sim_dat_high_rho,
+  mesh = mesh,
+  time = "year",
+  spatial = "off",
+  spatiotemporal = "off",
+  time_varying = ~ 1,
+  time_varying_type = "ar1",
+  control = sdmTMBcontrol(collapse = TRUE,
+    collapse_correlation_threshold = 0.05)
+)
+
+cat("Time-varying type:", as.character(fit2_solution$call['time_varying_type']), "\n")
+```
+
+**Result:** AR1 automatically switched to RW (random walk).
+
+---
+
+## Test 3: Low Correlation (AR1 → IID/Warning)
+
+**Scenario:** Simulate time-varying effects with no temporal correlation (rho = 0), then fit with AR1 structure.
+
+### Problem: Without Collapse Detection
+
+```{r test3-setup}
+# Simulate with rho = 0 (no temporal correlation)
+sim_dat_low_rho <- sdmTMB_simulate(
+  formula = ~ 1 + a1,
+  data = predictor_dat_tv,
+  time = "year",
+  mesh = mesh_tv,
+  family = gaussian(),
+  range = 0.5,
+  time_varying = ~ 1,
+  time_varying_type = "ar1",
+  rho_time = 0.01,              # No correlation
+  sigma_V = 0.8,
+  sigma_E = 0,
+  sigma_O = 0,
+  phi = 0.1,
+  seed = 99,
+  B = c(1, -0.1)
+)
+```
+
+```{r test3-problem}
+# Fit with collapse disabled
+fit3_problem <- sdmTMB(
+  observed ~ 1 + a1,
+  data = sim_dat_low_rho,
+  mesh = mesh_tv,
+  time = "year",
+  spatial = "off",
+  spatiotemporal = "off",
+  time_varying = ~ 1,
+  time_varying_type = "ar1",
+  control = sdmTMBcontrol(collapse = FALSE)
+)
+
+# Check estimated rho
+pl <- as.list(fit3_problem$sd_report, "Estimate")
+pls <- as.list(fit3_problem$sd_report, "Std. Error")
+rho_unscaled <- pl$rho_time_unscaled[1,1]
+se_unscaled <- pls$rho_time_unscaled[1,1]
+
+rho_est <- bound(rho_unscaled)
+rho_lower <- bound(rho_unscaled - 1.96 * se_unscaled)
+rho_upper <- bound(rho_unscaled + 1.96 * se_unscaled)
+
+cat("Estimated rho:", round(rho_est, 3), "\n")
+cat("95% CI: [", round(rho_lower, 3), ",", round(rho_upper, 3), "]\n")
+cat("CI overlaps 0:", rho_lower < 0 & rho_upper > 0, "\n")
+```
+
+**Issue:** AR1 is overparameterized when there's no temporal correlation. The model is also uncertain about rho (wide CI crossing 0).
+
+### Solution: With Collapse Detection
+
+```{r test3-solution}
+# Fit with collapse enabled
+fit3_solution <- sdmTMB(
+  observed ~ 1 + a1,
+  data = sim_dat_low_rho,
+  mesh = mesh_tv,
+  time = "year",
+  spatial = "off",
+  spatiotemporal = "off",
+  time_varying = ~ 1,
+  time_varying_type = "ar1",
+  control = sdmTMBcontrol(collapse = TRUE),
+  silent = FALSE
+)
+
+cat("Time-varying type:", as.character(fit3_solution$call['time_varying_type']), "\n")
+```
+
+**Result:** A warning is displayed suggesting the user remove `time_varying` or use `(1 | year)` instead. The model continues fitting with AR1 as specified, but the user is informed about the issue.
+
+**Note:** For `time_varying`, the function cannot automatically switch to "iid" because `time_varying_type = "iid"` is not a valid option in sdmTMB. The user must manually change the formula to use random effects: `formula = observed ~ 1 + (1 | year)`.
+
+---
+
+## Test 4: Selective Checking (variance only)
+
+**Scenario:** Check only variance, not correlation.
+
+```{r test4}
+# Fit checking variance only
+fit4 <- sdmTMB(
+  observed ~ 1 + a1,
+  data = sim_dat_low_rho,  # Has low rho AND low spatial variance
+  mesh = mesh_tv,
+  time = "year",
+  spatial = "on",           # Low variance - will collapse
+  spatiotemporal = "off",
+  time_varying = ~ 1,
+  time_varying_type = "ar1",  # Low rho - will NOT be checked
+  control = sdmTMBcontrol(collapse = "variance"),
+  silent = FALSE
+)
+
+cat("Spatial:", fit4$spatial, "\n")
+cat("Time-varying type:", as.character(fit4$call['time_varying_type']), "\n")
+```
+
+**Result:** Spatial field collapsed (variance check), but AR1 remains unchanged (correlation not checked) AND we don't see the warning because the correlation check was turned off.
+
+---
+
+## Test 5: Selective Checking (correlation only)
+
+**Scenario:** Check only correlation, not variance.
+
+```{r test5}
+# Fit checking variance only
+fit5 <- sdmTMB(
+  observed ~ 1 + a1,
+  data = sim_dat_low_rho,  # Has low rho AND low spatial variance
+  mesh = mesh_tv,
+  time = "year",
+  spatial = "on",           # Low variance - but not checked
+  spatiotemporal = "off",
+  time_varying = ~ 1,
+  time_varying_type = "ar1",  # Low and poorly estimated - will be checked and give warning
+  control = sdmTMBcontrol(collapse = "correlation"),
+  silent = FALSE
+)
+
+cat("Spatial:", fit5$spatial, "\n")
+cat("Time-varying type:", as.character(fit5$call['time_varying_type']), "\n")
+```
+
+**Result:** Spatial field remains unchanged, and a warning is displayed suggesting the user remove `time_varying` or use `(1 | year)` instead. The model continues fitting with AR1 as specified
+---
+
+## Test 6: Exhaustive Checking (variance and correlation)
+
+**Scenario:** Check variance and corrrelation
+
+```{r test6}
+# Fit checking variance and correlation
+fit6 <- sdmTMB(
+  observed ~ 1 + a1,
+  data = sim_dat_low_rho,  # Has low rho AND low spatial variance
+  mesh = mesh_tv,
+  time = "year",
+  spatial = "on",           # Low variance - will collapse
+  spatiotemporal = "off",
+  time_varying = ~ 1,
+  time_varying_type = "ar1",  # Low and poorly estimated rho - will be checked and give warning
+  control = sdmTMBcontrol(collapse = TRUE),
+  silent = FALSE
+)
+
+cat("Spatial:", fit6$spatial, "\n")
+cat("Time-varying type:", as.character(fit6$call['time_varying_type']), "\n")
+```
+
+**Result:** Spatial field collapsed (variance check), and a warning is displayed suggesting the user remove `time_varying` or use `(1 | year)` instead. The model continues fitting with AR1 as specified
+---
+
+## Test 7: Custom thresholds
+
+**Scenario:** Adjust variance threshold
+
+```{r test7}
+sim_dat_small_var <- sdmTMB_simulate(
+  formula = ~ 1 + a1,
+  data = predictor_dat,
+  time = "year",
+  mesh = mesh,
+  family = tweedie(),
+  range = 2,
+  sigma_E = 0,    # Small but not tiny
+  sigma_O = 0.05,
+  phi = 0.2,
+  seed = 45,
+  B = c(1, -0.1)
+)
+
+# Need to fit the model to get some idea of the threshold for demonstration purposes
+fit7_demo <- sdmTMB(
+  observed ~ 1 + a1,
+  data = sim_dat_small_var,  
+  mesh = mesh_tv,
+  time = "year",
+  spatial = "on",           
+  spatiotemporal = "off", 
+  control = sdmTMBcontrol(collapse = FALSE),
+  silent = FALSE
+)
+
+cat("Estimated sigma_O:", fit7_demo$tmb_obj$report()$sigma_O, "\n")
+
+# Should by default collapse, unless threshold is increased
+thresh_use<- as.numeric(fit7_demo$tmb_obj$report()$sigma_O) + 0.1
+
+fit7 <- sdmTMB(
+  observed ~ 1 + a1,
+  data = sim_dat_small_var,  
+  mesh = mesh_tv,
+  time = "year",
+  spatial = "on",           
+  spatiotemporal = "off",
+  control = sdmTMBcontrol(collapse = TRUE,
+    collapse_variance_threshold = thresh_use),
+  silent = FALSE
+)
+
+cat("Spatial:", fit7$spatial, "\n")
+```
+
+**Result:** Spatial field collapsed (variance check) with custom threshold, when it wouldn't under default (collapse_variance_threshold = 0.01).
+---
+
+# Summary
+
+## Key Features
+
+1. **Unified detection:** Single function checks both variance and correlation issues
+2. **Robust criteria:** Uses both point estimates and confidence intervals
+3. **Flexible control:** User can enable/disable specific checks
+4. **Automatic refitting:** Model simplification happens automatically when possible
+5. **Clear warnings:** Issues that require manual intervention are clearly communicated
+
+## Best Practices
+
+**When to use collapse checking:**
+- Exploratory data analysis
+- Model selection
+- When you're unsure about appropriate random effect structure
+- Production models where automatic simplification is desired
+
+**When to disable collapse checking:**
+- When you want exact control over model structure
+- Sensitivity analyses
+- When testing specific hypotheses about variance/correlation parameters
+
+## Control Parameter Guide
+
+```r
+# Default: Check everything
+sdmTMBcontrol(collapse = TRUE)
+
+# Disable all checks
+sdmTMBcontrol(collapse = FALSE)
+
+# Only check variance
+sdmTMBcontrol(collapse = "variance")
+
+# Only check correlation
+sdmTMBcontrol(collapse = "correlation")
+
+# Custom thresholds
+sdmTMBcontrol(
+  collapse = TRUE,
+  collapse_variance_threshold = 0.05,     # More aggressive
+  collapse_correlation_threshold = 0.02   # More conservative
+)
+```
+
+## What Gets Checked
+
+| Component | Parameter | Collapse to | Auto-refit? |
+|-----------|-----------|-------------|-------------|
+| Spatial field | sigma_O | "off" | ✅ Yes |
+| Spatiotemporal field | sigma_E | "off" | ✅ Yes |
+| Spatiotemporal AR1 (high rho) | rho → 1 | "rw" | ✅ Yes |
+| Spatiotemporal AR1 (low rho) | rho → 0 | "iid" | ✅ Yes |
+| Time-varying AR1 (high rho) | rho_time → 1 | "rw" | ✅ Yes |
+| Time-varying AR1 (low rho) | rho_time → 0 | Warning | ❌ No |
+
+---
+
+# Acknowledgments
+
+This work builds on Eric Ward's `collapse_random_fields` contribution. The extension to handle autoregressive correlation parameters was developed to address common model overparameterization issues encountered in practice.
+
+---
+
+# Session Info
+
+```{r session-info}
+sessionInfo()
+```
+

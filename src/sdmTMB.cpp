@@ -737,6 +737,12 @@ Type objective_function<Type>::operator()()
     }
     REPORT(sigma_V);
     ADREPORT(sigma_V); // time-varying SD
+
+    // Additional rho_time report
+    if (ar1_time) {
+      REPORT(rho_time);
+      ADREPORT(rho_time);
+    }
   }
   // ------------------ INLA projections ---------------------------------------
 

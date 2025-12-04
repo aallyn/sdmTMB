@@ -64,20 +64,36 @@
 #' @param suppress_nlminb_warnings Suppress uninformative warnings
 #'   from [stats::nlminb()] arising when a function evaluation is `NA`, which
 #'   are then replaced with `Inf` and avoided during estimation?
-#' @param collapse_spatial_variance Logical: should spatial and/or spatiotemporal
-#'   random fields be automatically dropped if their estimated standard deviation
-#'   is effectively zero (i.e., below `collapse_threshold`)? This helps prevent
-#'   overfitting and numerical instability when the data provide little evidence
-#'   for spatial or spatiotemporal variation. I.e., when the variance parameter is
-#'   estimated on or near the boundary of zero. When enabled, the model will be
-#'   automatically refitted via [update.sdmTMB()] with the corresponding field(s)
-#'   disabled. This adds a computational cost (a single model refit if
-#'   collapsing occurs) but can yield a simpler, more stable model and more
-#'   reliable inference. Default is `FALSE` for backwards compatibility.
-#' @param collapse_threshold Numeric: the standard deviation threshold below which random
-#'   fields are considered to be collapsing to zero. Only used when
-#'   `collapse_spatial_variance = TRUE`. Values are on the standard deviation
+#' @param collapse Logical or character: should random fields and/or temporal
+#'   processes be automatically simplified when estimated parameters indicate
+#'   model components are not needed? Options:
+#'   * `TRUE` (default): Check both variance (sigma) and correlation (rho) parameters
+#'   * `FALSE`: Disable all automatic simplification
+#'   * `"variance"`: Only check variance parameters (sigma_O, sigma_E)
+#'   * `"correlation"`: Only check correlation parameters (rho, rho_time)
+#'   When variance is near zero, fields are turned off. When AR1 correlation is
+#'   near 1, switches to random walk; when near 0, switches to IID (spatiotemporal)
+#'   or suggests formula restructuring (time-varying). This helps prevent
+#'   overfitting and numerical instability. Adds a computational cost (a single
+#'   model refit if simplification occurs) but can yield more stable models and
+#'   more reliable inference.
+#' @param variance_threshold Numeric: the standard deviation threshold below which
+#'   random fields are considered to be effectively zero. Only used when
+#'   `collapse` includes variance checking. Values are on the standard deviation
 #'   scale (i.e., square root of variance). Default is 0.01.
+#' @param rho_threshold_upper Numeric: the AR1 correlation threshold above which
+#'   the process is considered to be a random walk. When `rho > rho_threshold_upper`,
+#'   `spatiotemporal = "ar1"` is switched to `"rw"` and `time_varying_type = "ar1"`
+#'   is switched to `"rw"`. Only used when `collapse` includes correlation checking.
+#'   Default is 0.99.
+#' @param rho_threshold_lower Numeric: the AR1 correlation threshold below which
+#'   the process is considered to have no temporal correlation. When
+#'   `|rho| < rho_threshold_lower`, `spatiotemporal = "ar1"` is switched to `"iid"`.
+#'   For `time_varying_type = "ar1"` with low correlation, a warning is issued
+#'   suggesting formula restructuring with `(1 | time_column)`. Only used when
+#'   `collapse` includes correlation checking. Default is 0.01.
+#' @param collapse_spatial_variance Deprecated. Use `collapse = "variance"` instead.
+#' @param collapse_threshold Deprecated. Use `variance_threshold` instead.
 #' @param ... Anything else. See the 'Control parameters' section of
 #'   [stats::nlminb()].
 #'
@@ -89,6 +105,31 @@
 #' ```
 #' sdmTMB(..., control = sdmTMBcontrol(newton_loops = 2))
 #' ```
+#'
+#' The `collapse` argument provides automatic model simplification:
+#'
+#' ```
+#' # Default: check both variance and correlation
+#' sdmTMB(..., control = sdmTMBcontrol(collapse = TRUE))
+#'
+#' # Only check variance (similar to old collapse_spatial_variance)
+#' sdmTMB(..., control = sdmTMBcontrol(collapse = "variance"))
+#'
+#' # Only check correlation (new feature)
+#' sdmTMB(..., control = sdmTMBcontrol(collapse = "correlation"))
+#'
+#' # Disable all automatic simplification
+#' sdmTMB(..., control = sdmTMBcontrol(collapse = FALSE))
+#'
+#' # Custom thresholds
+#' sdmTMB(..., control = sdmTMBcontrol(
+#'   collapse = TRUE,
+#'   variance_threshold = 0.02,
+#'   rho_threshold_upper = 0.98,
+#'   rho_threshold_lower = 0.02
+#' ))
+#' ```
+#'
 #' @examples
 #' sdmTMBcontrol()
 sdmTMBcontrol <- function(
@@ -109,16 +150,16 @@ sdmTMBcontrol <- function(
   get_joint_precision = TRUE,
   parallel = getOption("sdmTMB.cores", 1L),
   suppress_nlminb_warnings = TRUE,
-  collapse_spatial_variance = FALSE,
-  collapse_threshold = 0.01,
-  ...) {
+  collapse = TRUE,
+  collapse_variance_threshold = 0.01,
+  collapse_correlation_threshold = 0.01,
+  collapse_spatial_variance = NULL,  # Deprecated
+  collapse_threshold = NULL,         # Deprecated
+  ...) {                             # Allow extra arguments
 
   assert_that(is.numeric(nlminb_loops), is.numeric(newton_loops))
   assert_that(nlminb_loops >= 1L)
   assert_that(newton_loops >= 0L)
-  # if (newton_loops > 1L) {
-  #   cli::cli_inform("There is rarely a benefit to making `newton_loops` > 1.")
-  # }
 
   if (!is.null(parallel)) {
     assert_that(!is.na(parallel), parallel > 0)
@@ -126,8 +167,44 @@ sdmTMBcontrol <- function(
   }
 
   assert_that(is.logical(profile) || is.character(profile))
-  assert_that(is.logical(collapse_spatial_variance))
-  assert_that(is.numeric(collapse_threshold), collapse_threshold > 0)
+
+  # Handle deprecated arguments
+  if (!is.null(collapse_spatial_variance)) {
+    warning(
+      "`collapse_spatial_variance` is deprecated.\n",
+      "  Use `collapse = 'variance'` instead for equivalent behavior.\n",
+      "  Or use `collapse = TRUE` (default) to also check correlation parameters.",
+      call. = FALSE
+    )
+    if (collapse_spatial_variance) {
+      collapse <- "variance"
+    } else {
+      collapse <- FALSE
+    }
+  }
+  
+  if (!is.null(collapse_threshold)) {
+    warning(
+      "`collapse_threshold` is deprecated.\n",
+      "  Use `collapse_variance_threshold` instead.",
+      call. = FALSE
+    )
+    collapse_variance_threshold <- collapse_threshold
+  }
+
+  # Validate collapse argument
+  if (!is.logical(collapse) && !collapse %in% c("variance", "correlation")) {
+    stop(
+      "`collapse` must be TRUE, FALSE, 'variance', or 'correlation'.\n",
+      "  You provided: ", collapse,
+      call. = FALSE
+    )
+  }
+
+  # Validate thresholds
+  assert_that(is.numeric(collapse_variance_threshold), collapse_variance_threshold > 0)
+  assert_that(is.numeric(collapse_correlation_threshold), 
+              collapse_correlation_threshold > 0, collapse_correlation_threshold < 1)
 
   out <- named_list(
     eval.max,
@@ -146,8 +223,10 @@ sdmTMBcontrol <- function(
     multiphase,
     parallel,
     get_joint_precision,
-    collapse_spatial_variance,
-    collapse_threshold
+    suppress_nlminb_warnings,
+    collapse,
+    collapse_variance_threshold,
+    collapse_correlation_threshold
   )
   c(out, list(...))
 }

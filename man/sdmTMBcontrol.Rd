@@ -22,8 +22,12 @@ sdmTMBcontrol(
   get_joint_precision = TRUE,
   parallel = getOption("sdmTMB.cores", 1L),
   suppress_nlminb_warnings = TRUE,
-  collapse_spatial_variance = FALSE,
-  collapse_threshold = 0.01,
+  collapse = TRUE,
+  variance_threshold = 0.01,
+  rho_threshold_upper = 0.99,
+  rho_threshold_lower = 0.01,
+  collapse_spatial_variance = NULL,
+  collapse_threshold = NULL,
   ...
 )
 }
@@ -107,21 +111,43 @@ definitely an upper limit.}
 from \code{\link[stats:nlminb]{stats::nlminb()}} arising when a function evaluation is \code{NA}, which
 are then replaced with \code{Inf} and avoided during estimation?}
 
-\item{collapse_spatial_variance}{Logical: should spatial and/or spatiotemporal
-random fields be automatically dropped if their estimated standard deviation
-is effectively zero (i.e., below \code{collapse_threshold})? This helps prevent
-overfitting and numerical instability when the data provide little evidence
-for spatial or spatiotemporal variation. I.e., when the variance parameter is
-estimated on or near the boundary of zero. When enabled, the model will be
-automatically refitted via \code{\link[=update.sdmTMB]{update.sdmTMB()}} with the corresponding field(s)
-disabled. This adds a computational cost (a single model refit if
-collapsing occurs) but can yield a simpler, more stable model and more
-reliable inference. Default is \code{FALSE} for backwards compatibility.}
+\item{collapse}{Logical or character: should random fields and/or temporal
+processes be automatically simplified when estimated parameters indicate
+model components are not needed? Options:
+\itemize{
+\item \code{TRUE} (default): Check both variance (sigma) and correlation (rho) parameters
+\item \code{FALSE}: Disable all automatic simplification
+\item \code{"variance"}: Only check variance parameters (sigma_O, sigma_E)
+\item \code{"correlation"}: Only check correlation parameters (rho, rho_time)
+When variance is near zero, fields are turned off. When AR1 correlation is
+near 1, switches to random walk; when near 0, switches to IID (spatiotemporal)
+or suggests formula restructuring (time-varying). This helps prevent
+overfitting and numerical instability. Adds a computational cost (a single
+model refit if simplification occurs) but can yield more stable models and
+more reliable inference.
+}}
 
-\item{collapse_threshold}{Numeric: the standard deviation threshold below which random
-fields are considered to be collapsing to zero. Only used when
-\code{collapse_spatial_variance = TRUE}. Values are on the standard deviation
+\item{variance_threshold}{Numeric: the standard deviation threshold below which
+random fields are considered to be effectively zero. Only used when
+\code{collapse} includes variance checking. Values are on the standard deviation
 scale (i.e., square root of variance). Default is 0.01.}
+
+\item{rho_threshold_upper}{Numeric: the AR1 correlation threshold above which
+the process is considered to be a random walk. When \code{rho > rho_threshold_upper},
+\code{spatiotemporal = "ar1"} is switched to \code{"rw"} and \code{time_varying_type = "ar1"}
+is switched to \code{"rw"}. Only used when \code{collapse} includes correlation checking.
+Default is 0.99.}
+
+\item{rho_threshold_lower}{Numeric: the AR1 correlation threshold below which
+the process is considered to have no temporal correlation. When
+\verb{|rho| < rho_threshold_lower}, \code{spatiotemporal = "ar1"} is switched to \code{"iid"}.
+For \code{time_varying_type = "ar1"} with low correlation, a warning is issued
+suggesting formula restructuring with \code{(1 | time_column)}. Only used when
+\code{collapse} includes correlation checking. Default is 0.01.}
+
+\item{collapse_spatial_variance}{Deprecated. Use \code{collapse = "variance"} instead.}
+
+\item{collapse_threshold}{Deprecated. Use \code{variance_threshold} instead.}
 
 \item{...}{Anything else. See the 'Control parameters' section of
 \code{\link[stats:nlminb]{stats::nlminb()}}.}
@@ -136,6 +162,29 @@ A list of control arguments
 Usually used within \code{\link[=sdmTMB]{sdmTMB()}}. For example:
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{sdmTMB(..., control = sdmTMBcontrol(newton_loops = 2))
+}\if{html}{\out{</div>}}
+
+The \code{collapse} argument provides automatic model simplification:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{# Default: check both variance and correlation
+sdmTMB(..., control = sdmTMBcontrol(collapse = TRUE))
+
+# Only check variance (similar to old collapse_spatial_variance)
+sdmTMB(..., control = sdmTMBcontrol(collapse = "variance"))
+
+# Only check correlation (new feature)
+sdmTMB(..., control = sdmTMBcontrol(collapse = "correlation"))
+
+# Disable all automatic simplification
+sdmTMB(..., control = sdmTMBcontrol(collapse = FALSE))
+
+# Custom thresholds
+sdmTMB(..., control = sdmTMBcontrol(
+  collapse = TRUE,
+  variance_threshold = 0.02,
+  rho_threshold_upper = 0.98,
+  rho_threshold_lower = 0.02
+))
 }\if{html}{\out{</div>}}
 }
 \examples{
